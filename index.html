@@ -1,3 +1,6 @@
+
+Copier
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -28,7 +31,7 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;}
 body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:72px;}
-
+ 
 /* ── NAV BAR ── */
 .navbar{
   position:fixed;bottom:0;left:0;right:0;
@@ -43,12 +46,12 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
 }
 .nav-item.active{color:var(--sage);}
 .nav-icon{font-size:20px;line-height:1;}
-
+ 
 /* ── PAGES ── */
 .page{display:none;animation:fadeIn 0.2s ease;}
 .page.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
-
+ 
 /* ── HEADER ── */
 .page-header{
   background:var(--surface);border-bottom:2px solid var(--wood-dim);
@@ -59,13 +62,13 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
   letter-spacing:0.03em;color:#fff;line-height:1;
 }
 .page-sub{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--wood);margin-top:5px;font-weight:500;}
-
+ 
 /* ── MONTH NAV ── */
 .month-nav{display:flex;align-items:center;padding:14px 20px;background:var(--surface2);border-bottom:1px solid var(--line);}
 .month-nav button{background:none;border:none;color:var(--wood-bright);font-size:22px;cursor:pointer;padding:4px 10px;opacity:0.8;transition:opacity 0.15s;}
 .month-nav button:hover{opacity:1;}
 .month-name{flex:1;text-align:center;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;letter-spacing:0.06em;color:#fff;}
-
+ 
 /* ── HOME PAGE ── */
 .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 16px 0;}
 .kpi{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:16px 14px 14px;position:relative;overflow:hidden;}
@@ -83,12 +86,12 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
 .kpi.accent{background:linear-gradient(135deg,var(--wood-dim),var(--surface2));border-color:var(--wood);}
 .kpi.accent .kpi-val{color:#fff;}
 .kpi.accent .kpi-lbl{color:var(--wood-bright);opacity:0.8;}
-
+ 
 .home-section-title{
   font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--wood);
   padding:22px 16px 10px;font-weight:600;
 }
-
+ 
 /* Streak bar */
 .streak-row{display:flex;gap:5px;padding:0 16px 16px;overflow-x:auto;}
 .streak-day{
@@ -102,12 +105,12 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
 .streak-day.has-both{background:var(--sage);border-color:var(--sage);color:#141210;font-weight:600;}
 .streak-day.today-marker{outline:2px solid var(--wood-bright);outline-offset:2px;}
 .streak-day-lbl{font-size:8px;opacity:0.7;}
-
+ 
 /* Cycle mini card */
 .cycle-mini{margin:0 16px;padding:16px;background:var(--rose-bg);border:1px solid var(--rose-bd);border-radius:12px;border-left:4px solid var(--rose);}
 .cycle-mini-main{font-size:14px;color:#fff;font-weight:500;}
 .cycle-mini-sub{font-size:12px;color:var(--ink2);margin-top:4px;}
-
+ 
 /* Progress rings */
 .progress-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 16px 16px;}
 .prog-item{display:flex;flex-direction:column;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:14px 8px;}
@@ -117,7 +120,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
 .prog-ring-fill{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset 0.6s ease;}
 .prog-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:#fff;}
 .prog-lbl{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);text-align:center;font-weight:500;}
-
+ 
 /* ── CALENDAR PAGE ── */
 .cycle-banner{display:none;margin:12px 16px 0;padding:12px 16px;background:var(--rose-bg);border:1px solid var(--rose-bd);border-left:4px solid var(--rose);border-radius:8px;}
 .cycle-banner.on{display:block;}
@@ -151,7 +154,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
 .d-sport{background:var(--sage);}
 .d-write{background:var(--wood-bright);}
 .d-weight{background:var(--gold);}
-
+ 
 /* ── STATS PAGE ── */
 .chart-wrap{padding:0 16px 16px;}
 .bar-chart{display:flex;align-items:flex-end;gap:5px;height:90px;}
@@ -166,7 +169,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
 .weight-chart{padding:0 16px 16px;}
 .wline{position:relative;height:70px;border-bottom:1px solid var(--line);}
 .wline svg{width:100%;height:100%;overflow:visible;}
-
+ 
 /* ── CYCLE PAGE ── */
 .cycle-hero{margin:16px;padding:20px;background:var(--rose-bg);border:1px solid var(--rose-bd);border-radius:14px;border-left:5px solid var(--rose);}
 .cycle-hero-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-style:italic;font-weight:600;color:var(--rose);margin-bottom:6px;}
@@ -190,7 +193,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
 .phase-seg{height:100%;}
 .phase-labels{display:flex;padding:0 16px 14px;gap:0;}
 .phase-lbl{font-size:9px;color:var(--ink3);flex:1;text-align:center;font-weight:500;}
-
+ 
 /* ── MODAL ── */
 .overlay{display:none;position:fixed;inset:0;background:rgba(5,4,3,0.85);z-index:200;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px);}
 .overlay.on{display:flex;}
@@ -219,24 +222,24 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
 </style>
 </head>
 <body>
-
+ 
 <!-- ══════════════ HOME ══════════════ -->
 <div class="page active" id="page-home">
   <div class="page-header">
     <div class="page-title" id="home-title">Bonjour</div>
     <div class="page-sub" id="home-sub"></div>
   </div>
-
+ 
   <div class="home-greeting" style="padding-bottom:4px;"></div>
-
+ 
   <div class="kpi-grid" id="kpi-grid"></div>
-
+ 
   <div class="home-section-title">Les 14 derniers jours</div>
   <div class="streak-row" id="streak-row"></div>
-
+ 
   <div class="home-section-title">Objectifs du mois</div>
   <div class="progress-row" id="progress-row"></div>
-
+ 
   <div class="home-section-title">Cycle</div>
   <div style="padding:0 16px 16px;">
     <div class="cycle-mini" id="cycle-mini" style="display:none">
@@ -246,7 +249,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
     <div id="cycle-mini-empty" style="font-size:12px;color:var(--ink3);display:none;">Enregistre au moins 2 cycles pour voir les prévisions.</div>
   </div>
 </div>
-
+ 
 <!-- ══════════════ CALENDAR ══════════════ -->
 <div class="page" id="page-cal">
   <div class="page-header">
@@ -281,43 +284,43 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
     </div>
   </div>
 </div>
-
+ 
 <!-- ══════════════ STATS ══════════════ -->
 <div class="page" id="page-stats">
   <div class="page-header">
     <div class="page-title">Statistiques</div>
     <div class="page-sub" id="stats-sub"></div>
   </div>
-
+ 
   <div class="home-section-title">Sport — séances par mois</div>
   <div class="chart-wrap"><div class="bar-chart" id="sport-bar-chart"></div></div>
-
+ 
   <div class="home-section-title">Écriture — mots par mois</div>
   <div class="chart-wrap"><div class="bar-chart" id="words-bar-chart"></div></div>
-
+ 
   <div class="home-section-title">Répartition écriture</div>
   <div class="two-col" id="write-split"></div>
-
+ 
   <div class="home-section-title">Running — kilomètres par mois</div>
   <div class="chart-wrap"><div class="bar-chart" id="run-bar-chart"></div></div>
-
+ 
   <div class="home-section-title">Poids</div>
   <div class="weight-chart"><div class="wline"><svg id="weight-svg"></svg></div></div>
   <div class="two-col" id="weight-stats"></div>
 </div>
-
+ 
 <!-- ══════════════ CYCLE ══════════════ -->
 <div class="page" id="page-cycle">
   <div class="page-header">
     <div class="page-title">Cycle</div>
     <div class="page-sub">Analyse &amp; prévisions</div>
   </div>
-
+ 
   <div id="cycle-hero-wrap"></div>
-
+ 
   <div class="home-section-title">Indicateurs</div>
   <div class="cycle-grid" id="cycle-grid"></div>
-
+ 
   <div class="phase-card" id="phase-card" style="display:none">
     <div class="phase-title">Phase actuelle du cycle</div>
     <div class="phase-timeline" id="phase-timeline"></div>
@@ -328,13 +331,13 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
       <div class="phase-lbl">Lutéale</div>
     </div>
   </div>
-
+ 
   <div class="cycle-history" id="cycle-history-wrap">
     <div class="cycle-history-title">Historique des cycles</div>
     <div id="cycle-history-list"></div>
   </div>
 </div>
-
+ 
 <!-- ══════════════ NAV ══════════════ -->
 <nav class="navbar">
   <div class="nav-item active" onclick="showPage('home')" id="nav-home">
@@ -350,7 +353,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
     <div class="nav-icon">◯</div><div>Cycle</div>
   </div>
 </nav>
-
+ 
 <!-- ══════════════ SHEET ══════════════ -->
 <div class="overlay" id="overlay" onclick="closeSheet(event)">
 <div class="sheet">
@@ -418,7 +421,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--bg);color:va
   <button class="btn-save" onclick="save()">Enregistrer</button>
 </div>
 </div>
-
+ 
 <script>
 // ── Data ──
 var store = JSON.parse(localStorage.getItem('j2') || '{}');
@@ -429,12 +432,12 @@ var MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août'
 var MONTHS_SHORT = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
 var DAYS_FR = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
 var todayK = dk(now.getFullYear(), now.getMonth(), now.getDate());
-
+ 
 function dk(y,m,d){ return y+'-'+pad(m)+'-'+pad(d); }
 function pad(n){ return String(n).padStart(2,'0'); }
 function kd(k){ var p=k.split('-'); return new Date(+p[0],+p[1],+p[2]); }
 function fmtNum(n){ return n>=1000?(Math.round(n/100)/10)+'k':String(n); }
-
+ 
 // ── Page nav ──
 function showPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
@@ -446,7 +449,7 @@ function showPage(id){
   if(id==='stats') renderStats();
   if(id==='cycle') renderCyclePage();
 }
-
+ 
 // ── Cycle logic ──
 function periodStarts(){
   var keys=Object.keys(store).filter(function(k){return store[k].period;}).sort();
@@ -489,7 +492,7 @@ function periodDuration(start,starts){
   }
   return count;
 }
-
+ 
 // ── Greeting ──
 function greeting(){
   var h=now.getHours();
@@ -497,7 +500,7 @@ function greeting(){
   if(h<18) return 'Bon après-midi';
   return 'Bonsoir';
 }
-
+ 
 // ── Month data helper ──
 function monthData(y,m){
   var sc=0,wc=0,wj=0,wf=0,km=0,weights=[],period=0;
@@ -515,7 +518,7 @@ function monthData(y,m){
   });
   return {sport:sc,write:wc,wordsJournal:wj,wordsFiction:wf,km:km,weights:weights,period:period,totalWords:wj+wf};
 }
-
+ 
 // ─────────────────────────────────────────────
 // HOME
 // ─────────────────────────────────────────────
@@ -526,25 +529,25 @@ function renderHome(){
   var prev=monthData(prevY,prevM);
   var daysInMonth=new Date(yr,mn+1,0).getDate();
   var daysPast=now.getDate();
-
+ 
   // Header
   document.getElementById('home-title').textContent=greeting();
   document.getElementById('home-sub').textContent=now.getDate()+' '+MONTHS[mn]+' '+yr;
-
+ 
   // KPIs
   var grid=document.getElementById('kpi-grid');
   grid.innerHTML='';
   var lastW=cur.weights.length?cur.weights[cur.weights.length-1].v:null;
   var prevW=prev.weights.length?prev.weights[prev.weights.length-1].v:null;
   var wDiff=lastW&&prevW?Math.round((lastW-prevW)*10)/10:null;
-
+ 
   var kpis=[
     {val:cur.sport,unit:'',lbl:'Séances sport',trend:cur.sport>prev.sport?'↑ vs mois dernier':cur.sport<prev.sport?'↓ vs mois dernier':'= vs mois dernier',up:cur.sport>=prev.sport},
     {val:fmtNum(cur.totalWords),unit:'',lbl:'Mots écrits',trend:cur.totalWords>prev.totalWords?'↑ vs mois dernier':cur.totalWords<prev.totalWords?'↓ vs mois dernier':'= vs mois dernier',up:cur.totalWords>=prev.totalWords},
     {val:lastW?lastW.toFixed(1):'—',unit:lastW?'kg':'',lbl:'Poids actuel',trend:wDiff!==null?(wDiff>0?'↑ '+wDiff+' kg':wDiff<0?'↓ '+Math.abs(wDiff)+' kg':'stable'):'',up:wDiff!==null?wDiff<=0:true},
     {val:Math.round(cur.km*10)/10||'—',unit:cur.km?'km':'',lbl:'Running ce mois',trend:'',up:true,accent:true}
   ];
-
+ 
   kpis.forEach(function(k,i){
     var div=document.createElement('div');
     div.className='kpi'+(k.accent?' accent':'');
@@ -553,7 +556,7 @@ function renderHome(){
       +(k.trend?'<div class="kpi-trend '+(k.up?'':'down')+'">'+k.trend+'</div>':'');
     grid.appendChild(div);
   });
-
+ 
   // Streak — 14 days
   var streak=document.getElementById('streak-row');
   streak.innerHTML='';
@@ -568,7 +571,7 @@ function renderHome(){
     div.innerHTML='<span>'+d.getDate()+'</span><span class="streak-day-lbl">'+['D','L','M','M','J','V','S'][d.getDay()]+'</span>';
     streak.appendChild(div);
   }
-
+ 
   // Progress rings
   var row=document.getElementById('progress-row');
   row.innerHTML='';
@@ -594,7 +597,7 @@ function renderHome(){
       +'<div class="prog-lbl">'+g.lbl+'<br><span style="opacity:0.6">/ '+g.goal+(g.unit?' '+g.unit:'')+'</span></div>';
     row.appendChild(item);
   });
-
+ 
   // Cycle mini
   var ci=cycleInfo();
   var mini=document.getElementById('cycle-mini');
@@ -614,7 +617,7 @@ function renderHome(){
     mini.style.display='none'; empty.style.display='block';
   }
 }
-
+ 
 // ─────────────────────────────────────────────
 // CALENDAR
 // ─────────────────────────────────────────────
@@ -680,14 +683,14 @@ function renderCal(){
   b.classList.add('on');
 }
 function nav(d){ vm+=d; if(vm<0){vm=11;vy--;} if(vm>11){vm=0;vy++;} renderCal(); }
-
+ 
 // ─────────────────────────────────────────────
 // STATS
 // ─────────────────────────────────────────────
 function renderStats(){
   var mn=now.getMonth(), yr=now.getFullYear();
   document.getElementById('stats-sub').textContent='12 derniers mois';
-
+ 
   // build 12 months of data
   var months=[];
   for(var i=11;i>=0;i--){
@@ -696,7 +699,7 @@ function renderStats(){
     var md=monthData(y,m);
     months.push({label:MONTHS_SHORT[m],y:y,m:m,data:md});
   }
-
+ 
   function barChart(el,vals,color,unit){
     el.innerHTML='';
     var max=Math.max.apply(null,vals.map(function(v){return v.v;}));
@@ -714,16 +717,16 @@ function renderStats(){
       el.appendChild(col);
     });
   }
-
+ 
   var sportVals=months.map(function(m,i){return {v:m.data.sport,label:m.label,current:i===11};});
   barChart(document.getElementById('sport-bar-chart'),sportVals,'var(--sage)','');
-
+ 
   var wordsVals=months.map(function(m,i){return {v:m.data.totalWords,label:m.label,current:i===11};});
   barChart(document.getElementById('words-bar-chart'),wordsVals,'var(--wheat)','');
-
+ 
   var runVals=months.map(function(m,i){return {v:Math.round(m.data.km*10)/10,label:m.label,current:i===11};});
   barChart(document.getElementById('run-bar-chart'),runVals,'var(--clay)','km');
-
+ 
   // Write split
   var totalJ=months.reduce(function(a,m){return a+m.data.wordsJournal;},0);
   var totalF=months.reduce(function(a,m){return a+m.data.wordsFiction;},0);
@@ -733,7 +736,7 @@ function renderStats(){
     div.innerHTML='<div class="mini-stat-v" style="color:'+s.c+'">'+s.v+'</div><div class="mini-stat-l">'+s.l+'</div>';
     ws.appendChild(div);
   });
-
+ 
   // Weight line chart
   var allW=[];
   Object.keys(store).sort().forEach(function(k){
@@ -768,7 +771,7 @@ function renderStats(){
   } else {
     svg.innerHTML='<text x="10" y="35" font-size="11" fill="var(--ink3)" font-family="Jost">Pas encore assez de données</text>';
   }
-
+ 
   // Weight stats
   var wstats=document.getElementById('weight-stats'); wstats.innerHTML='';
   if(allW.length){
@@ -781,7 +784,7 @@ function renderStats(){
     });
   }
 }
-
+ 
 // ─────────────────────────────────────────────
 // CYCLE PAGE
 // ─────────────────────────────────────────────
@@ -791,13 +794,13 @@ function renderCyclePage(){
   var grid=document.getElementById('cycle-grid');
   var histList=document.getElementById('cycle-history-list');
   grid.innerHTML=''; histList.innerHTML='';
-
+ 
   if(!ci){
     hero.innerHTML='<div style="margin:16px;padding:16px;background:var(--rose-bg);border:1px solid var(--rose-bd);border-radius:10px;font-size:13px;color:var(--ink2);line-height:1.6;">Enregistre tes règles sur au moins 2 cycles pour voir l\'analyse prédictive apparaître ici.</div>';
     document.getElementById('phase-card').style.display='none';
     return;
   }
-
+ 
   // Hero
   var t=new Date(); t.setHours(0,0,0,0);
   var diff=Math.round((ci.next-t)/864e5);
@@ -807,14 +810,14 @@ function renderCyclePage(){
   else if(diff===0) heroTxt="Aujourd'hui", heroSub='Règles prévues ce jour';
   else if(diff<=7) heroTxt='Dans '+diff+' jours', heroSub='Prévue le '+ds;
   else heroTxt='Dans '+diff+' jours', heroSub='Prévue le '+ds;
-
+ 
   hero.innerHTML='<div class="cycle-hero">'
     +'<div class="cycle-hero-title">Prochaines règles</div>'
     +'<div style="font-family:\'Cormorant Garamond\',serif;font-size:32px;font-weight:400;color:var(--rose);margin:4px 0;">'+heroTxt+'</div>'
     +'<div class="cycle-hero-date">'+heroSub+'</div>'
     +'<div class="cycle-hero-sub">Basé sur '+ci.count+' cycle'+(ci.count>1?'s':'')+' enregistré'+(ci.count>1?'s':'')+' · Cycle moyen : '+ci.avg+' jours</div>'
     +'</div>';
-
+ 
   // KPIs
   var min=Math.min.apply(null,ci.gaps), max=Math.max.apply(null,ci.gaps);
   var variance=Math.round((max-min));
@@ -832,7 +835,7 @@ function renderCyclePage(){
       +(k.note?'<div class="cycle-kpi-note">'+k.note+'</div>':'');
     grid.appendChild(div);
   });
-
+ 
   // Phase timeline
   var lastStart=ci.starts[ci.starts.length-1];
   var dayInCycle=Math.round((t-lastStart)/864e5)+1;
@@ -859,7 +862,7 @@ function renderCyclePage(){
     var marker=document.createElement('div');
     marker.style.cssText='position:absolute;left:calc('+pctNow+'% - 1px);top:-3px;width:2px;height:14px;background:var(--ink);border-radius:1px;';
     tl.style.position='relative'; tl.appendChild(marker);
-
+ 
     // which phase
     var phaseNames=['Menstruelle (j1-5)','Folliculaire (j6-13)','Ovulation (j14-16)','Lutéale (j17-'+ci.avg+')'];
     var phaseIdx=dayInCycle<=5?0:dayInCycle<=13?1:dayInCycle<=16?2:3;
@@ -868,7 +871,7 @@ function renderCyclePage(){
   } else {
     document.getElementById('phase-card').style.display='none';
   }
-
+ 
   // History
   ci.starts.forEach(function(s,i){
     if(i===0) return;
@@ -886,7 +889,7 @@ function renderCyclePage(){
     histList.insertBefore(row,histList.firstChild);
   });
 }
-
+ 
 // ─────────────────────────────────────────────
 // SHEET
 // ─────────────────────────────────────────────
@@ -942,9 +945,10 @@ function save(){
   var cur=document.querySelector('.page.active').id.replace('page-','');
   showPage(cur);
 }
-
+ 
 // Init
 renderHome();
 </script>
 </body>
 </html>
+ 
