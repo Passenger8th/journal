@@ -5,881 +5,537 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Journal</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
- 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+
 :root{
-  --paper:#F7F0E4;
-  --paper2:#EDE4D0;
-  --paper3:#E2D5BC;
-  --ink:#2C1F0E;
-  --ink2:#5C4030;
-  --ink3:#9C8060;
-  --line:#C8B898;
-  --rust:#B84820;
-  --amber:#C87820;
-  --moss:#4A6830;
-  --plum:#7A3850;
-  --umber:#8C5828;
-  --fog:#D8C8A8;
+  --bg:#F4F1EC;
+  --surface:#FFFFFF;
+  --surface2:#F9F6F1;
+  --ink:#1A1614;
+  --ink2:#4A3C34;
+  --ink3:#8A7A6E;
+  --line:#E0D8CE;
+  --green:#2D7A4F;
+  --green-light:#EAF4EE;
+  --green-mid:#A8D4B8;
+  --amber:#B86820;
+  --amber-light:#FBF0E4;
+  --amber-mid:#E4B880;
+  --rose:#A83050;
+  --rose-light:#F9E8EE;
+  --rose-mid:#D4A0B0;
+  --blue:#2858A0;
+  --blue-light:#EAF0F8;
+  --blue-mid:#A0B8D8;
+  --gold:#886018;
+  --gold-light:#FAF0DC;
 }
- 
+
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;}
-body{
-  font-family:'Caveat',cursive;
-  background:var(--paper);
-  color:var(--ink);
-  min-height:100vh;
-  padding-bottom:72px;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(160,130,80,0.12) 27px, rgba(160,130,80,0.12) 28px),
-    repeating-linear-gradient(90deg, transparent, transparent 27px, rgba(160,130,80,0.05) 27px, rgba(160,130,80,0.05) 28px);
-}
- 
+body{font-family:'Inter',sans-serif;font-weight:400;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:64px;font-size:14px;}
+
 /* ── NAV ── */
-.navbar{
+.nav{
   position:fixed;bottom:0;left:0;right:0;z-index:100;
-  background:var(--paper2);
-  border-top:2px solid var(--umber);
-  display:flex;
+  background:var(--ink);display:flex;
 }
-.nav-item{
+.ni{
   flex:1;display:flex;flex-direction:column;align-items:center;
   padding:8px 0 12px;cursor:pointer;gap:2px;
-  font-family:'Caveat',cursive;font-size:11px;color:var(--ink3);
-  transition:color 0.15s;
+  font-size:8px;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.4);font-weight:500;transition:color 0.15s;
 }
-.nav-item.active{color:var(--rust);}
-.nav-icon{font-size:22px;line-height:1;}
- 
-/* ── PAGE ── */
-.page{display:none;animation:fadeIn 0.2s ease;}
-.page.active{display:block;}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
- 
-/* ── WOODEN WINDOW HEADER ── */
-.wood-header{
-  position:relative;
-  background:linear-gradient(180deg, #6B3E18 0%, #8B5228 30%, #7A4520 60%, #6B3818 100%);
-  padding:0;
-  overflow:hidden;
-}
-.wood-grain{
-  position:absolute;inset:0;
-  background-image:
-    repeating-linear-gradient(92deg, transparent 0px, transparent 8px, rgba(255,255,255,0.03) 8px, rgba(255,255,255,0.03) 9px),
-    repeating-linear-gradient(88deg, transparent 0px, transparent 15px, rgba(0,0,0,0.04) 15px, rgba(0,0,0,0.04) 16px);
-  pointer-events:none;
-}
-.window-frame{
-  position:relative;
-  margin:12px 14px 0;
-  border:6px solid #4A2810;
-  border-radius:4px;
-  background:linear-gradient(160deg,#C8E0F0 0%,#D8EAF8 40%,#E0EEF4 70%,#D0E4F0 100%);
-  overflow:hidden;
-  min-height:120px;
-  box-shadow:inset 0 2px 8px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.4);
-}
-.window-cross-h{position:absolute;top:50%;left:0;right:0;height:5px;background:#4A2810;transform:translateY(-50%);z-index:2;}
-.window-cross-v{position:absolute;left:50%;top:0;bottom:0;width:5px;background:#4A2810;transform:translateX(-50%);z-index:2;}
-.window-sky{position:absolute;inset:0;overflow:hidden;}
-.window-title{
-  position:relative;z-index:3;
-  padding:16px 16px 12px;
-  text-align:center;
-}
-.window-title-text{
-  font-family:'Caveat',cursive;font-size:32px;font-weight:700;
-  color:#1A3050;
-  text-shadow:0 1px 2px rgba(255,255,255,0.5);
-  display:block;
-}
-.window-date{
-  font-family:'Crimson Pro',serif;font-size:14px;font-style:italic;
-  color:#3A5878;margin-top:2px;display:block;
-}
-.wood-sill{
-  background:linear-gradient(180deg,#8B5228,#6B3818);
-  height:14px;margin:0 14px;
-  border:3px solid #4A2810;border-top:none;border-radius:0 0 4px 4px;
-  box-shadow:0 3px 6px rgba(0,0,0,0.3);
-}
-.wood-bottom-bar{
-  background:linear-gradient(180deg,#6B3818,#5A3010);
-  padding:10px 16px 14px;
-}
- 
-/* ── SECTION TITLE ── */
-.sec-title{
-  font-family:'Caveat',cursive;font-size:20px;font-weight:600;color:var(--umber);
-  padding:18px 18px 8px;
+.ni.on{color:#fff;}
+.ni.on .ni-dot{background:#fff;}
+.ni-icon{font-size:17px;line-height:1;}
+.ni-dot{width:4px;height:4px;border-radius:50%;background:transparent;margin-top:1px;}
+
+/* ── PAGES ── */
+.page{display:none;}
+.page.on{display:block;animation:fi 0.18s ease;}
+@keyframes fi{from{opacity:0;}to{opacity:1;}}
+
+/* ── PAGE HEADER ── */
+.ph{background:var(--ink);padding:20px 16px 16px;}
+.ph-title{font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.02em;}
+.ph-sub{font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px;letter-spacing:0.06em;text-transform:uppercase;font-weight:500;}
+
+/* ── SECTION LABEL ── */
+.sl{
+  font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--ink3);padding:16px 16px 8px;
   display:flex;align-items:center;gap:8px;
 }
-.sec-deco{font-size:16px;}
- 
-/* ── KPI CARDS ── */
-.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 14px 4px;}
-.kpi-card{
+.sl::after{content:'';flex:1;height:1px;background:var(--line);}
+
+/* ── KPI ROW ── */
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px;}
+.kpi-wide{grid-column:1/-1;}
+.kc{
+  background:var(--surface);border:1px solid var(--line);border-radius:10px;
+  padding:14px 14px 12px;position:relative;overflow:hidden;
+}
+.kc-bar{position:absolute;top:0;left:0;right:0;height:3px;border-radius:10px 10px 0 0;}
+.kc-icon{font-size:14px;margin-bottom:6px;display:block;}
+.kc-num{font-size:36px;font-weight:700;line-height:1;color:var(--ink);letter-spacing:-0.02em;}
+.kc-unit{font-size:14px;font-weight:400;color:var(--ink3);margin-left:2px;}
+.kc-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-top:6px;}
+.kc-trend{font-size:11px;font-weight:600;margin-top:4px;}
+.kc-trend.up{color:var(--green);}
+.kc-trend.dn{color:var(--rose);}
+.kc-trend.eq{color:var(--ink3);}
+
+/* ── SPARKLINE BAR ROW ── */
+.spark-wrap{padding:0 12px 4px;}
+.spark-row{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+.spark-label{font-size:10px;font-weight:600;color:var(--ink3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;display:flex;justify-content:space-between;}
+.spark-bars{display:flex;align-items:flex-end;gap:3px;height:40px;}
+.sb{flex:1;border-radius:2px 2px 0 0;min-height:2px;transition:height 0.4s ease;}
+.spark-x{display:flex;gap:3px;margin-top:4px;}
+.sx{flex:1;text-align:center;font-size:7px;color:var(--ink3);font-weight:500;}
+
+/* ── PROGRESS BARS ── */
+.prog-list{padding:0 12px 4px;display:flex;flex-direction:column;gap:8px;}
+.prog-item{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+.prog-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.prog-name{font-size:13px;font-weight:600;color:var(--ink);}
+.prog-val{font-size:13px;font-weight:700;color:var(--ink);}
+.prog-track{height:8px;background:var(--line);border-radius:4px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:4px;transition:width 0.6s ease;}
+.prog-sub{font-size:11px;color:var(--ink3);margin-top:6px;}
+
+/* ── STREAK GRID ── */
+.streak-wrap{padding:0 12px 4px;}
+.streak-grid{
+  background:var(--surface);border:1px solid var(--line);border-radius:10px;
+  padding:12px 14px;
+}
+.streak-title{font-size:10px;font-weight:600;color:var(--ink3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;}
+.streak-row{display:flex;gap:3px;}
+.sd{
+  flex:1;height:32px;border-radius:4px;
+  background:var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:9px;font-weight:600;color:var(--ink3);gap:1px;
   position:relative;
-  background:var(--paper2);
-  border-radius:6px;
-  padding:14px 12px 10px;
-  overflow:hidden;
 }
-.kpi-card::before{
-  content:'';position:absolute;inset:0;border-radius:6px;
-  border:2px solid transparent;
-}
-.kpi-card-rust{border:2px solid var(--rust) !important;background:rgba(184,72,32,0.06);}
-.kpi-card-amber{border:2px solid var(--amber) !important;background:rgba(200,120,32,0.06);}
-.kpi-card-moss{border:2px solid var(--moss) !important;background:rgba(74,104,48,0.06);}
-.kpi-card-plum{border:2px solid var(--plum) !important;background:rgba(122,56,80,0.06);}
-/* Simulated hand-drawn border with SVG filter */
-.kpi-card{filter:url(#sketchy);}
-.kpi-num{
-  font-family:'Caveat',cursive;font-size:48px;font-weight:700;line-height:1;color:var(--ink);
-}
-.kpi-unit{font-size:18px;color:var(--ink3);}
-.kpi-lbl{font-size:14px;color:var(--ink2);margin-top:4px;}
-.kpi-trend{font-size:13px;margin-top:3px;}
-.kpi-trend.up{color:var(--moss);}
-.kpi-trend.down{color:var(--rust);}
-.kpi-trend.flat{color:var(--ink3);}
-.kpi-icon{position:absolute;top:8px;right:10px;font-size:20px;opacity:0.4;}
- 
-/* ── STREAK ── */
-.streak-wrap{padding:0 14px 8px;overflow-x:auto;}
-.streak-row{display:flex;gap:4px;}
-.streak-day{
-  flex-shrink:0;width:34px;height:44px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-  font-size:13px;font-weight:600;color:var(--ink3);
-  position:relative;
-}
-.streak-day::before{
-  content:'';position:absolute;inset:1px;
-  border:1.5px solid var(--fog);border-radius:3px;
-  background:var(--paper2);
-}
-.streak-day.has-sport::before{background:rgba(74,104,48,0.15);border-color:var(--moss);}
-.streak-day.has-write::before{background:rgba(140,88,40,0.15);border-color:var(--umber);}
-.streak-day.has-both::before{background:rgba(184,72,32,0.18);border-color:var(--rust);}
-.streak-day.today-marker::after{
-  content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);
-  width:6px;height:6px;border-radius:50%;background:var(--rust);
-}
-.streak-day span{position:relative;z-index:1;}
-.streak-lbl{font-size:9px !important;opacity:0.6;font-weight:400 !important;}
- 
-/* ── RINGS ── */
-.rings-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 14px 8px;}
-.ring-item{
-  background:var(--paper2);border:1.5px solid var(--fog);border-radius:6px;
-  padding:12px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;
-}
-.ring-wrap{position:relative;width:60px;height:60px;}
-.ring-wrap svg{transform:rotate(-90deg);}
-.ring-track{fill:none;stroke:var(--fog);stroke-width:5;}
-.ring-fill{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset 0.7s ease;}
-.ring-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--ink);}
-.ring-lbl{font-size:12px;color:var(--ink2);text-align:center;line-height:1.2;}
- 
+.sd.sport{background:var(--green-light);color:var(--green);}
+.sd.write{background:var(--amber-light);color:var(--amber);}
+.sd.both{background:var(--green);color:#fff;}
+.sd.today{outline:2px solid var(--ink);outline-offset:1px;}
+.sd-lbl{font-size:7px;opacity:0.7;}
+
 /* ── CYCLE CARD ── */
-.cycle-autumn{
-  margin:0 14px;padding:16px;
-  background:rgba(122,56,80,0.08);
-  border:2px solid var(--plum);border-radius:6px;
-}
-.cycle-autumn-label{font-size:14px;color:var(--plum);}
-.cycle-autumn-num{font-size:36px;font-weight:700;color:var(--ink);line-height:1.1;}
-.cycle-autumn-sub{font-size:13px;color:var(--ink3);margin-top:4px;}
- 
+.cycle-card{margin:0 12px;background:var(--rose-light);border:1px solid var(--rose-mid);border-radius:10px;padding:14px;border-left:3px solid var(--rose);}
+.cc-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--rose);margin-bottom:4px;}
+.cc-num{font-size:32px;font-weight:700;color:var(--ink);line-height:1.1;}
+.cc-date{font-size:12px;color:var(--ink2);margin-top:4px;}
+.cc-sub{font-size:11px;color:var(--ink3);margin-top:6px;}
+
 /* ── CALENDAR ── */
-.cal-header-bar{
-  display:flex;align-items:center;
-  padding:12px 16px;
-  background:var(--paper2);
-  border-bottom:2px solid var(--umber);
-}
-.cal-header-bar button{
-  background:none;border:none;cursor:pointer;
-  font-family:'Caveat',cursive;font-size:26px;color:var(--umber);padding:0 8px;
-}
-.cal-month-name{
-  flex:1;text-align:center;
-  font-family:'Caveat',cursive;font-size:24px;font-weight:700;color:var(--ink);
-}
-.cycle-banner{display:none;margin:10px 14px 0;padding:10px 14px;background:rgba(122,56,80,0.08);border:2px solid var(--plum);border-radius:6px;}
-.cycle-banner.on{display:block;}
-.cycle-main{font-size:15px;color:var(--plum);font-weight:600;}
-.cycle-sub{font-size:13px;color:var(--ink3);margin-top:2px;}
-.stats-mini{display:flex;margin:10px 14px 0;border:2px solid var(--umber);border-radius:6px;overflow:hidden;background:var(--paper2);}
-.sm{flex:1;padding:10px 4px 8px;text-align:center;border-right:1px solid var(--fog);}
-.sm:last-child{border-right:none;}
-.sm-v{font-size:22px;font-weight:700;color:var(--ink);line-height:1;}
-.sm-l{font-size:11px;color:var(--ink3);margin-top:2px;}
-.legend{display:flex;flex-wrap:wrap;gap:6px 12px;padding:8px 14px 4px;justify-content:center;}
-.leg{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--ink2);}
-.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
- 
-/* ── CALENDAR GRID ── */
+.month-nav{display:flex;align-items:center;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--line);}
+.mn-btn{background:none;border:none;font-size:22px;color:var(--ink2);cursor:pointer;padding:0 8px;line-height:1;}
+.mn-name{flex:1;text-align:center;font-size:16px;font-weight:700;color:var(--ink);}
+.cal-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.cs{padding:10px 6px;text-align:center;border-right:1px solid var(--line);}
+.cs:last-child{border-right:none;}
+.cs-v{font-size:18px;font-weight:700;color:var(--ink);}
+.cs-l{font-size:8px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-top:2px;}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;padding:8px 16px 4px;}
+.leg{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--ink2);font-weight:500;}
+.ldot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .cal-wrap{padding:6px 8px 0;}
-.cal-days{display:grid;grid-template-columns:repeat(7,1fr);}
-.cal-label{text-align:center;font-size:13px;font-weight:600;color:var(--ink3);padding:4px 0 6px;}
-.day{
-  aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  cursor:pointer;position:relative;gap:2px;margin:2px;border-radius:4px;
-  transition:background 0.1s;
-}
-.day:hover{background:rgba(200,120,32,0.1);}
-.day-n{font-size:15px;font-weight:600;color:var(--ink);line-height:1;}
-.day.other .day-n{color:var(--fog);}
-/* Today: circle drawn by hand-ish */
-.day.today .day-n{color:#fff;font-weight:700;}
-.day.today::before{
-  content:'';position:absolute;inset:2px;
-  background:var(--rust);border-radius:50%;z-index:0;
-  transform:rotate(-2deg) scale(1.05);
-}
-.day.today .day-n,.day.today .day-dots{position:relative;z-index:1;}
-.day.period{background:rgba(122,56,80,0.12);}
-.day.period .day-n{color:var(--plum);}
-.day.period.today::before{background:var(--plum);}
-.day.period.today .day-n{color:#fff;}
-.day.predicted{background:rgba(122,56,80,0.05);outline:1.5px dashed var(--plum);outline-offset:-2px;border-radius:4px;}
-.day-dots{display:flex;gap:2px;justify-content:center;min-height:5px;}
-.d{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-.d-sport{background:var(--moss);}
-.d-write{background:var(--umber);}
-.d-weight{background:var(--amber);}
- 
-/* ── STATS ── */
-.chart-wrap{padding:0 14px 16px;}
-.bar-chart{
-  display:flex;align-items:flex-end;gap:4px;height:100px;
-  background:var(--paper2);border:2px solid var(--umber);border-radius:6px;
-  padding:12px 10px 10px;
-}
-.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
-.bar{width:100%;border-radius:3px 3px 0 0;min-height:2px;transition:height 0.5s ease;}
-.bar-val{font-size:9px;color:var(--ink3);}
-.bar-lbl{font-size:8px;color:var(--ink3);}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 14px 14px;}
-.mini-stat{background:var(--paper2);border:2px solid var(--fog);border-radius:6px;padding:14px;}
-.mini-stat-v{font-size:30px;font-weight:700;color:var(--ink);}
-.mini-stat-l{font-size:13px;color:var(--ink3);margin-top:4px;}
-.wline{height:80px;background:var(--paper2);border:2px solid var(--umber);border-radius:6px;padding:10px;margin:0 14px 14px;}
-.wline svg{width:100%;height:100%;overflow:visible;}
- 
-/* ── CYCLE PAGE ── */
-.cycle-hero{margin:14px;padding:20px;background:rgba(122,56,80,0.08);border:2px solid var(--plum);border-radius:8px;}
-.cycle-hero-label{font-size:14px;color:var(--plum);}
-.cycle-hero-num{font-size:52px;font-weight:700;color:var(--ink);line-height:1.1;}
-.cycle-hero-date{font-size:16px;color:var(--ink2);margin-top:4px;}
-.cycle-hero-sub{font-size:13px;color:var(--ink3);margin-top:8px;line-height:1.6;}
-.cycle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 14px;}
-.cycle-kpi{background:var(--paper2);border:2px solid var(--fog);border-radius:6px;padding:14px;}
-.cycle-kpi-v{font-size:30px;font-weight:700;color:var(--ink);}
-.cycle-kpi-l{font-size:12px;color:var(--umber);margin-top:4px;font-weight:600;}
-.cycle-kpi-note{font-size:12px;color:var(--ink3);margin-top:3px;}
-.cycle-history{padding:0 14px 14px;}
-.cycle-history-title{font-size:16px;color:var(--umber);font-weight:600;margin-bottom:12px;}
-.cycle-row{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1.5px dashed var(--fog);}
-.cycle-row:last-child{border-bottom:none;}
-.cycle-row-num{font-size:22px;color:var(--umber);font-weight:700;width:28px;}
-.cycle-row-date{font-size:14px;color:var(--ink);flex:1;}
-.cycle-row-len{font-size:20px;color:var(--ink);font-weight:700;}
-.phase-card{margin:0 14px 14px;background:var(--paper2);border:2px solid var(--fog);border-radius:8px;padding:14px;}
-.phase-title{font-size:13px;color:var(--umber);font-weight:600;margin-bottom:10px;}
-.phase-timeline{display:flex;height:14px;border-radius:7px;overflow:hidden;position:relative;margin-bottom:6px;}
-.phase-seg{height:100%;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
+.cl{text-align:center;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);padding:4px 0 6px;}
+.day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;gap:2px;margin:1.5px;border-radius:6px;transition:background 0.1s;}
+.day:hover{background:var(--surface2);}
+.dn{font-size:13px;font-weight:600;color:var(--ink);line-height:1;}
+.day.other .dn{color:var(--line);}
+.day.today::before{content:'';position:absolute;inset:2px;background:var(--ink);border-radius:4px;z-index:0;}
+.day.today .dn,.day.today .ddots{position:relative;z-index:1;}
+.day.today .dn{color:#fff;font-weight:700;}
+.day.period{background:var(--rose-light);}
+.day.period .dn{color:var(--rose);}
+.day.period.today::before{background:var(--rose);}
+.day.period.today .dn{color:#fff;}
+.day.predicted{outline:1px dashed var(--rose-mid);outline-offset:-2px;border-radius:6px;}
+.ddots{display:flex;gap:2px;justify-content:center;min-height:5px;}
+.dd{width:5px;height:5px;border-radius:50%;}
+.dd-sport{background:var(--green);}
+.dd-write{background:var(--amber);}
+.dd-weight{background:var(--gold);}
+.cycle-banner{display:none;margin:10px 12px 0;padding:10px 14px;background:var(--rose-light);border:1px solid var(--rose-mid);border-left:3px solid var(--rose);border-radius:8px;}
+.cycle-banner.on{display:block;}
+.cb-main{font-size:13px;font-weight:600;color:var(--rose);}
+.cb-sub{font-size:11px;color:var(--ink3);margin-top:2px;}
+
+/* ── CHARTS ── */
+.chart-card{margin:0 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;}
+.chart-title{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+.chart-val{font-size:20px;font-weight:700;color:var(--ink);}
+.bar-chart{display:flex;align-items:flex-end;gap:4px;height:80px;}
+.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.bb{width:100%;border-radius:3px 3px 0 0;min-height:2px;transition:height 0.5s ease;}
+.bv{font-size:7px;color:var(--ink3);font-weight:600;}
+.bl{font-size:7px;color:var(--ink3);}
+
+/* line chart */
+.line-chart{position:relative;height:80px;}
+.line-chart svg{width:100%;height:100%;overflow:visible;}
+
+/* ── SPORT PAGE ── */
+.sport-type-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 12px;}
+.stype{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 8px;text-align:center;}
+.stype-num{font-size:28px;font-weight:700;color:var(--ink);}
+.stype-lbl{font-size:10px;font-weight:600;color:var(--ink3);margin-top:4px;text-transform:uppercase;letter-spacing:0.06em;}
+
+/* ── ÉCRITURE PAGE ── */
+.write-split{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px;}
+.ws-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;}
+.ws-num{font-size:32px;font-weight:700;color:var(--ink);}
+.ws-lbl{font-size:10px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;}
+.ws-sub{font-size:11px;color:var(--ink2);margin-top:6px;}
+
+/* ── CYCLE ANALYSIS ── */
+.cyc-hero{margin:0 12px 10px;background:var(--rose-light);border:1px solid var(--rose-mid);border-left:4px solid var(--rose);border-radius:10px;padding:18px;}
+.cyc-hero-lbl{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;}
+.cyc-hero-num{font-size:48px;font-weight:700;color:var(--ink);line-height:1;}
+.cyc-hero-date{font-size:13px;color:var(--ink2);margin-top:6px;font-weight:500;}
+.cyc-hero-sub{font-size:11px;color:var(--ink3);margin-top:8px;line-height:1.6;}
+.cyc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px;}
+.ck{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;border-top:2px solid var(--rose-mid);}
+.ck-v{font-size:26px;font-weight:700;color:var(--ink);}
+.ck-l{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink3);margin-top:5px;}
+.ck-n{font-size:11px;color:var(--ink2);margin-top:4px;}
+.phase-card{margin:0 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;}
+.phase-lbl{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;}
+.phase-bar{display:flex;height:10px;border-radius:5px;overflow:hidden;position:relative;margin-bottom:6px;}
+.pseg{height:100%;}
 .phase-labels{display:flex;}
-.phase-lbl{font-size:11px;color:var(--ink3);flex:1;text-align:center;}
- 
-/* ── MODAL ── */
-.overlay{display:none;position:fixed;inset:0;background:rgba(44,31,14,0.6);z-index:200;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
+.plbl{font-size:9px;color:var(--ink3);flex:1;text-align:center;font-weight:500;}
+.cyc-hist{padding:0 12px;}
+.cyc-hist-title{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);padding:16px 0 10px;}
+.ch-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);}
+.ch-row:last-child{border-bottom:none;}
+.ch-i{font-size:18px;font-weight:700;color:var(--rose);width:24px;}
+.ch-d{font-size:13px;color:var(--ink);flex:1;}
+.ch-l{font-size:18px;font-weight:700;color:var(--ink);}
+.ch-bar{height:4px;border-radius:2px;background:var(--rose-mid);margin-top:4px;}
+
+/* ── MODAL SHEET ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(26,22,20,0.55);z-index:200;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px);}
 .overlay.on{display:flex;}
-.sheet{
-  background:var(--paper);
-  width:100%;max-width:480px;
-  border-radius:20px 20px 0 0;
-  padding:20px 20px 44px;
-  max-height:92vh;overflow-y:auto;
-  animation:up 0.22s ease;
-  border-top:4px solid var(--umber);
-  background-image:repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(160,130,80,0.12) 27px, rgba(160,130,80,0.12) 28px);
-}
+.sheet{background:var(--surface);width:100%;max-width:480px;border-radius:16px 16px 0 0;padding:20px 18px 44px;max-height:92vh;overflow-y:auto;animation:up 0.2s ease;border-top:3px solid var(--amber);}
 @keyframes up{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.sheet-handle{width:40px;height:4px;background:var(--fog);border-radius:2px;margin:0 auto 18px;}
-.sheet-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;}
-.sheet-date{font-family:'Crimson Pro',serif;font-size:26px;font-style:italic;color:var(--ink);line-height:1.1;}
-.btn-x{background:none;border:none;color:var(--ink3);font-size:28px;cursor:pointer;line-height:1;}
-.field{margin-bottom:18px;}
-.field-lbl{font-size:14px;color:var(--umber);font-weight:600;margin-bottom:8px;}
-.chips{display:flex;gap:8px;flex-wrap:wrap;}
-.chip{
-  padding:8px 16px;border-radius:20px;
-  border:2px solid var(--fog);
-  font-family:'Caveat',cursive;font-size:15px;font-weight:600;
-  color:var(--ink2);background:var(--paper2);cursor:pointer;transition:all 0.13s;
-}
-.chip:hover{border-color:var(--umber);}
-.chip.on-sport{background:rgba(74,104,48,0.15);border-color:var(--moss);color:var(--moss);}
-.chip.on-write{background:rgba(140,88,40,0.15);border-color:var(--umber);color:var(--umber);}
-.chip.on-period{background:rgba(122,56,80,0.15);border-color:var(--plum);color:var(--plum);}
-.chip.on-neutral{background:rgba(44,31,14,0.12);border-color:var(--ink2);color:var(--ink);}
-.num-row{display:flex;align-items:center;gap:12px;}
-.num-input{
-  width:110px;padding:10px 14px;
-  border:2px solid var(--fog);border-radius:8px;
-  font-family:'Caveat',cursive;font-size:24px;font-weight:700;
-  background:var(--paper2);color:var(--ink);
-  -moz-appearance:textfield;
-}
-.num-input::-webkit-inner-spin-button,.num-input::-webkit-outer-spin-button{-webkit-appearance:none;}
-.num-input:focus{outline:none;border-color:var(--umber);}
-.num-unit{font-size:16px;color:var(--ink3);}
-.sep{border:none;border-top:1.5px dashed var(--fog);margin:16px 0;}
-.btn-save{
-  width:100%;margin-top:20px;padding:14px;
-  background:var(--umber);color:#fff;border:none;border-radius:10px;
-  font-family:'Caveat',cursive;font-size:18px;font-weight:700;
-  letter-spacing:0.05em;cursor:pointer;transition:all 0.15s;
-}
-.btn-save:hover{background:var(--rust);}
- 
-/* ── SVG ILLUSTRATIONS (inline) ── */
-.illus-leaves{position:absolute;right:8px;bottom:10px;opacity:0.7;pointer-events:none;}
-.illus-plane{position:absolute;pointer-events:none;}
+.sh-handle{width:36px;height:4px;background:var(--line);border-radius:2px;margin:0 auto 18px;}
+.sh-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.sh-date{font-size:20px;font-weight:700;color:var(--ink);}
+.sh-x{background:none;border:none;font-size:22px;color:var(--ink3);cursor:pointer;line-height:1;}
+.field{margin-bottom:16px;}
+.fl{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
+.chips{display:flex;gap:7px;flex-wrap:wrap;}
+.chip{padding:8px 14px;border-radius:20px;border:1.5px solid var(--line);font-size:13px;font-weight:500;color:var(--ink2);background:var(--bg);cursor:pointer;transition:all 0.12s;font-family:'Inter',sans-serif;}
+.chip.cs{background:var(--green-light);border-color:var(--green);color:var(--green);font-weight:600;}
+.chip.cw{background:var(--amber-light);border-color:var(--amber);color:var(--amber);font-weight:600;}
+.chip.cp{background:var(--rose-light);border-color:var(--rose);color:var(--rose);font-weight:600;}
+.chip.cn{background:var(--surface2);border-color:var(--ink3);color:var(--ink);font-weight:600;}
+.num-row{display:flex;align-items:center;gap:10px;}
+.num-inp{width:110px;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;font-family:'Inter',sans-serif;font-size:20px;font-weight:700;background:var(--surface2);color:var(--ink);-moz-appearance:textfield;}
+.num-inp::-webkit-inner-spin-button,.num-inp::-webkit-outer-spin-button{-webkit-appearance:none;}
+.num-inp:focus{outline:none;border-color:var(--amber);}
+.num-u{font-size:13px;color:var(--ink3);font-weight:500;}
+.sep{border:none;border-top:1px solid var(--line);margin:16px 0;}
+.btn-save{width:100%;margin-top:18px;padding:14px;background:var(--ink);color:#fff;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.06em;cursor:pointer;transition:background 0.15s;}
+.btn-save:hover{background:var(--amber);}
+.btn-save:active{background:var(--amber);}
 </style>
 </head>
 <body>
- 
-<!-- SVG filter for sketchy look -->
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <filter id="sketchy" x="-5%" y="-5%" width="110%" height="110%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" seed="2"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <filter id="sketchy-light" x="-2%" y="-2%" width="104%" height="104%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" result="noise" seed="5"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.8" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </defs>
-</svg>
- 
-<!-- ══════════════ HOME ══════════════ -->
-<div class="page active" id="page-home">
- 
-  <!-- Wooden window header — sunset suburban scene -->
-  <div class="wood-header" style="position:relative;">
-    <div class="wood-grain"></div>
- 
-    <!-- greeting text above window -->
-    <div style="padding:14px 18px 8px;position:relative;z-index:2;">
-      <div style="font-family:'Caveat',cursive;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,210,150,0.7);" id="home-sub"></div>
-      <div style="font-family:'Caveat',cursive;font-size:30px;font-weight:700;color:#FFE8C0;line-height:1.1;text-shadow:0 1px 6px rgba(0,0,0,0.3);" id="home-title">Bonsoir</div>
-    </div>
- 
-    <!-- Window glass with sunset scene -->
-    <div style="margin:0 16px;position:relative;z-index:2;">
-      <!-- Outer wooden frame with raised effect -->
-      <div style="background:linear-gradient(160deg,#7A4820,#5A3010,#6A3E18);padding:10px;border-radius:4px;box-shadow:inset 0 -3px 8px rgba(0,0,0,0.4),0 4px 12px rgba(0,0,0,0.5);">
-        <!-- Window panes 2x2 -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
- 
-          <!-- Pane top-left -->
-          <div style="border-radius:2px;overflow:hidden;box-shadow:inset 0 1px 4px rgba(0,0,0,0.3);">
-            <svg viewBox="0 0 140 90" width="100%" style="display:block;">
-              <defs>
-                <linearGradient id="sun1" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#1A1035"/>
-                  <stop offset="35%" stop-color="#7B2D8B"/>
-                  <stop offset="60%" stop-color="#E05530"/>
-                  <stop offset="80%" stop-color="#F4913A"/>
-                  <stop offset="100%" stop-color="#FAC85A"/>
-                </linearGradient>
-                <linearGradient id="glow1" x1="0.5" y1="1" x2="0.5" y2="0">
-                  <stop offset="0%" stop-color="#FAE08A" stop-opacity="0.5"/>
-                  <stop offset="100%" stop-color="#FAE08A" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <rect width="140" height="90" fill="url(#sun1)"/>
-              <!-- Sun glow -->
-              <ellipse cx="70" cy="90" rx="55" ry="30" fill="url(#glow1)"/>
-              <!-- Sun disk peeking -->
-              <ellipse cx="70" cy="94" rx="18" ry="14" fill="#FFF0A0" opacity="0.9"/>
-              <!-- Wispy clouds -->
-              <g opacity="0.4" fill="#FFD0A0">
-                <ellipse cx="30" cy="28" rx="20" ry="6"/>
-                <ellipse cx="18" cy="30" rx="10" ry="5"/>
-                <ellipse cx="42" cy="30" rx="12" ry="5"/>
-              </g>
-              <g opacity="0.3" fill="#E8B090">
-                <ellipse cx="108" cy="20" rx="16" ry="5"/>
-                <ellipse cx="98" cy="22" rx="9" ry="4"/>
-                <ellipse cx="118" cy="22" rx="10" ry="4"/>
-              </g>
-              <!-- Houses silhouette -->
-              <g fill="#1A0E08" opacity="0.85">
-                <!-- House 1 -->
-                <rect x="2" y="72" width="28" height="18"/>
-                <polygon points="2,72 16,60 30,72"/>
-                <rect x="9" y="78" width="6" height="12"/>
-                <!-- Chimney -->
-                <rect x="22" y="63" width="4" height="8"/>
-              </g>
-              <g fill="#1A0E08" opacity="0.85">
-                <!-- House 2 -->
-                <rect x="34" y="76" width="22" height="14"/>
-                <polygon points="34,76 45,66 56,76"/>
-                <rect x="40" y="80" width="5" height="10"/>
-              </g>
-              <!-- Ground / road -->
-              <rect x="0" y="88" width="140" height="4" fill="#0E0808" opacity="0.7"/>
-              <!-- Street lamp -->
-              <line x1="62" y1="62" x2="62" y2="88" stroke="#1A0E08" stroke-width="1.5" opacity="0.8"/>
-              <path d="M62,62 Q62,56 68,56" stroke="#1A0E08" stroke-width="1.5" fill="none" opacity="0.8"/>
-              <ellipse cx="68" cy="55" rx="3" ry="2" fill="#FFE88A" opacity="0.9"/>
-              <ellipse cx="68" cy="55" rx="7" ry="4" fill="#FFE88A" opacity="0.2"/>
-            </svg>
-          </div>
- 
-          <!-- Pane top-right -->
-          <div style="border-radius:2px;overflow:hidden;box-shadow:inset 0 1px 4px rgba(0,0,0,0.3);">
-            <svg viewBox="0 0 140 90" width="100%" style="display:block;">
-              <defs>
-                <linearGradient id="sun2" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#1A1035"/>
-                  <stop offset="40%" stop-color="#7B2D8B"/>
-                  <stop offset="65%" stop-color="#E05530"/>
-                  <stop offset="85%" stop-color="#F4913A"/>
-                  <stop offset="100%" stop-color="#FAC85A"/>
-                </linearGradient>
-              </defs>
-              <rect width="140" height="90" fill="url(#sun2)"/>
-              <!-- Paper plane flying across -->
-              <g transform="translate(20,30) rotate(-8)" opacity="0.92">
-                <polygon points="0,0 32,9 0,18" fill="#F5E8D0" stroke="#8C5828" stroke-width="0.8"/>
-                <line x1="0" y1="9" x2="32" y2="9" stroke="#8C5828" stroke-width="0.7"/>
-                <line x1="0" y1="0" x2="0" y2="18" stroke="#8C5828" stroke-width="0.7"/>
-              </g>
-              <!-- Little plane trail -->
-              <path d="M12,34 Q30,32 50,38" stroke="#FFE8C0" stroke-width="0.8" fill="none" opacity="0.4" stroke-dasharray="3,3"/>
-              <!-- Second tiny plane far away -->
-              <g transform="translate(95,18) rotate(-5) scale(0.5)" opacity="0.55">
-                <polygon points="0,0 32,9 0,18" fill="#F5E8D0" stroke="#C8A870" stroke-width="1.2"/>
-                <line x1="0" y1="9" x2="32" y2="9" stroke="#C8A870" stroke-width="1"/>
-              </g>
-              <!-- Trees cime — autumn oaks, warm colors -->
-              <!-- Tree 1 big oak right -->
-              <g opacity="0.9">
-                <rect x="98" y="58" width="5" height="32" fill="#2A1808"/>
-                <!-- Crown layers -->
-                <ellipse cx="100" cy="58" rx="18" ry="16" fill="#7A3010"/>
-                <ellipse cx="90" cy="54" rx="12" ry="10" fill="#C87020"/>
-                <ellipse cx="112" cy="52" rx="11" ry="9" fill="#B85020"/>
-                <ellipse cx="100" cy="46" rx="14" ry="11" fill="#E09030"/>
-                <!-- Leaves detail -->
-                <ellipse cx="94" cy="60" rx="8" ry="6" fill="#C86020" opacity="0.6"/>
-                <ellipse cx="108" cy="58" rx="7" ry="5" fill="#D07828" opacity="0.5"/>
-              </g>
-              <!-- Tree 2 smaller left -->
-              <g opacity="0.85">
-                <rect x="14" y="66" width="4" height="24" fill="#2A1808"/>
-                <ellipse cx="16" cy="66" rx="13" ry="12" fill="#B84020"/>
-                <ellipse cx="10" cy="61" rx="9" ry="8" fill="#D07828"/>
-                <ellipse cx="22" cy="60" rx="8" ry="7" fill="#A83818"/>
-                <ellipse cx="16" cy="55" rx="10" ry="8" fill="#E09030"/>
-              </g>
-              <!-- Falling leaf animation hint -->
-              <g transform="translate(60,48) rotate(25)">
-                <path d="M0,0 C3,-6 9,-7 6,-1 C4,2 1,4 0,0Z" fill="#C87020" opacity="0.8"/>
-              </g>
-              <g transform="translate(75,65) rotate(-20)">
-                <path d="M0,0 C3,-5 8,-6 5,-1 C3,2 1,3 0,0Z" fill="#E09030" opacity="0.7"/>
-              </g>
-              <!-- Ground -->
-              <rect x="0" y="88" width="140" height="4" fill="#0E0808" opacity="0.6"/>
-            </svg>
-          </div>
- 
-          <!-- Pane bottom-left -->
-          <div style="border-radius:2px;overflow:hidden;box-shadow:inset 0 1px 4px rgba(0,0,0,0.3);">
-            <svg viewBox="0 0 140 70" width="100%" style="display:block;">
-              <defs>
-                <linearGradient id="sun3" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#E05530"/>
-                  <stop offset="50%" stop-color="#F4913A"/>
-                  <stop offset="100%" stop-color="#FAC85A"/>
-                </linearGradient>
-              </defs>
-              <rect width="140" height="70" fill="url(#sun3)"/>
-              <!-- Rooftops close up — pavillonnaire -->
-              <g fill="#120A04" opacity="0.9">
-                <!-- House left -->
-                <rect x="0" y="40" width="45" height="30"/>
-                <polygon points="0,40 22,20 44,40"/>
-                <rect x="14" y="48" width="8" height="22"/>
-                <!-- Window lit -->
-                <rect x="28" y="44" width="8" height="7" fill="#FFE070" opacity="0.7" rx="1"/>
-                <!-- Chimney smoke hint -->
-                <rect x="36" y="22" width="5" height="10"/>
-                <ellipse cx="38" cy="19" rx="4" ry="3" fill="#2A1818" opacity="0.4"/>
-                <ellipse cx="36" cy="15" rx="3" ry="2.5" fill="#2A1818" opacity="0.25"/>
-              </g>
-              <g fill="#1A0E06" opacity="0.88">
-                <!-- House right -->
-                <rect x="90" y="46" width="50" height="24"/>
-                <polygon points="88,46 115,28 140,46"/>
-                <rect x="108" y="52" width="7" height="18"/>
-                <!-- Window lit warm -->
-                <rect x="95" y="50" width="9" height="7" fill="#FFD060" opacity="0.65" rx="1"/>
-              </g>
-              <!-- Pavement / sidewalk -->
-              <rect x="0" y="68" width="140" height="4" fill="#0A0606" opacity="0.7"/>
-              <!-- Street lamp glow on ground -->
-              <ellipse cx="70" cy="68" rx="20" ry="4" fill="#FFE090" opacity="0.12"/>
-            </svg>
-          </div>
- 
-          <!-- Pane bottom-right -->
-          <div style="border-radius:2px;overflow:hidden;box-shadow:inset 0 1px 4px rgba(0,0,0,0.3);">
-            <svg viewBox="0 0 140 70" width="100%" style="display:block;">
-              <defs>
-                <linearGradient id="sun4" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#C04030"/>
-                  <stop offset="50%" stop-color="#E07828"/>
-                  <stop offset="100%" stop-color="#F4B840"/>
-                </linearGradient>
-              </defs>
-              <rect width="140" height="70" fill="url(#sun4)"/>
-              <!-- Big tree close — silhouette, autumn splendor -->
-              <g opacity="0.92">
-                <rect x="55" y="30" width="7" height="40" fill="#1A0C06"/>
-                <!-- Wide oak crown -->
-                <ellipse cx="58" cy="28" rx="30" ry="22" fill="#8A2808"/>
-                <ellipse cx="40" cy="22" rx="20" ry="16" fill="#C86018"/>
-                <ellipse cx="76" cy="20" rx="18" ry="14" fill="#B04010"/>
-                <ellipse cx="58" cy="12" rx="22" ry="16" fill="#E08828"/>
-                <ellipse cx="36" cy="30" rx="14" ry="10" fill="#C07020" opacity="0.7"/>
-                <ellipse cx="80" cy="28" rx="12" ry="9" fill="#D06820" opacity="0.6"/>
-                <!-- A few visible leaves -->
-                <g fill="#F0A030" opacity="0.5">
-                  <path d="M44,16 C47,10 53,9 50,15 C48,19 44,20 44,16Z"/>
-                  <path d="M62,8 C65,3 71,3 68,8 C66,12 62,13 62,8Z"/>
-                  <path d="M72,18 C75,12 80,12 78,17 C76,21 72,22 72,18Z"/>
-                </g>
-              </g>
-              <!-- Small bush foreground -->
-              <ellipse cx="20" cy="65" rx="16" ry="8" fill="#7A3010" opacity="0.8"/>
-              <ellipse cx="120" cy="66" rx="14" ry="7" fill="#8A3808" opacity="0.75"/>
-              <!-- Ground -->
-              <rect x="0" y="66" width="140" height="6" fill="#0E0808" opacity="0.75"/>
-              <!-- Falling leaves tiny -->
-              <g opacity="0.8">
-                <path d="M100,25 C103,19 108,19 106,24 C104,28 100,29 100,25Z" fill="#F0A030" transform="rotate(15,103,24)"/>
-                <path d="M118,38 C120,33 125,33 123,37 C122,40 118,41 118,38Z" fill="#C86018" transform="rotate(-10,121,37)"/>
-                <path d="M25,30 C27,25 32,25 30,30 C28,33 25,34 25,30Z" fill="#E08828" transform="rotate(20,28,30)"/>
-              </g>
-            </svg>
-          </div>
- 
-        </div><!-- end 2x2 grid -->
-      </div><!-- end wooden frame -->
-    </div><!-- end window container -->
- 
-    <!-- Window sill -->
-    <div style="margin:0 16px 0;background:linear-gradient(180deg,#8B5228,#6B3818);height:12px;border:3px solid #4A2810;border-top:none;border-radius:0 0 4px 4px;box-shadow:0 3px 8px rgba(0,0,0,0.4);"></div>
- 
-    <!-- POST-IT NOTES on the wooden desk/sill area -->
-    <div style="position:relative;padding:14px 10px 16px;display:flex;gap:8px;align-items:flex-start;justify-content:center;">
- 
-      <!-- Post-it 1 : Séances — yellow -->
-      <div style="
-        background:linear-gradient(160deg,#F5E050,#EDD030);
-        width:80px;min-height:72px;
-        padding:8px 6px 6px;
-        border-radius:2px;
-        box-shadow:3px 4px 10px rgba(0,0,0,0.35), inset 0 -2px 0 rgba(0,0,0,0.08);
-        transform:rotate(-3deg);
-        position:relative;
-        flex-shrink:0;
-      ">
-        <!-- Post-it tape top -->
-        <div style="position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:24px;height:10px;background:rgba(255,255,255,0.35);border-radius:1px;"></div>
-        <div style="font-family:'Caveat',cursive;font-size:11px;color:#5C3800;opacity:0.7;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">Séances</div>
-        <div style="font-family:'Caveat',cursive;font-size:38px;font-weight:700;color:#2C1800;line-height:1;" id="posit-sport">—</div>
-        <div style="font-family:'Caveat',cursive;font-size:10px;color:#7C5020;margin-top:2px;opacity:0.8;">ce mois</div>
-      </div>
- 
-      <!-- Post-it 2 : Mots — orange/coral -->
-      <div style="
-        background:linear-gradient(160deg,#F5A050,#E88030);
-        width:80px;min-height:72px;
-        padding:8px 6px 6px;
-        border-radius:2px;
-        box-shadow:3px 4px 10px rgba(0,0,0,0.35), inset 0 -2px 0 rgba(0,0,0,0.1);
-        transform:rotate(2deg);
-        margin-top:6px;
-        position:relative;
-        flex-shrink:0;
-      ">
-        <div style="position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:22px;height:10px;background:rgba(255,255,255,0.3);border-radius:1px;"></div>
-        <div style="font-family:'Caveat',cursive;font-size:11px;color:#5C2800;opacity:0.7;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">Mots</div>
-        <div style="font-family:'Caveat',cursive;font-size:34px;font-weight:700;color:#2C1000;line-height:1;" id="posit-words">—</div>
-        <div style="font-family:'Caveat',cursive;font-size:10px;color:#7C3010;margin-top:2px;opacity:0.8;">écrits</div>
-      </div>
- 
-      <!-- Post-it 3 : Poids — green/sage -->
-      <div style="
-        background:linear-gradient(160deg,#A8D080,#88B860);
-        width:80px;min-height:72px;
-        padding:8px 6px 6px;
-        border-radius:2px;
-        box-shadow:3px 4px 10px rgba(0,0,0,0.35), inset 0 -2px 0 rgba(0,0,0,0.08);
-        transform:rotate(-1.5deg);
-        margin-top:3px;
-        position:relative;
-        flex-shrink:0;
-      ">
-        <div style="position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:20px;height:10px;background:rgba(255,255,255,0.35);border-radius:1px;"></div>
-        <div style="font-family:'Caveat',cursive;font-size:11px;color:#2A4010;opacity:0.7;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">Poids</div>
-        <div style="font-family:'Caveat',cursive;font-size:32px;font-weight:700;color:#1A2808;line-height:1;" id="posit-weight">—</div>
-        <div style="font-family:'Caveat',cursive;font-size:10px;color:#3A5818;margin-top:2px;opacity:0.8;">kg</div>
-      </div>
- 
-    </div><!-- end post-its -->
- 
-    <!-- hidden kpi-strip (kept for JS compatibility) -->
-    <div id="kpi-strip" style="display:none;"></div>
- 
+
+<!-- ══════════ PAGE : ACCUEIL ══════════ -->
+<div class="page on" id="p-home">
+  <div class="ph">
+    <div class="ph-title" id="h-title">Tableau de bord</div>
+    <div class="ph-sub" id="h-sub"></div>
   </div>
- 
-  <div class="sec-title"><span class="sec-deco">🍂</span> Ce mois-ci</div>
-  <div class="kpi-grid" id="cards-grid"></div>
- 
-  <div class="sec-title"><span class="sec-deco">✈</span> 14 derniers jours</div>
-  <div class="streak-wrap"><div class="streak-row" id="streak-row"></div></div>
- 
-  <div class="sec-title"><span class="sec-deco">🍁</span> Objectifs</div>
-  <div class="rings-row" id="rings-row"></div>
- 
-  <div class="sec-title"><span class="sec-deco">🌙</span> Cycle</div>
-  <div style="padding:0 14px 20px;">
-    <div class="cycle-autumn" id="cycle-mini" style="display:none">
-      <div class="cycle-autumn-label" id="cycle-mini-main"></div>
-      <div class="cycle-autumn-num" id="cycle-mini-date"></div>
-      <div class="cycle-autumn-sub" id="cycle-mini-sub"></div>
+
+  <!-- KPI row -->
+  <div class="sl">Ce mois-ci</div>
+  <div class="kpi-row" id="kpi-row"></div>
+
+  <!-- Sparkline 12 mois — sport -->
+  <div class="sl">Tendances — 12 mois</div>
+  <div class="spark-wrap" id="spark-sport-wrap">
+    <div class="spark-row">
+      <div class="spark-label"><span>Séances sport</span><span id="spark-sport-total" style="color:var(--ink);font-size:13px;"></span></div>
+      <div class="spark-bars" id="spark-sport"></div>
+      <div class="spark-x" id="spark-sport-x"></div>
     </div>
-    <div id="cycle-mini-empty" style="display:none;font-size:14px;color:var(--ink3);padding:8px 0;">Enregistre 2 cycles pour voir les prévisions.</div>
+  </div>
+  <div class="spark-wrap" style="margin-top:8px;" id="spark-words-wrap">
+    <div class="spark-row">
+      <div class="spark-label"><span>Mots écrits</span><span id="spark-words-total" style="color:var(--ink);font-size:13px;"></span></div>
+      <div class="spark-bars" id="spark-words"></div>
+      <div class="spark-x" id="spark-words-x"></div>
+    </div>
+  </div>
+
+  <!-- Progress vs objectifs -->
+  <div class="sl">Objectifs du mois</div>
+  <div class="prog-list" id="prog-list"></div>
+
+  <!-- Streak 14j -->
+  <div class="sl">Activité — 14 jours</div>
+  <div class="streak-wrap">
+    <div class="streak-grid">
+      <div class="streak-title">Vert = sport · Orange = écriture · Les deux = les deux</div>
+      <div class="streak-row" id="streak-row"></div>
+    </div>
+  </div>
+
+  <!-- Cycle mini -->
+  <div class="sl">Cycle</div>
+  <div style="padding:0 12px 20px;">
+    <div class="cycle-card" id="cycle-home" style="display:none">
+      <div class="cc-label">Prochaines règles</div>
+      <div class="cc-num" id="cyc-home-num"></div>
+      <div class="cc-date" id="cyc-home-date"></div>
+      <div class="cc-sub" id="cyc-home-sub"></div>
+    </div>
+    <div id="cyc-home-empty" style="display:none;font-size:13px;color:var(--ink3);padding:6px 0;">Enregistre au moins 2 cycles pour voir les prévisions.</div>
   </div>
 </div>
- 
-<!-- ══════════════ CALENDAR ══════════════ -->
-<div class="page" id="page-cal">
-  <div class="cal-header-bar">
-    <button onclick="nav(-1)">&#8249;</button>
-    <div class="cal-month-name" id="month-label"></div>
-    <button onclick="nav(1)">&#8250;</button>
+
+<!-- ══════════ PAGE : CALENDRIER ══════════ -->
+<div class="page" id="p-cal">
+  <div class="ph">
+    <div class="ph-title">Calendrier</div>
   </div>
-  <!-- Autumn leaves decoration -->
-  <svg width="100%" height="28" viewBox="0 0 360 28" preserveAspectRatio="none" style="display:block;opacity:0.5">
-    <g fill="#C87820">
-      <path d="M20,14 C24,6 32,4 28,12 C26,16 22,18 20,14Z"/>
-      <path d="M60,10 C63,4 70,3 67,9 C65,13 61,15 60,10Z" fill="#B84820"/>
-      <path d="M100,16 C104,8 112,6 108,14 C106,18 102,20 100,16Z" fill="#8C6820"/>
-      <path d="M140,8 C143,2 150,1 147,7 C145,11 141,13 140,8Z"/>
-      <path d="M200,14 C204,6 212,5 208,12 C206,16 202,18 200,14Z" fill="#B84820"/>
-      <path d="M250,9 C253,3 260,2 257,8 C255,12 251,14 250,9Z" fill="#A84020"/>
-      <path d="M300,15 C304,7 312,5 308,13 C306,17 302,19 300,15Z" fill="#8C6820"/>
-      <path d="M340,10 C343,4 350,3 347,9 C345,13 341,15 340,10Z"/>
-    </g>
-  </svg>
+  <div class="month-nav">
+    <button class="mn-btn" onclick="nav(-1)">&#8249;</button>
+    <div class="mn-name" id="mn-label"></div>
+    <button class="mn-btn" onclick="nav(1)">&#8250;</button>
+  </div>
   <div class="cycle-banner" id="cbanner">
-    <div class="cycle-main" id="cmain"></div>
-    <div class="cycle-sub" id="csub"></div>
+    <div class="cb-main" id="cb-main"></div>
+    <div class="cb-sub" id="cb-sub"></div>
   </div>
-  <div class="stats-mini">
-    <div class="sm"><div class="sm-v" id="s-sport">—</div><div class="sm-l">Sport</div></div>
-    <div class="sm"><div class="sm-v" id="s-words">—</div><div class="sm-l">Mots</div></div>
-    <div class="sm"><div class="sm-v" id="s-weight">—</div><div class="sm-l">Poids</div></div>
-    <div class="sm"><div class="sm-v" id="s-cycle">—</div><div class="sm-l">Cycle</div></div>
+  <div class="cal-stats">
+    <div class="cs"><div class="cs-v" id="cs-sport">—</div><div class="cs-l">Sport</div></div>
+    <div class="cs"><div class="cs-v" id="cs-words">—</div><div class="cs-l">Mots</div></div>
+    <div class="cs"><div class="cs-v" id="cs-weight">—</div><div class="cs-l">Poids</div></div>
+    <div class="cs"><div class="cs-v" id="cs-cycle">—</div><div class="cs-l">Cycle</div></div>
   </div>
   <div class="legend">
-    <div class="leg"><div class="leg-dot" style="background:var(--moss)"></div>Sport</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--umber)"></div>Écriture</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--amber)"></div>Poids</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--plum)"></div>Règles</div>
+    <div class="leg"><div class="ldot" style="background:var(--green)"></div>Sport</div>
+    <div class="leg"><div class="ldot" style="background:var(--amber)"></div>Écriture</div>
+    <div class="leg"><div class="ldot" style="background:var(--gold)"></div>Poids</div>
+    <div class="leg"><div class="ldot" style="background:var(--rose)"></div>Règles</div>
   </div>
   <div class="cal-wrap">
-    <div class="cal-days" id="cal">
-      <div class="cal-label">L</div><div class="cal-label">M</div><div class="cal-label">M</div>
-      <div class="cal-label">J</div><div class="cal-label">V</div><div class="cal-label">S</div><div class="cal-label">D</div>
+    <div class="cal-grid" id="cal">
+      <div class="cl">L</div><div class="cl">M</div><div class="cl">M</div>
+      <div class="cl">J</div><div class="cl">V</div><div class="cl">S</div><div class="cl">D</div>
     </div>
   </div>
-  <!-- Floating leaf decoration bottom-right -->
-  <svg width="80" height="60" viewBox="0 0 80 60" style="display:block;margin-left:auto;opacity:0.35;margin-right:8px;">
-    <g fill="#C87820"><path d="M60,40 C68,20 80,10 72,28 C68,36 62,42 60,40Z"/></g>
-    <line x1="60" y1="40" x2="73" y2="22" stroke="#8C5828" stroke-width="1.2"/>
-    <g fill="#B84820"><path d="M30,50 C36,35 46,30 40,44 C37,50 32,54 30,50Z"/></g>
-    <line x1="30" y1="50" x2="40" y2="33" stroke="#8C3010" stroke-width="1"/>
-    <g fill="#8C6820"><path d="M10,30 C14,20 22,17 18,26 C16,31 11,33 10,30Z"/></g>
-  </svg>
 </div>
- 
-<!-- ══════════════ STATS ══════════════ -->
-<div class="page" id="page-stats">
-  <div class="cal-header-bar" style="border-bottom:2px solid var(--umber);">
-    <div class="cal-month-name">Statistiques</div>
+
+<!-- ══════════ PAGE : SPORT ══════════ -->
+<div class="page" id="p-sport">
+  <div class="ph">
+    <div class="ph-title">Sport</div>
+    <div class="ph-sub">Analyse détaillée</div>
   </div>
-  <div class="sec-title"><span class="sec-deco">🏃</span> Sport — séances</div>
-  <div class="chart-wrap"><div class="bar-chart" id="sport-bar-chart"></div></div>
-  <div class="sec-title"><span class="sec-deco">✍️</span> Écriture — mots</div>
-  <div class="chart-wrap"><div class="bar-chart" id="words-bar-chart"></div></div>
-  <div class="sec-title"><span class="sec-deco">📖</span> Répartition</div>
-  <div class="two-col" id="write-split"></div>
-  <div class="sec-title"><span class="sec-deco">🗺️</span> Running — km</div>
-  <div class="chart-wrap"><div class="bar-chart" id="run-bar-chart"></div></div>
-  <div class="sec-title"><span class="sec-deco">⚖️</span> Poids</div>
-  <div class="wline"><svg id="weight-svg"></svg></div>
-  <div class="two-col" id="weight-stats"></div>
+
+  <div class="sl">Ce mois-ci</div>
+  <div class="kpi-row" id="sport-kpi"></div>
+
+  <div class="sl">Par type d'activité — 12 mois</div>
+  <div class="sport-type-row" id="sport-types"></div>
+
+  <div class="sl">Séances / mois — 12 mois</div>
+  <div class="chart-card">
+    <div class="chart-title"><span>Séances</span><span class="chart-val" id="sport-total-val"></span></div>
+    <div class="bar-chart" id="sport-bar"></div>
+    <div style="display:flex;gap:4px;margin-top:6px;" id="sport-bar-x"></div>
+  </div>
+
+  <div class="sl">Kilomètres courus — 12 mois</div>
+  <div class="chart-card">
+    <div class="chart-title"><span>Running</span><span class="chart-val" id="run-total-val"></span></div>
+    <div class="bar-chart" id="run-bar"></div>
+    <div style="display:flex;gap:4px;margin-top:6px;" id="run-bar-x"></div>
+  </div>
+
+  <div class="sl">Régularité hebdomadaire</div>
+  <div class="prog-list" id="sport-reg-list"></div>
 </div>
- 
-<!-- ══════════════ CYCLE ══════════════ -->
-<div class="page" id="page-cycle">
-  <div class="cal-header-bar">
-    <div class="cal-month-name">🌙 Cycle</div>
+
+<!-- ══════════ PAGE : ÉCRITURE ══════════ -->
+<div class="page" id="p-write">
+  <div class="ph">
+    <div class="ph-title">Écriture</div>
+    <div class="ph-sub">Analyse détaillée</div>
   </div>
-  <div id="cycle-hero-wrap"></div>
-  <div class="sec-title"><span class="sec-deco">🍂</span> Indicateurs</div>
-  <div class="cycle-grid" id="cycle-grid"></div>
-  <div class="phase-card" id="phase-card" style="display:none">
-    <div class="phase-title" id="phase-title-text">Phase actuelle</div>
-    <div class="phase-timeline" id="phase-timeline"></div>
+
+  <div class="sl">Ce mois-ci</div>
+  <div class="write-split" id="write-kpi"></div>
+
+  <div class="sl">Total mots — 12 mois</div>
+  <div class="chart-card">
+    <div class="chart-title"><span>Mots écrits</span><span class="chart-val" id="write-total-val"></span></div>
+    <div class="bar-chart" id="write-bar"></div>
+    <div style="display:flex;gap:4px;margin-top:6px;" id="write-bar-x"></div>
+  </div>
+
+  <div class="sl">Journal vs Fiction — 12 mois</div>
+  <div class="chart-card" style="margin-bottom:0;">
+    <div class="chart-title"><span>Répartition</span></div>
+    <div class="bar-chart" id="write-split-bar"></div>
+    <div style="display:flex;gap:4px;margin-top:6px;" id="write-split-x"></div>
+    <div style="display:flex;gap:16px;margin-top:8px;">
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink2);font-weight:500;">
+        <div style="width:10px;height:10px;border-radius:2px;background:var(--amber);flex-shrink:0;"></div>Journal
+      </div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink2);font-weight:500;">
+        <div style="width:10px;height:10px;border-radius:2px;background:var(--blue);flex-shrink:0;"></div>Fiction
+      </div>
+    </div>
+  </div>
+  <div style="height:16px;"></div>
+</div>
+
+<!-- ══════════ PAGE : CYCLE ══════════ -->
+<div class="page" id="p-cycle">
+  <div class="ph">
+    <div class="ph-title">Cycle</div>
+    <div class="ph-sub">Analyse &amp; prévisions</div>
+  </div>
+  <div class="sl">Prévision</div>
+  <div id="cyc-hero-wrap"></div>
+  <div class="sl">Indicateurs</div>
+  <div class="cyc-grid" id="cyc-grid"></div>
+  <div class="phase-card" id="phase-card" style="display:none;margin:10px 12px;">
+    <div class="phase-lbl" id="phase-lbl-text">Phase actuelle</div>
+    <div class="phase-bar" id="phase-bar"></div>
     <div class="phase-labels">
-      <div class="phase-lbl">Mens.</div><div class="phase-lbl">Follic.</div>
-      <div class="phase-lbl">Ovul.</div><div class="phase-lbl">Lutéale</div>
+      <div class="plbl">Mens.</div><div class="plbl">Follic.</div>
+      <div class="plbl">Ovul.</div><div class="plbl">Lutéale</div>
     </div>
   </div>
-  <div class="cycle-history" id="cycle-history-wrap">
-    <div class="cycle-history-title">📋 Historique</div>
-    <div id="cycle-history-list"></div>
+  <div class="cyc-hist" id="cyc-hist-wrap">
+    <div class="cyc-hist-title">Historique des cycles</div>
+    <div id="cyc-hist-list"></div>
   </div>
 </div>
- 
-<!-- ══════════════ NAV ══════════════ -->
-<nav class="navbar">
-  <div class="nav-item active" onclick="showPage('home')" id="nav-home">
-    <div class="nav-icon">🏡</div><div>Accueil</div>
-  </div>
-  <div class="nav-item" onclick="showPage('cal')" id="nav-cal">
-    <div class="nav-icon">📅</div><div>Calendrier</div>
-  </div>
-  <div class="nav-item" onclick="showPage('stats')" id="nav-stats">
-    <div class="nav-icon">📊</div><div>Stats</div>
-  </div>
-  <div class="nav-item" onclick="showPage('cycle')" id="nav-cycle">
-    <div class="nav-icon">🌙</div><div>Cycle</div>
-  </div>
+
+<!-- ══════════ NAV ══════════ -->
+<nav class="nav">
+  <div class="ni on" onclick="go('home')" id="nav-home"><div class="ni-icon">⊞</div><div>Accueil</div><div class="ni-dot"></div></div>
+  <div class="ni" onclick="go('cal')" id="nav-cal"><div class="ni-icon">⊟</div><div>Calendrier</div><div class="ni-dot"></div></div>
+  <div class="ni" onclick="go('sport')" id="nav-sport"><div class="ni-icon">◎</div><div>Sport</div><div class="ni-dot"></div></div>
+  <div class="ni" onclick="go('write')" id="nav-write"><div class="ni-icon">✦</div><div>Écriture</div><div class="ni-dot"></div></div>
+  <div class="ni" onclick="go('cycle')" id="nav-cycle"><div class="ni-icon">◐</div><div>Cycle</div><div class="ni-dot"></div></div>
 </nav>
- 
-<!-- ══════════════ SHEET ══════════════ -->
+
+<!-- ══════════ SHEET ══════════ -->
 <div class="overlay" id="overlay" onclick="closeSheet(event)">
 <div class="sheet">
-  <div class="sheet-handle"></div>
-  <div class="sheet-header">
-    <div class="sheet-date" id="sheet-date"></div>
-    <button class="btn-x" onclick="closeSheet()">&#215;</button>
+  <div class="sh-handle"></div>
+  <div class="sh-head">
+    <div class="sh-date" id="sh-date"></div>
+    <button class="sh-x" onclick="closeSheet()">&#215;</button>
   </div>
   <div class="field">
-    <div class="field-lbl">🏃 Sport</div>
+    <div class="fl">Sport</div>
     <div class="chips">
-      <div class="chip" id="c-repos"     onclick="setSport('repos')">Repos</div>
-      <div class="chip" id="c-run"       onclick="setSport('run')">Running</div>
-      <div class="chip" id="c-pilates"   onclick="setSport('pilates')">Pilates</div>
+      <div class="chip" id="c-repos" onclick="setSport('repos')">Repos</div>
+      <div class="chip" id="c-run" onclick="setSport('run')">Running</div>
+      <div class="chip" id="c-pilates" onclick="setSport('pilates')">Pilates</div>
       <div class="chip" id="c-badminton" onclick="setSport('badminton')">Badminton</div>
     </div>
   </div>
   <div class="field" id="run-field" style="display:none">
-    <div class="field-lbl">📍 Distance</div>
+    <div class="fl">Distance</div>
     <div class="num-row">
-      <input class="num-input" type="number" id="run-val" step="0.1" min="0" max="200" placeholder="0">
-      <span class="num-unit">km</span>
+      <input class="num-inp" type="number" id="run-val" step="0.1" min="0" placeholder="0">
+      <span class="num-u">km</span>
     </div>
   </div>
   <hr class="sep">
   <div class="field">
-    <div class="field-lbl">✍️ Écriture</div>
+    <div class="fl">Écriture</div>
     <div class="chips">
-      <div class="chip" id="c-wno"     onclick="setWrite('non')">Rien</div>
+      <div class="chip" id="c-wno" onclick="setWrite('non')">Rien</div>
       <div class="chip" id="c-journal" onclick="setWrite('journal')">Journal</div>
       <div class="chip" id="c-fiction" onclick="setWrite('fiction')">Fiction</div>
-      <div class="chip" id="c-both"    onclick="setWrite('les deux')">Les deux</div>
+      <div class="chip" id="c-both" onclick="setWrite('les deux')">Les deux</div>
     </div>
   </div>
-  <div class="field" id="words-journal-field" style="display:none">
-    <div class="field-lbl">📓 Mots — Journal</div>
+  <div class="field" id="wj-field" style="display:none">
+    <div class="fl">Mots — Journal</div>
     <div class="num-row">
-      <input class="num-input" type="number" id="words-journal-val" min="0" max="99999" placeholder="0">
-      <span class="num-unit">mots</span>
+      <input class="num-inp" type="number" id="wj-val" min="0" placeholder="0">
+      <span class="num-u">mots</span>
     </div>
   </div>
-  <div class="field" id="words-fiction-field" style="display:none">
-    <div class="field-lbl">📖 Mots — Fiction</div>
+  <div class="field" id="wf-field" style="display:none">
+    <div class="fl">Mots — Fiction</div>
     <div class="num-row">
-      <input class="num-input" type="number" id="words-fiction-val" min="0" max="99999" placeholder="0">
-      <span class="num-unit">mots</span>
+      <input class="num-inp" type="number" id="wf-val" min="0" placeholder="0">
+      <span class="num-u">mots</span>
     </div>
   </div>
   <hr class="sep">
   <div class="field">
-    <div class="field-lbl">⚖️ Poids</div>
+    <div class="fl">Poids</div>
     <div class="num-row">
-      <input class="num-input" type="number" id="weight-val" step="0.1" min="30" max="200" placeholder="—">
-      <span class="num-unit">kg</span>
+      <input class="num-inp" type="number" id="weight-val" step="0.1" min="30" placeholder="—">
+      <span class="num-u">kg</span>
     </div>
   </div>
   <hr class="sep">
   <div class="field">
-    <div class="field-lbl">🌸 Règles</div>
+    <div class="fl">Règles</div>
     <div class="chips">
-      <div class="chip" id="c-pno"  onclick="setPeriod(false)">Non</div>
+      <div class="chip" id="c-pno" onclick="setPeriod(false)">Non</div>
       <div class="chip" id="c-pyes" onclick="setPeriod(true)">Oui</div>
     </div>
   </div>
-  <button class="btn-save" onclick="save()">Enregistrer ✓</button>
+  <button class="btn-save" onclick="save()">Enregistrer</button>
 </div>
 </div>
- 
+
 <script>
+// ── Core data ──
 var store=JSON.parse(localStorage.getItem('j2')||'{}');
-var now=new Date();
-var vy=now.getFullYear(),vm=now.getMonth();
+var now=new Date(),vy=now.getFullYear(),vm=now.getMonth();
 var eKey=null,tmp={};
 var MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-var MONTHS_SHORT=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
-var DAYS_FR=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+var MS=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+var DAYS=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
 var todayK=dk(now.getFullYear(),now.getMonth(),now.getDate());
- 
+
 function dk(y,m,d){return y+'-'+pad(m)+'-'+pad(d);}
 function pad(n){return String(n).padStart(2,'0');}
 function kd(k){var p=k.split('-');return new Date(+p[0],+p[1],+p[2]);}
-function fmtNum(n){return n>=1000?(Math.round(n/100)/10)+'k':String(n);}
- 
-function showPage(id){
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
-  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
-  document.getElementById('page-'+id).classList.add('active');
-  document.getElementById('nav-'+id).classList.add('active');
-  if(id==='home') renderHome();
-  if(id==='cal')  renderCal();
-  if(id==='stats') renderStats();
-  if(id==='cycle') renderCyclePage();
+function fmt(n){return n>=1000?(Math.round(n/100)/10)+'k':String(n||0);}
+
+// ── Nav ──
+function go(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('on');});
+  document.getElementById('p-'+id).classList.add('on');
+  document.getElementById('nav-'+id).classList.add('on');
+  if(id==='home')  renderHome();
+  if(id==='cal')   renderCal();
+  if(id==='sport') renderSport();
+  if(id==='write') renderWrite();
+  if(id==='cycle') renderCycle();
 }
- 
+
+// ── Cycle helpers ──
 function periodStarts(){
   var keys=Object.keys(store).filter(function(k){return store[k].period;}).sort();
   var s=[],prev=null;
@@ -892,79 +548,116 @@ function cycleInfo(){
   var avg=Math.round(g.reduce(function(a,b){return a+b;},0)/g.length);
   return{avg:avg,next:new Date(s[s.length-1].getTime()+avg*864e5),count:s.length,starts:s,gaps:g};
 }
-function predictedSet(){
-  var info=cycleInfo();if(!info)return{};
-  var set={};
-  for(var i=-2;i<=4;i++){var d=new Date(info.next.getTime()+i*864e5);set[dk(d.getFullYear(),d.getMonth(),d.getDate())]=true;}
-  return set;
+function predSet(){
+  var ci=cycleInfo();if(!ci)return{};
+  var s={};
+  for(var i=-2;i<=4;i++){var d=new Date(ci.next.getTime()+i*864e5);s[dk(d.getFullYear(),d.getMonth(),d.getDate())]=true;}
+  return s;
 }
-function monthData(y,m){
-  var sc=0,wc=0,wj=0,wf=0,km=0,weights=[],period=0;
+
+// ── Month aggregation ──
+function mdata(y,m){
+  var sc=0,wc=0,wj=0,wf=0,km=0,wts=[],per=0,run=0,pilates=0,badm=0;
   Object.keys(store).forEach(function(k){
     var p=k.split('-');if(+p[0]!==y||+p[1]!==m)return;
     var e=store[k];
-    if(e.sport&&e.sport!=='repos')sc++;
+    if(e.sport&&e.sport!=='repos'){sc++;if(e.sport==='run')run++;if(e.sport==='pilates')pilates++;if(e.sport==='badminton')badm++;}
     if(e.sport==='run'&&e.runKm)km+=e.runKm;
     if(e.write&&e.write!=='non')wc++;
     if(e.wordsJournal)wj+=e.wordsJournal;
     if(e.wordsFiction)wf+=e.wordsFiction;
     if(e.words)wj+=e.words;
-    if(e.weight)weights.push({d:new Date(+p[0],+p[1],+p[2]),v:e.weight});
-    if(e.period)period++;
+    if(e.weight)wts.push({d:new Date(+p[0],+p[1],+p[2]),v:e.weight});
+    if(e.period)per++;
   });
-  return{sport:sc,write:wc,wordsJournal:wj,wordsFiction:wf,km:km,weights:weights,period:period,totalWords:wj+wf};
+  return{sport:sc,write:wc,wj:wj,wf:wf,words:wj+wf,km:km,wts:wts,period:per,run:run,pilates:pilates,badminton:badm};
 }
-function greeting(){var h=now.getHours();return h<12?'Bonjour ☀️':h<18?'Bon après-midi':'Bonsoir 🌙';}
- 
+
+function last12(){
+  var mn=now.getMonth(),yr=now.getFullYear(),res=[];
+  for(var i=11;i>=0;i--){
+    var m=mn-i,y=yr;while(m<0){m+=12;y--;}
+    res.push({lbl:MS[m],m:m,y:y,d:mdata(y,m),cur:i===0});
+  }
+  return res;
+}
+
+// ── Greeting ──
+function greet(){var h=now.getHours();return h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';}
+
+// ── HOME ──
 function renderHome(){
   var mn=now.getMonth(),yr=now.getFullYear();
-  var cur=monthData(yr,mn);
+  var cur=mdata(yr,mn);
   var prevM=mn===0?11:mn-1,prevY=mn===0?yr-1:yr;
-  var prev=monthData(prevY,prevM);
-  var lastW=cur.weights.length?cur.weights[cur.weights.length-1].v:null;
- 
-  document.getElementById('home-title').textContent=greeting();
-  document.getElementById('home-sub').textContent=now.getDate()+' '+MONTHS[mn]+' '+yr;
- 
-  // Post-its
-  var lastW2=cur.weights.length?cur.weights[cur.weights.length-1].v:null;
-  var ps=document.getElementById('posit-sport');
-  var pw=document.getElementById('posit-words');
-  var pwt=document.getElementById('posit-weight');
-  if(ps) ps.textContent=cur.sport||'0';
-  if(pw) pw.textContent=fmtNum(cur.totalWords)||'0';
-  if(pwt) pwt.textContent=lastW2?lastW2.toFixed(1):'—';
- 
-  // Hero strip (kept for compat)
-  var strip=document.getElementById('kpi-strip');strip.innerHTML='';
-  [{n:cur.sport,u:'',l:'Séances',c:'#D4A878'},{n:fmtNum(cur.totalWords),u:'',l:'Mots',c:'#C4D4A0'},{n:lastW?lastW.toFixed(1):'—',u:lastW?'kg':'',l:'Poids',c:'#D4B8A8'}].forEach(function(h){
-    var d=document.createElement('div');
-    d.style.cssText='flex:1;text-align:center;padding:0 4px;';
-    d.innerHTML='<div style="font-family:Caveat,cursive;font-size:38px;font-weight:700;line-height:1;color:'+h.c+'">'+h.n+'<span style="font-size:14px;opacity:0.7;margin-left:1px;">'+h.u+'</span></div>'
-      +'<div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,230,180,0.6);margin-top:4px;">'+h.l+'</div>';
-    strip.appendChild(d);
-  });
- 
-  // Cards
-  var grid=document.getElementById('cards-grid');grid.innerHTML='';
-  var wDiff=lastW&&prev.weights.length?Math.round((lastW-prev.weights[prev.weights.length-1].v)*10)/10:null;
-  [{n:cur.sport,u:'',l:'Séances sport',acc:'rust',icon:'🏃',
-    trend:cur.sport>prev.sport?'↑ progression':cur.sport<prev.sport?'↓ moins':'= stable',up:cur.sport>=prev.sport},
-   {n:fmtNum(cur.totalWords),u:'',l:'Mots écrits',acc:'amber',icon:'✍️',
-    trend:cur.totalWords>prev.totalWords?'↑ progression':cur.totalWords<prev.totalWords?'↓ moins':'= stable',up:cur.totalWords>=prev.totalWords},
-   {n:lastW?lastW.toFixed(1):'—',u:lastW?'kg':'',l:'Poids actuel',acc:'moss',icon:'⚖️',
-    trend:wDiff!==null?(wDiff>0?'↑ +'+wDiff+' kg':wDiff<0?'↓ '+Math.abs(wDiff)+' kg':'stable'):'',up:wDiff!==null?wDiff<=0:true},
-   {n:Math.round(cur.km*10)/10||'—',u:cur.km?'km':'',l:'Km courus',acc:'plum',icon:'🗺️',
-    trend:cur.km>prev.km?'↑ progression':cur.km<prev.km?'↓ moins':'',up:cur.km>=prev.km}
+  var prev=mdata(prevY,prevM);
+  var lastW=cur.wts.length?cur.wts[cur.wts.length-1].v:null;
+  var prevW=prev.wts.length?prev.wts[prev.wts.length-1].v:null;
+
+  document.getElementById('h-title').textContent=greet();
+  document.getElementById('h-sub').textContent=now.getDate()+' '+MONTHS[mn]+' '+yr;
+
+  // KPIs
+  var kr=document.getElementById('kpi-row');kr.innerHTML='';
+  var wDiff=lastW&&prevW?Math.round((lastW-prevW)*10)/10:null;
+  function trend(v,p){if(v>p)return'up';if(v<p)return'dn';return'eq';}
+  function ttext(v,p,unit){
+    var d=v-p;
+    if(d===0)return'= stable';
+    return(d>0?'↑ +':('↓ '))+Math.abs(d)+(unit||'');
+  }
+  [
+    {n:cur.sport,u:'',l:'Séances sport',c:'#2D7A4F',tr:trend(cur.sport,prev.sport),tt:ttext(cur.sport,prev.sport,' séances')},
+    {n:fmt(cur.words),u:'',l:'Mots écrits',c:'#B86820',tr:trend(cur.words,prev.words),tt:cur.words>prev.words?'↑ progression':cur.words<prev.words?'↓ moins':'= stable'},
+    {n:lastW?lastW.toFixed(1):'—',u:lastW?'kg':'',l:'Poids actuel',c:'#886018',tr:wDiff!==null?(wDiff<=0?'up':'dn'):'eq',tt:wDiff!==null?(wDiff>0?'↑ +'+wDiff+' kg':wDiff<0?'↓ '+Math.abs(wDiff)+' kg':'stable'):''},
+    {n:Math.round(cur.km*10)/10||'—',u:cur.km?'km':'',l:'Km running',c:'#2858A0',tr:trend(cur.km,prev.km),tt:ttext(Math.round(cur.km),Math.round(prev.km),' km')}
   ].forEach(function(c){
-    var div=document.createElement('div');div.className='kpi-card kpi-card-'+c.acc;
-    div.innerHTML='<div class="kpi-icon">'+c.icon+'</div>'
-      +'<div class="kpi-num">'+c.n+'<span class="kpi-unit">'+c.u+'</span></div>'
-      +'<div class="kpi-lbl">'+c.l+'</div>'
-      +(c.trend?'<div class="kpi-trend '+(c.up?'up':'down')+'">'+c.trend+'</div>':'');
-    grid.appendChild(div);
+    var d=document.createElement('div');d.className='kc';
+    d.innerHTML='<div class="kc-bar" style="background:'+c.c+'"></div>'
+      +'<div class="kc-num">'+c.n+'<span class="kc-unit">'+c.u+'</span></div>'
+      +'<div class="kc-label">'+c.l+'</div>'
+      +(c.tt?'<div class="kc-trend '+c.tr+'">'+c.tt+'</div>':'');
+    kr.appendChild(d);
   });
- 
+
+  // Sparklines
+  var m12=last12();
+  function buildSpark(barEl,xEl,vals,color,totEl,totFn){
+    barEl.innerHTML='';xEl.innerHTML='';
+    var max=Math.max.apply(null,vals.map(function(v){return v||0;}));if(!max)max=1;
+    vals.forEach(function(v,i){
+      var b=document.createElement('div');b.className='sb';
+      b.style.height=Math.round(((v||0)/max)*36)+'px';
+      b.style.background=i===11?color:color+'55';
+      b.style.borderRadius='2px 2px 0 0';b.style.flex='1';
+      barEl.appendChild(b);
+      var x=document.createElement('div');x.className='sx';x.textContent=m12[i].lbl;
+      xEl.appendChild(x);
+    });
+    if(totEl) totEl.textContent=totFn();
+  }
+  buildSpark(document.getElementById('spark-sport'),document.getElementById('spark-sport-x'),
+    m12.map(function(m){return m.d.sport;}),'#2D7A4F',document.getElementById('spark-sport-total'),
+    function(){return m12.reduce(function(a,m){return a+m.d.sport;},0)+' séances';});
+  buildSpark(document.getElementById('spark-words'),document.getElementById('spark-words-x'),
+    m12.map(function(m){return m.d.words;}),'#B86820',document.getElementById('spark-words-total'),
+    function(){return fmt(m12.reduce(function(a,m){return a+m.d.words;},0))+' mots';});
+
+  // Progress bars
+  var pl=document.getElementById('prog-list');pl.innerHTML='';
+  var daysInM=new Date(yr,mn+1,0).getDate(),daysPast=now.getDate();
+  [{name:'Sport',v:cur.sport,goal:12,color:'#2D7A4F',sub:'Objectif : 12 séances / mois'},
+   {name:'Écriture',v:cur.write,goal:20,color:'#B86820',sub:'Objectif : 20 jours écrits / mois'},
+   {name:'Running',v:Math.round(cur.km),goal:30,color:'#2858A0',sub:'Objectif : 30 km / mois',unit:'km'}
+  ].forEach(function(p){
+    var pct=Math.min(100,Math.round((p.v/(p.goal||1))*100));
+    var d=document.createElement('div');d.className='prog-item';
+    d.innerHTML='<div class="prog-header"><span class="prog-name">'+p.name+'</span><span class="prog-val">'+(p.unit?p.v+' '+p.unit:p.v)+' / '+(p.unit?p.goal+' '+p.unit:p.goal)+'</span></div>'
+      +'<div class="prog-track"><div class="prog-fill" style="width:'+pct+'%;background:'+p.color+'"></div></div>'
+      +'<div class="prog-sub">'+pct+'% — '+p.sub+'</div>';
+    pl.appendChild(d);
+  });
+
   // Streak
   var sr=document.getElementById('streak-row');sr.innerHTML='';
   for(var i=13;i>=0;i--){
@@ -972,198 +665,242 @@ function renderHome(){
     var k=dk(d.getFullYear(),d.getMonth(),d.getDate());
     var e=store[k]||{};
     var hs=e.sport&&e.sport!=='repos',hw=e.write&&e.write!=='non';
-    var div=document.createElement('div');
-    div.className='streak-day'+(hs&&hw?' has-both':hs?' has-sport':hw?' has-write':'')+(i===0?' today-marker':'');
-    div.innerHTML='<span>'+d.getDate()+'</span><span class="streak-lbl">'+['D','L','M','M','J','V','S'][d.getDay()]+'</span>';
-    sr.appendChild(div);
+    var dv=document.createElement('div');
+    dv.className='sd'+(hs&&hw?' both':hs?' sport':hw?' write':'')+(i===0?' today':'');
+    dv.innerHTML='<span>'+d.getDate()+'</span><span class="sd-lbl">'+['D','L','M','M','J','V','S'][d.getDay()]+'</span>';
+    sr.appendChild(dv);
   }
- 
-  // Rings
-  var rr=document.getElementById('rings-row');rr.innerHTML='';
-  [{l:'Sport',v:cur.sport,g:12,c:'#4A6830'},{l:'Écriture',v:cur.write,g:20,c:'#8C5828'},{l:'Running',v:Math.round(cur.km),g:30,c:'#C87820',u:'km'}].forEach(function(g){
-    var pct=Math.min(1,g.v/(g.g||1));
-    var r=23,circ=2*Math.PI*r;
-    var item=document.createElement('div');item.className='ring-item';
-    item.innerHTML='<div class="ring-wrap">'
-      +'<svg viewBox="0 0 60 60" width="60" height="60">'
-      +'<circle class="ring-track" cx="30" cy="30" r="'+r+'"/>'
-      +'<circle class="ring-fill" cx="30" cy="30" r="'+r+'" stroke="'+g.c+'"'
-      +' stroke-dasharray="'+circ.toFixed(1)+'" stroke-dashoffset="'+(circ*(1-pct)).toFixed(1)+'"/>'
-      +'</svg>'
-      +'<div class="ring-pct">'+g.v+(g.u?'<span style="font-size:10px">'+g.u+'</span>':'')+'</div>'
-      +'</div>'
-      +'<div class="ring-lbl">'+g.l+'<br><span style="font-size:11px;opacity:0.6">/ '+g.g+(g.u?' '+g.u:'')+'</span></div>';
-    rr.appendChild(item);
-  });
- 
+
   // Cycle
   var ci=cycleInfo();
-  var mini=document.getElementById('cycle-mini'),empty=document.getElementById('cycle-mini-empty');
+  var cm=document.getElementById('cycle-home'),ce=document.getElementById('cyc-home-empty');
   if(ci){
-    mini.style.display='block';empty.style.display='none';
+    cm.style.display='block';ce.style.display='none';
     var t=new Date();t.setHours(0,0,0,0);
     var diff=Math.round((ci.next-t)/864e5);
     var ds=ci.next.getDate()+' '+MONTHS[ci.next.getMonth()];
-    document.getElementById('cycle-mini-main').textContent=diff<=0?'Règles prévues':'Prochaines règles';
-    document.getElementById('cycle-mini-date').textContent=diff===0?"Aujourd'hui":diff<0?'il y a '+Math.abs(diff)+' j':diff===1?'demain':'dans '+diff+' jours';
-    document.getElementById('cycle-mini-sub').textContent=ds+' · cycle moyen : '+ci.avg+' jours';
-  } else {mini.style.display='none';empty.style.display='block';}
+    document.getElementById('cyc-home-num').textContent=diff===0?"Aujourd'hui":diff<0?'Retard de '+Math.abs(diff)+' j':diff===1?'Demain':'Dans '+diff+' jours';
+    document.getElementById('cyc-home-date').textContent=ds;
+    document.getElementById('cyc-home-sub').textContent='Cycle moyen : '+ci.avg+' j · '+ci.count+' cycle'+(ci.count>1?'s':'')+' enregistré'+(ci.count>1?'s':'');
+  } else {cm.style.display='none';ce.style.display='block';}
 }
- 
+
+// ── CALENDAR ──
 function renderCal(){
   var cal=document.getElementById('cal');
   while(cal.children.length>7)cal.removeChild(cal.lastChild);
-  document.getElementById('month-label').textContent=MONTHS[vm]+' '+vy;
-  var pred=predictedSet();
+  document.getElementById('mn-label').textContent=MONTHS[vm]+' '+vy;
+  var pred=predSet();
   var dow=new Date(vy,vm,1).getDay();dow=dow===0?6:dow-1;
-  var dim=new Date(vy,vm+1,0).getDate();
-  var prevd=new Date(vy,vm,0).getDate();
+  var dim=new Date(vy,vm+1,0).getDate(),prevd=new Date(vy,vm,0).getDate();
   var cells=[];
   for(var i=dow-1;i>=0;i--)cells.push({d:prevd-i,m:vm-1,y:vy,o:true});
   for(var d=1;d<=dim;d++)cells.push({d:d,m:vm,y:vy,o:false});
   var nd=1;while(cells.length%7!==0)cells.push({d:nd++,m:vm+1,y:vy,o:true});
   cells.forEach(function(c){
-    var k=dk(c.y,c.m,c.d);
-    var e=store[k]||{};
+    var k=dk(c.y,c.m,c.d),e=store[k]||{};
     var isToday=k===todayK&&!c.o;
-    var isPeriod=!c.o&&e.period;
-    var isPred=!c.o&&pred[k]&&!e.period;
+    var isPeriod=!c.o&&e.period,isPred=!c.o&&pred[k]&&!e.period;
     var div=document.createElement('div');
     div.className='day'+(c.o?' other':'')+(isToday?' today':'')+(isPeriod?' period':isPred?' predicted':'');
-    var num=document.createElement('div');num.className='day-n';num.textContent=c.d;div.appendChild(num);
+    var num=document.createElement('div');num.className='dn';num.textContent=c.d;div.appendChild(num);
     if(!c.o){
-      var dots=document.createElement('div');dots.className='day-dots';
-      if(e.sport&&e.sport!=='repos'){var p=document.createElement('div');p.className='d d-sport';dots.appendChild(p);}
-      if(e.write&&e.write!=='non'){var q=document.createElement('div');q.className='d d-write';dots.appendChild(q);}
-      if(e.weight){var r=document.createElement('div');r.className='d d-weight';dots.appendChild(r);}
+      var dots=document.createElement('div');dots.className='ddots';
+      if(e.sport&&e.sport!=='repos'){var p=document.createElement('div');p.className='dd dd-sport';dots.appendChild(p);}
+      if(e.write&&e.write!=='non'){var q=document.createElement('div');q.className='dd dd-write';dots.appendChild(q);}
+      if(e.weight){var r=document.createElement('div');r.className='dd dd-weight';dots.appendChild(r);}
       div.appendChild(dots);
     }
     if(!c.o)(function(cy,cm,cd){div.onclick=function(){openSheet(cy,cm,cd);};})(c.y,c.m,c.d);
     cal.appendChild(div);
   });
-  var md=monthData(vy,vm);
-  document.getElementById('s-sport').textContent=md.sport||'—';
-  document.getElementById('s-words').textContent=md.totalWords?fmtNum(md.totalWords):'—';
-  var lw=md.weights.length?md.weights[md.weights.length-1].v:null;
-  document.getElementById('s-weight').textContent=lw?lw.toFixed(1):'—';
+  var md=mdata(vy,vm);
+  document.getElementById('cs-sport').textContent=md.sport||'—';
+  document.getElementById('cs-words').textContent=md.words?fmt(md.words):'—';
+  var lw=md.wts.length?md.wts[md.wts.length-1].v:null;
+  document.getElementById('cs-weight').textContent=lw?lw.toFixed(1):'—';
   var ci=cycleInfo();
-  document.getElementById('s-cycle').textContent=ci?ci.avg+' j':'—';
+  document.getElementById('cs-cycle').textContent=ci?ci.avg+' j':'—';
   var b=document.getElementById('cbanner');
   if(!ci){b.classList.remove('on');return;}
   var t=new Date();t.setHours(0,0,0,0);
   var diff=Math.round((ci.next-t)/864e5);
   var ds=ci.next.getDate()+' '+MONTHS[ci.next.getMonth()];
-  document.getElementById('cmain').textContent=diff<=0?'Règles prévues il y a '+Math.abs(diff)+' j ('+ds+')':diff<=7?'Règles dans '+diff+' jours — '+ds:'Prochaines règles le '+ds+' (dans '+diff+' j)';
-  document.getElementById('csub').textContent='Cycle moyen : '+ci.avg+' jours · '+ci.count+' cycle'+(ci.count>1?'s':'')+' enregistré'+(ci.count>1?'s':'');
+  document.getElementById('cb-main').textContent=diff<=0?'Règles prévues ('+ds+')':'Règles dans '+diff+' j — '+ds;
+  document.getElementById('cb-sub').textContent='Cycle moyen : '+ci.avg+' j';
   b.classList.add('on');
 }
 function nav(d){vm+=d;if(vm<0){vm=11;vy--;}if(vm>11){vm=0;vy++;}renderCal();}
- 
-function renderStats(){
+
+// ── SPORT ──
+function renderSport(){
+  var m12=last12();
   var mn=now.getMonth(),yr=now.getFullYear();
-  var months=[];
-  for(var i=11;i>=0;i--){var m=mn-i,y=yr;while(m<0){m+=12;y--;}months.push({label:MONTHS_SHORT[m],data:monthData(y,m)});}
-  function barChart(el,vals,color){
-    el.innerHTML='';
+  var cur=mdata(yr,mn),prevM=mn===0?11:mn-1,prevY=mn===0?yr-1:yr,prev=mdata(prevY,prevM);
+
+  var kr=document.getElementById('sport-kpi');kr.innerHTML='';
+  [{n:cur.sport,u:'',l:'Séances ce mois',c:'#2D7A4F'},{n:Math.round(cur.km*10)/10||'—',u:cur.km?'km':'',l:'Km courus',c:'#2858A0'}].forEach(function(c){
+    var d=document.createElement('div');d.className='kc';
+    d.innerHTML='<div class="kc-bar" style="background:'+c.c+'"></div><div class="kc-num">'+c.n+'<span class="kc-unit">'+c.u+'</span></div><div class="kc-label">'+c.l+'</div>';
+    kr.appendChild(d);
+  });
+
+  // By type 12 months
+  var types={run:0,pilates:0,badminton:0,autre:0};
+  m12.forEach(function(m){types.run+=m.d.run;types.pilates+=m.d.pilates;types.badminton+=m.d.badminton;types.autre+=m.d.sport-m.d.run-m.d.pilates-m.d.badminton;});
+  var tr=document.getElementById('sport-types');tr.innerHTML='';
+  [{v:types.run,l:'Running'},{v:types.pilates,l:'Pilates'},{v:types.badminton,l:'Badminton'},{v:Math.max(0,types.autre),l:'Autre'}].forEach(function(t){
+    var d=document.createElement('div');d.className='stype';
+    d.innerHTML='<div class="stype-num">'+t.v+'</div><div class="stype-lbl">'+t.l+'</div>';
+    tr.appendChild(d);
+  });
+
+  // Bar charts
+  function barChart(barEl,xEl,vals,color,totEl,suffix){
+    barEl.innerHTML='';xEl.innerHTML='';
     var max=Math.max.apply(null,vals.map(function(v){return v||0;}));if(!max)max=1;
     vals.forEach(function(v,i){
-      var col=document.createElement('div');col.className='bar-col';
-      var bar=document.createElement('div');bar.className='bar';
+      var col=document.createElement('div');col.className='bc';
+      var bar=document.createElement('div');bar.className='bb';
       bar.style.height=Math.round(((v||0)/max)*72)+'px';
-      bar.style.background=i===11?color:color+'55';
-      var bv=document.createElement('div');bv.className='bar-val';bv.textContent=v||'';
-      var bl=document.createElement('div');bl.className='bar-lbl';bl.textContent=months[i].label;
-      col.appendChild(bar);col.appendChild(bv);col.appendChild(bl);el.appendChild(col);
+      bar.style.background=i===11?color:color+'44';
+      var bv=document.createElement('div');bv.className='bv';bv.textContent=v||'';
+      var bl=document.createElement('div');bl.className='bl';bl.textContent=m12[i].lbl;
+      col.appendChild(bar);col.appendChild(bv);col.appendChild(bl);barEl.appendChild(col);
     });
+    if(totEl)totEl.textContent=vals.reduce(function(a,v){return a+(v||0);},0)+(suffix||'');
   }
-  barChart(document.getElementById('sport-bar-chart'),months.map(function(m){return m.data.sport;}),'#4A6830');
-  barChart(document.getElementById('words-bar-chart'),months.map(function(m){return m.data.totalWords;}),'#8C5828');
-  barChart(document.getElementById('run-bar-chart'),months.map(function(m){return Math.round(m.data.km);}),'#C87820');
-  var tj=months.reduce(function(a,m){return a+m.data.wordsJournal;},0);
-  var tf=months.reduce(function(a,m){return a+m.data.wordsFiction;},0);
-  var ws=document.getElementById('write-split');ws.innerHTML='';
-  [{v:fmtNum(tj),l:'Mots journal'},{v:fmtNum(tf),l:'Mots fiction'}].forEach(function(s){
-    var d=document.createElement('div');d.className='mini-stat';
-    d.innerHTML='<div class="mini-stat-v">'+s.v+'</div><div class="mini-stat-l">'+s.l+'</div>';
-    ws.appendChild(d);
-  });
-  var allW=[];Object.keys(store).sort().forEach(function(k){if(store[k].weight)allW.push(store[k].weight);});
-  var svg=document.getElementById('weight-svg');svg.innerHTML='';
-  if(allW.length>1){
-    var wmin=Math.min.apply(null,allW)-1,wmax=Math.max.apply(null,allW)+1;
-    svg.setAttribute('viewBox','0 0 300 60');
-    var pts=allW.map(function(v,i){return (Math.round(i/(allW.length-1)*290)+5)+','+(Math.round((1-(v-wmin)/(wmax-wmin))*50)+5);});
-    var pl=document.createElementNS('http://www.w3.org/2000/svg','polyline');
-    pl.setAttribute('points',pts.join(' '));pl.setAttribute('fill','none');pl.setAttribute('stroke','#8C5828');pl.setAttribute('stroke-width','2');pl.setAttribute('stroke-linecap','round');pl.setAttribute('stroke-linejoin','round');
-    svg.appendChild(pl);
-    var lp=pts[pts.length-1].split(',');
-    var dot=document.createElementNS('http://www.w3.org/2000/svg','circle');
-    dot.setAttribute('cx',lp[0]);dot.setAttribute('cy',lp[1]);dot.setAttribute('r','4');dot.setAttribute('fill','#8C5828');svg.appendChild(dot);
-  } else {svg.innerHTML='<text x="10" y="30" font-size="13" fill="#9C8060" font-family="Caveat">Pas encore assez de données</text>';}
-  var wstats=document.getElementById('weight-stats');wstats.innerHTML='';
-  if(allW.length){
-    var diff=Math.round((allW[allW.length-1]-allW[0])*10)/10;
-    [{v:allW[allW.length-1].toFixed(1)+' kg',l:'Poids actuel'},{v:(diff>0?'+':'')+diff+' kg',l:'Évolution totale'}].forEach(function(s){
-      var d=document.createElement('div');d.className='mini-stat';
-      d.innerHTML='<div class="mini-stat-v">'+s.v+'</div><div class="mini-stat-l">'+s.l+'</div>';
-      wstats.appendChild(d);
-    });
-  }
+  barChart(document.getElementById('sport-bar'),document.getElementById('sport-bar-x'),m12.map(function(m){return m.d.sport;}),'#2D7A4F',document.getElementById('sport-total-val'),' séances');
+  barChart(document.getElementById('run-bar'),document.getElementById('run-bar-x'),m12.map(function(m){return Math.round(m.d.km);}),'#2858A0',document.getElementById('run-total-val'),' km');
+
+  // Regularity
+  var rl=document.getElementById('sport-reg-list');rl.innerHTML='';
+  var sportDays=Object.keys(store).filter(function(k){var e=store[k];return e.sport&&e.sport!=='repos';});
+  var totalDays=Object.keys(store).length;
+  var pct=totalDays>0?Math.round(sportDays.length/totalDays*100):0;
+  var d=document.createElement('div');d.className='prog-item';
+  d.innerHTML='<div class="prog-header"><span class="prog-name">Jours actifs / jours saisis</span><span class="prog-val">'+sportDays.length+' / '+totalDays+'</span></div>'
+    +'<div class="prog-track"><div class="prog-fill" style="width:'+pct+'%;background:#2D7A4F"></div></div>'
+    +'<div class="prog-sub">'+pct+'% des jours enregistrés</div>';
+  rl.appendChild(d);
 }
- 
-function renderCyclePage(){
+
+// ── ÉCRITURE ──
+function renderWrite(){
+  var m12=last12();
+  var mn=now.getMonth(),yr=now.getFullYear();
+  var cur=mdata(yr,mn);
+
+  var wk=document.getElementById('write-kpi');wk.innerHTML='';
+  var totalJ=m12.reduce(function(a,m){return a+m.d.wj;},0);
+  var totalF=m12.reduce(function(a,m){return a+m.d.wf;},0);
+  [{n:fmt(cur.words),l:'Mots ce mois',s:fmt(cur.wj)+' journal · '+fmt(cur.wf)+' fiction'},
+   {n:fmt(totalJ+totalF),l:'Total 12 mois',s:fmt(totalJ)+' journal · '+fmt(totalF)+' fiction'}
+  ].forEach(function(c){
+    var d=document.createElement('div');d.className='ws-card';
+    d.innerHTML='<div class="ws-num">'+c.n+'</div><div class="ws-lbl">'+c.l+'</div><div class="ws-sub">'+c.s+'</div>';
+    wk.appendChild(d);
+  });
+
+  document.getElementById('write-total-val').textContent=fmt(totalJ+totalF)+' mots';
+  var wb=document.getElementById('write-bar'),wx=document.getElementById('write-bar-x');
+  wb.innerHTML='';wx.innerHTML='';
+  var max=Math.max.apply(null,m12.map(function(m){return m.d.words||0;}));if(!max)max=1;
+  m12.forEach(function(m,i){
+    var col=document.createElement('div');col.className='bc';
+    var bar=document.createElement('div');bar.className='bb';
+    bar.style.height=Math.round(((m.d.words||0)/max)*72)+'px';
+    bar.style.background=i===11?'#B86820':'#B8682044';
+    var bv=document.createElement('div');bv.className='bv';bv.textContent=m.d.words?fmt(m.d.words):'';
+    var bl=document.createElement('div');bl.className='bl';bl.textContent=m.lbl;
+    col.appendChild(bar);col.appendChild(bv);col.appendChild(bl);wb.appendChild(col);
+    var x=document.createElement('div');x.style.cssText='flex:1;font-size:7px;color:var(--ink3);text-align:center;';x.textContent=m.lbl;wx.appendChild(x);
+  });
+
+  // Stacked journal vs fiction
+  var sb=document.getElementById('write-split-bar'),sx=document.getElementById('write-split-x');
+  sb.innerHTML='';sx.innerHTML='';
+  var maxS=Math.max.apply(null,m12.map(function(m){return(m.d.wj||0)+(m.d.wf||0);}));if(!maxS)maxS=1;
+  m12.forEach(function(m,i){
+    var col=document.createElement('div');col.className='bc';col.style.flexDirection='column-reverse';
+    var bj=document.createElement('div');bj.className='bb';
+    bj.style.height=Math.round(((m.d.wj||0)/maxS)*72)+'px';
+    bj.style.background=i===11?'#B86820':'#B8682055';
+    bj.style.borderRadius='0';
+    var bf=document.createElement('div');bf.className='bb';
+    bf.style.height=Math.round(((m.d.wf||0)/maxS)*72)+'px';
+    bf.style.background=i===11?'#2858A0':'#2858A044';
+    bf.style.borderRadius='3px 3px 0 0';
+    var bl=document.createElement('div');bl.className='bl';bl.textContent=m.lbl;
+    col.appendChild(bf);col.appendChild(bj);col.appendChild(bl);sb.appendChild(col);
+  });
+}
+
+// ── CYCLE ──
+function renderCycle(){
   var ci=cycleInfo();
-  var hero=document.getElementById('cycle-hero-wrap');
-  var grid=document.getElementById('cycle-grid');
-  var hist=document.getElementById('cycle-history-list');
-  grid.innerHTML='';hist.innerHTML='';
+  var hw=document.getElementById('cyc-hero-wrap');
+  var cg=document.getElementById('cyc-grid');
+  var hl=document.getElementById('cyc-hist-list');
+  cg.innerHTML='';hl.innerHTML='';
+
   if(!ci){
-    hero.innerHTML='<div style="margin:14px;padding:16px;background:rgba(122,56,80,0.08);border:2px dashed var(--plum);border-radius:8px;font-size:15px;color:var(--ink3);line-height:1.7;">Enregistre tes règles sur au moins 2 cycles pour voir l\'analyse prédictive ici. 🌙</div>';
+    hw.innerHTML='<div style="margin:0 12px 10px;padding:16px;background:var(--rose-light);border:1px solid var(--rose-mid);border-radius:10px;font-size:13px;color:var(--ink2);line-height:1.7;">Enregistre tes règles sur au moins 2 cycles pour voir l\'analyse.</div>';
     document.getElementById('phase-card').style.display='none';return;
   }
+
   var t=new Date();t.setHours(0,0,0,0);
   var diff=Math.round((ci.next-t)/864e5);
   var ds=ci.next.getDate()+' '+MONTHS[ci.next.getMonth()]+' '+ci.next.getFullYear();
-  hero.innerHTML='<div class="cycle-hero">'
-    +'<div class="cycle-hero-label">🌙 Prochaines règles</div>'
-    +'<div class="cycle-hero-num">'+(diff<0?'Retard de '+Math.abs(diff)+' j':diff===0?"Aujourd'hui":diff===1?'Demain':'Dans '+diff+' j')+'</div>'
-    +'<div class="cycle-hero-date">'+ds+'</div>'
-    +'<div class="cycle-hero-sub">'+ci.count+' cycle'+(ci.count>1?'s':'')+' · Cycle moyen : '+ci.avg+' jours</div>'
+  hw.innerHTML='<div class="cyc-hero">'
+    +'<div class="cyc-hero-lbl">Prochaines règles</div>'
+    +'<div class="cyc-hero-num">'+(diff<0?'Retard de '+Math.abs(diff)+' j':diff===0?"Aujourd'hui":diff===1?'Demain':'Dans '+diff+' j')+'</div>'
+    +'<div class="cyc-hero-date">'+ds+'</div>'
+    +'<div class="cyc-hero-sub">'+ci.count+' cycle'+(ci.count>1?'s':'')+' enregistré'+(ci.count>1?'s':'')+' · Cycle moyen : '+ci.avg+' jours</div>'
     +'</div>';
+
   var mn=Math.min.apply(null,ci.gaps),mx=Math.max.apply(null,ci.gaps),v=mx-mn;
-  [{v:ci.avg+' j',l:'Durée moyenne',note:'de ton cycle'},{v:v<=3?'Très régulier':v<=6?'Assez régulier':'Variable',l:'Régularité',note:'écart : '+v+' j'},{v:mn+' j',l:'Plus court',note:''},{v:mx+' j',l:'Plus long',note:''}].forEach(function(k){
-    var d=document.createElement('div');d.className='cycle-kpi';
-    d.innerHTML='<div class="cycle-kpi-v">'+k.v+'</div><div class="cycle-kpi-l">'+k.l+'</div>'+(k.note?'<div class="cycle-kpi-note">'+k.note+'</div>':'');
-    grid.appendChild(d);
+  [{v:ci.avg+' j',l:'Durée moyenne',n:'de ton cycle'},{v:v<=3?'Très régulier':v<=6?'Assez régulier':'Variable',l:'Régularité',n:'écart : '+v+' j'},{v:mn+' j',l:'Plus court',n:''},{v:mx+' j',l:'Plus long',n:''}].forEach(function(k){
+    var d=document.createElement('div');d.className='ck';
+    d.innerHTML='<div class="ck-v">'+k.v+'</div><div class="ck-l">'+k.l+'</div>'+(k.n?'<div class="ck-n">'+k.n+'</div>':'');
+    cg.appendChild(d);
   });
+
   var ls=ci.starts[ci.starts.length-1];
   var dic=Math.round((t-ls)/864e5)+1;
   if(dic>0&&dic<=ci.avg){
     document.getElementById('phase-card').style.display='block';
-    var phases=[{d:5,c:'#B85060'},{d:8,c:'#C87820'},{d:3,c:'#4A6830'},{d:ci.avg-16,c:'#8C5828'}];
-    var tl=document.getElementById('phase-timeline');tl.innerHTML='';
-    phases.forEach(function(ph){var s=document.createElement('div');s.className='phase-seg';s.style.width=Math.round(ph.d/ci.avg*100)+'%';s.style.background=ph.c;tl.appendChild(s);});
-    var mk=document.createElement('div');mk.style.cssText='position:absolute;left:calc('+Math.round(dic/ci.avg*100)+'% - 2px);top:-4px;width:4px;height:22px;background:var(--ink);border-radius:2px;';tl.appendChild(mk);
+    var phases=[{d:5,c:'#A83050'},{d:8,c:'#B86820'},{d:3,c:'#2D7A4F'},{d:ci.avg-16,c:'#886018'}];
+    var pb=document.getElementById('phase-bar');pb.innerHTML='';
+    phases.forEach(function(ph){var s=document.createElement('div');s.className='pseg';s.style.width=Math.round(ph.d/ci.avg*100)+'%';s.style.background=ph.c;pb.appendChild(s);});
+    var mk=document.createElement('div');mk.style.cssText='position:absolute;left:calc('+Math.round(dic/ci.avg*100)+'% - 2px);top:-3px;width:3px;height:16px;background:var(--ink);border-radius:2px;';pb.appendChild(mk);
     var pn=['Menstruelle (j1-5)','Folliculaire (j6-13)','Ovulation (j14-16)','Lutéale (j17-'+ci.avg+')'];
-    document.getElementById('phase-title-text').textContent='Jour '+dic+' — '+pn[dic<=5?0:dic<=13?1:dic<=16?2:3];
+    document.getElementById('phase-lbl-text').textContent='Jour '+dic+' — '+pn[dic<=5?0:dic<=13?1:dic<=16?2:3];
   } else {document.getElementById('phase-card').style.display='none';}
+
   ci.starts.forEach(function(s,i){
     if(i===0)return;
-    var row=document.createElement('div');row.className='cycle-row';
-    row.innerHTML='<div class="cycle-row-num">'+i+'</div><div class="cycle-row-date">'+s.getDate()+' '+MONTHS_SHORT[s.getMonth()]+' '+s.getFullYear()+'</div><div class="cycle-row-len">'+ci.gaps[i-1]+' j</div>';
-    hist.insertBefore(row,hist.firstChild);
+    var row=document.createElement('div');row.className='ch-row';
+    var len=ci.gaps[i-1];
+    var diff2=len-ci.avg;
+    row.innerHTML='<div class="ch-i">'+i+'</div>'
+      +'<div style="flex:1"><div class="ch-d">'+s.getDate()+' '+MS[s.getMonth()]+' '+s.getFullYear()+'</div>'
+      +'<div class="ch-bar" style="width:'+Math.round(len/ci.avg*80)+'px;margin-top:4px;"></div></div>'
+      +'<div><div class="ch-l">'+len+' j</div><div style="font-size:10px;color:'+(diff2===0?'var(--ink3)':diff2>0?'#A83050':'#2D7A4F')+';">'+(diff2===0?'=':diff2>0?'+'+diff2:diff2)+' j</div></div>';
+    hl.insertBefore(row,hl.firstChild);
   });
 }
- 
+
+// ── SHEET ──
 function openSheet(y,m,d){
   eKey=dk(y,m,d);
   var e=store[eKey]||{};
-  tmp={sport:e.sport||'repos',runKm:e.runKm||'',write:e.write||'non',wordsJournal:e.wordsJournal||0,wordsFiction:e.wordsFiction||0,weight:e.weight||'',period:!!e.period};
+  tmp={sport:e.sport||'repos',runKm:e.runKm||'',write:e.write||'non',wj:e.wordsJournal||0,wf:e.wordsFiction||0,weight:e.weight||'',period:!!e.period};
   var date=new Date(y,m,d);
-  document.getElementById('sheet-date').textContent=DAYS_FR[date.getDay()]+' '+d+' '+MONTHS[m];
+  document.getElementById('sh-date').textContent=DAYS[date.getDay()]+' '+d+' '+MONTHS[m];
   document.getElementById('run-val').value=tmp.runKm||'';
-  document.getElementById('words-journal-val').value=tmp.wordsJournal||'';
-  document.getElementById('words-fiction-val').value=tmp.wordsFiction||'';
+  document.getElementById('wj-val').value=tmp.wj||'';
+  document.getElementById('wf-val').value=tmp.wf||'';
   document.getElementById('weight-val').value=tmp.weight||'';
   syncChips();
   document.getElementById('overlay').classList.add('on');
@@ -1173,30 +910,30 @@ function setSport(v){tmp.sport=v;syncChips();}
 function setWrite(v){tmp.write=v;syncChips();}
 function setPeriod(v){tmp.period=v;syncChips();}
 function syncChips(){
-  ['repos','run','pilates','badminton'].forEach(function(s){var el=document.getElementById('c-'+s);if(el)el.className='chip'+(tmp.sport===s?' on-sport':'');});
-  ['wno','journal','fiction','both'].forEach(function(s){var map={wno:'non',journal:'journal',fiction:'fiction',both:'les deux'};var el=document.getElementById('c-'+s);if(el)el.className='chip'+(tmp.write===map[s]?' on-write':'');});
-  var w=tmp.write;
-  document.getElementById('words-journal-field').style.display=(w==='journal'||w==='les deux')?'block':'none';
-  document.getElementById('words-fiction-field').style.display=(w==='fiction'||w==='les deux')?'block':'none';
+  ['repos','run','pilates','badminton'].forEach(function(s){var el=document.getElementById('c-'+s);if(el)el.className='chip'+(tmp.sport===s?' cs':'');});
+  ['wno','journal','fiction','both'].forEach(function(s){var map={wno:'non',journal:'journal',fiction:'fiction',both:'les deux'};var el=document.getElementById('c-'+s);if(el)el.className='chip'+(tmp.write===map[s]?' cw':'');});
+  document.getElementById('wj-field').style.display=(tmp.write==='journal'||tmp.write==='les deux')?'block':'none';
+  document.getElementById('wf-field').style.display=(tmp.write==='fiction'||tmp.write==='les deux')?'block':'none';
   document.getElementById('run-field').style.display=(tmp.sport==='run')?'block':'none';
-  document.getElementById('c-pno').className='chip'+(tmp.period?'':' on-neutral');
-  document.getElementById('c-pyes').className='chip'+(tmp.period?' on-period':'');
+  document.getElementById('c-pno').className='chip'+(tmp.period?'':' cn');
+  document.getElementById('c-pyes').className='chip'+(tmp.period?' cp':'');
 }
 function save(){
   var w=parseFloat(document.getElementById('weight-val').value);
-  var wj=parseInt(document.getElementById('words-journal-val').value)||0;
-  var wf=parseInt(document.getElementById('words-fiction-val').value)||0;
-  var runKm=parseFloat(document.getElementById('run-val').value)||0;
+  var wj=parseInt(document.getElementById('wj-val').value)||0;
+  var wf=parseInt(document.getElementById('wf-val').value)||0;
+  var km=parseFloat(document.getElementById('run-val').value)||0;
   tmp.weight=isNaN(w)?null:w;
-  tmp.wordsJournal=(tmp.write==='journal'||tmp.write==='les deux')?wj:0;
-  tmp.wordsFiction=(tmp.write==='fiction'||tmp.write==='les deux')?wf:0;
-  tmp.runKm=(tmp.sport==='run')?runKm:0;
-  var empty=tmp.sport==='repos'&&tmp.write==='non'&&!tmp.weight&&!tmp.period&&!tmp.wordsJournal&&!tmp.wordsFiction;
-  if(empty)delete store[eKey];else store[eKey]=JSON.parse(JSON.stringify(tmp));
+  tmp.wj=(tmp.write==='journal'||tmp.write==='les deux')?wj:0;
+  tmp.wf=(tmp.write==='fiction'||tmp.write==='les deux')?wf:0;
+  tmp.runKm=(tmp.sport==='run')?km:0;
+  var empty=tmp.sport==='repos'&&tmp.write==='non'&&!tmp.weight&&!tmp.period&&!tmp.wj&&!tmp.wf;
+  if(empty)delete store[eKey];
+  else store[eKey]={sport:tmp.sport,runKm:tmp.runKm,write:tmp.write,wordsJournal:tmp.wj,wordsFiction:tmp.wf,weight:tmp.weight,period:tmp.period};
   localStorage.setItem('j2',JSON.stringify(store));
   document.getElementById('overlay').classList.remove('on');
-  var cur=document.querySelector('.page.active').id.replace('page-','');
-  showPage(cur);
+  var cur=document.querySelector('.page.on').id.replace('p-','');
+  go(cur);
 }
 renderHome();
 </script>
