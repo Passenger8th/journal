@@ -34,30 +34,149 @@
   --teal:#0891B2;
   --teal-bg:#ECFEFF;
   --teal-bd:#A5F3FC;
-  --nav-h:52px;
+  --nav-h:56px;
   --header-h:56px;
+  --sidebar-w:260px;
+}
+
+/* ── DARK MODE ── */
+body.dark{
+  --bg:#0F1117;
+  --white:#1A1D27;
+  --ink:#F1F5F9;
+  --ink2:#CBD5E1;
+  --ink3:#64748B;
+  --ink4:#475569;
+  --line:#1E2535;
+  --line2:#2A3348;
+  --green-bg:#052E16;
+  --green-bd:#14532D;
+  --blue-bg:#0F1B3D;
+  --blue-bd:#1E3A8A;
+  --amber-bg:#1C1400;
+  --amber-bd:#78350F;
+  --rose-bg:#200A0A;
+  --rose-bd:#7F1D1D;
+  --violet-bg:#150B2E;
+  --violet-bd:#4C1D95;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;font-size:14px;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:var(--nav-h);}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:var(--nav-h);transition:background 0.2s,color 0.2s;}
 
 /* ── TOP HEADER ── */
 .top-header{
   background:var(--white);border-bottom:1px solid var(--line);
   height:var(--header-h);display:flex;align-items:center;
-  padding:0 20px;gap:12px;
+  padding:0 16px;gap:12px;
   position:sticky;top:0;z-index:90;
+  transition:background 0.2s,border-color 0.2s;
 }
-.th-title{font-size:16px;font-weight:700;color:var(--ink);}
-.th-sub{font-size:12px;color:var(--ink3);margin-left:4px;}
-.th-date{margin-left:auto;font-size:11px;color:var(--ink4);font-weight:500;}
+.th-burger{
+  width:36px;height:36px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:5px;cursor:pointer;border-radius:8px;
+  background:none;border:none;padding:0;flex-shrink:0;
+}
+.th-burger span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;transition:background 0.2s;}
+.th-title{font-size:15px;font-weight:700;color:var(--ink);}
+.th-sub{font-size:11px;color:var(--ink3);margin-left:2px;}
+.th-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.th-date{font-size:11px;color:var(--ink4);font-weight:500;}
 
-/* ── NAV TABS ── */
+/* Dark mode toggle */
+.dark-toggle{
+  width:36px;height:36px;border:1px solid var(--line);border-radius:8px;
+  background:var(--bg);cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.15s,border-color 0.15s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{background:var(--line);}
+
+/* ── SIDEBAR ── */
+.sidebar-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.4);z-index:200;
+  backdrop-filter:blur(2px);
+  transition:opacity 0.2s;
+}
+.sidebar-overlay.on{display:block;}
+
+.sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);
+  background:var(--white);border-right:1px solid var(--line);
+  z-index:210;
+  transform:translateX(-100%);
+  transition:transform 0.25s cubic-bezier(0.4,0,0.2,1);
+  display:flex;flex-direction:column;
+  box-shadow:4px 0 24px rgba(0,0,0,0.1);
+}
+.sidebar.on{transform:translateX(0);}
+
+.sidebar-header{
+  padding:20px 16px 16px;
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.sidebar-title{font-size:15px;font-weight:700;color:var(--ink);}
+.sidebar-close{
+  width:30px;height:30px;border:none;background:none;
+  font-size:20px;cursor:pointer;color:var(--ink3);
+  display:flex;align-items:center;justify-content:center;
+  border-radius:6px;transition:background 0.1s;
+}
+.sidebar-close:hover{background:var(--line);}
+
+.sidebar-section{
+  font-size:9px;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--ink4);
+  padding:16px 16px 6px;
+}
+
+.sidebar-item{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 16px;cursor:pointer;
+  font-size:13px;font-weight:500;color:var(--ink2);
+  border-radius:0;transition:background 0.1s,color 0.1s;
+  border-left:3px solid transparent;
+}
+.sidebar-item:hover{background:var(--bg);color:var(--ink);}
+.sidebar-item.on{
+  background:var(--blue-bg);color:var(--blue);
+  border-left-color:var(--blue);font-weight:600;
+}
+.sidebar-item-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+
+.sidebar-footer{
+  margin-top:auto;padding:16px;
+  border-top:1px solid var(--line);
+}
+.sidebar-dark-row{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:13px;font-weight:500;color:var(--ink2);
+}
+/* Toggle switch */
+.toggle-switch{
+  width:40px;height:22px;border-radius:11px;
+  background:var(--line2);position:relative;cursor:pointer;
+  transition:background 0.2s;flex-shrink:0;border:none;
+}
+.toggle-switch.on{background:var(--blue);}
+.toggle-switch::after{
+  content:'';position:absolute;top:3px;left:3px;
+  width:16px;height:16px;border-radius:50%;
+  background:#fff;transition:transform 0.2s;
+  box-shadow:0 1px 3px rgba(0,0,0,0.2);
+}
+.toggle-switch.on::after{transform:translateX(18px);}
+
+/* ── BOTTOM NAV (4 tabs) ── */
 .nav{
   position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);
   background:var(--white);border-top:1px solid var(--line);
   display:flex;z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,0.06);
+  transition:background 0.2s,border-color 0.2s;
 }
 .nt{
   flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -67,6 +186,44 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);paddin
 }
 .nt.on{color:var(--blue);border-top-color:var(--blue);}
 .nt-icon{font-size:18px;line-height:1;}
+
+/* ── FAB (floating action button) ── */
+.fab{
+  position:fixed;bottom:calc(var(--nav-h) + 16px);right:16px;
+  width:54px;height:54px;border-radius:50%;
+  background:var(--blue);color:#fff;
+  border:none;cursor:pointer;font-size:26px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,99,235,0.4);
+  z-index:95;
+  transition:transform 0.15s,box-shadow 0.15s,background 0.15s;
+  line-height:1;
+}
+.fab:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(37,99,235,0.5);}
+.fab:active{transform:scale(0.96);}
+
+/* ── TOAST (micro-feedback) ── */
+.toast{
+  position:fixed;bottom:calc(var(--nav-h) + 80px);left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:#fff;
+  padding:10px 20px;border-radius:20px;
+  font-size:12px;font-weight:600;
+  white-space:nowrap;z-index:300;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.2s,transform 0.2s;
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.success{background:var(--green);}
+.toast.error{background:var(--rose);}
+
+/* ── TABLE ROW SAVED FLASH ── */
+@keyframes rowFlash{
+  0%{background:rgba(22,163,74,0.15);}
+  100%{background:transparent;}
+}
+.row-saved{animation:rowFlash 0.8s ease-out;}
 
 /* ── PAGE ── */
 .page{display:none;}
@@ -244,13 +401,58 @@ tr:hover td{background:#F9FAFB;}
 </head>
 <body>
 
+<!-- ── SIDEBAR OVERLAY ── -->
+<div class="sidebar-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+
+<!-- ── SIDEBAR ── -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">Journal de Manon</div>
+    <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+  </div>
+
+  <div class="sidebar-section">Principal</div>
+  <div class="sidebar-item on" id="sb-home" onclick="goSb('home')"><span class="sidebar-item-icon">⊞</span>Accueil</div>
+  <div class="sidebar-item" id="sb-log" onclick="goSb('log')"><span class="sidebar-item-icon">✏</span>Saisie</div>
+  <div class="sidebar-item" id="sb-bilan" onclick="goSb('bilan')"><span class="sidebar-item-icon">📋</span>Bilan hebdo</div>
+
+  <div class="sidebar-section">Analyses</div>
+  <div class="sidebar-item" id="sb-sport" onclick="goSb('sport')"><span class="sidebar-item-icon">◉</span>Sport</div>
+  <div class="sidebar-item" id="sb-write" onclick="goSb('write')"><span class="sidebar-item-icon">✦</span>Écriture</div>
+  <div class="sidebar-item" id="sb-cycle" onclick="goSb('cycle')"><span class="sidebar-item-icon">◐</span>Cycle</div>
+
+  <div class="sidebar-section">Outils</div>
+  <div class="sidebar-item" id="sb-cal" onclick="goSb('cal')"><span class="sidebar-item-icon">▦</span>Calendrier</div>
+  <div class="sidebar-item" id="sb-sync" onclick="goSb('sync')"><span class="sidebar-item-icon">⇅</span>Sync &amp; Export</div>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-dark-row">
+      <span>Mode sombre</span>
+      <button class="toggle-switch" id="dark-switch" onclick="toggleDark()"></button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOP HEADER ── -->
 <div class="top-header">
+  <button class="th-burger" onclick="openSidebar()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <div>
     <div class="th-title">Tableau de bord de Manon</div>
     <div class="th-sub" id="top-sub"></div>
   </div>
-  <div class="th-date" id="top-date"></div>
+  <div class="th-right">
+    <div class="th-date" id="top-date"></div>
+    <button class="dark-toggle" onclick="toggleDark()" title="Mode sombre" id="dark-btn">🌙</button>
+  </div>
 </div>
+
+<!-- ── FAB ── -->
+<button class="fab" onclick="openTodaySheet()" title="Saisir aujourd'hui">+</button>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"></div>
 
 <!-- ══════ HOME ══════ -->
 <div class="page on" id="p-home">
@@ -451,14 +653,63 @@ tr:hover td{background:#F9FAFB;}
   </div>
 </div>
 
+<!-- ══════ BILAN HEBDO ══════ -->
+<div class="page" id="p-bilan">
+  <div class="content">
+    <div class="sh">
+      <div><div class="sh-title">Bilan hebdomadaire</div><div class="sh-sub">Analyse automatique de chaque semaine</div></div>
+    </div>
+    <div id="bilan-list"></div>
+  </div>
+</div>
+
+<!-- ══════ SYNCHRO & EXPORT ══════ -->
+<div class="page" id="p-sync">
+  <div class="content">
+    <div class="sh"><div class="sh-title">Synchronisation &amp; Export</div></div>
+
+    <!-- Sync warning -->
+    <div style="background:#FFFBEB;border:1px solid #FDE68A;border-left:4px solid #D97706;border-radius:10px;padding:14px 16px;margin-bottom:16px;">
+      <div style="font-size:12px;font-weight:700;color:#D97706;margin-bottom:6px;">⚠ À propos de la synchronisation</div>
+      <div style="font-size:12px;color:#374151;line-height:1.6;">Les données sont stockées localement dans le navigateur de chaque appareil. Pour synchroniser ton PC et ton iPhone, utilise <strong>Exporter les données</strong> sur l'appareil source, puis <strong>Importer</strong> sur l'autre. À faire une fois pour repartir du même point, puis régulièrement pour garder les deux à jour.</div>
+    </div>
+
+    <!-- Export données JSON -->
+    <div class="card">
+      <div class="card-title"><div class="card-title-accent" style="background:var(--blue)"></div>Données complètes (JSON)</div>
+      <div style="font-size:12px;color:var(--ink3);margin-bottom:12px;line-height:1.6;">Exporte toutes tes données pour les sauvegarder ou les transférer sur un autre appareil. Importe un fichier précédemment exporté pour écraser les données actuelles.</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button onclick="exportJSON()" style="padding:10px 18px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">⬇ Exporter les données</button>
+        <label style="padding:10px 18px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink2);">
+          ⬆ Importer des données
+          <input type="file" accept=".json" onchange="importJSON(event)" style="display:none;">
+        </label>
+      </div>
+      <div id="import-msg" style="margin-top:10px;font-size:12px;display:none;"></div>
+    </div>
+
+    <!-- Export CSV -->
+    <div class="card">
+      <div class="card-title"><div class="card-title-accent" style="background:var(--green)"></div>Export CSV (Excel / Google Sheets)</div>
+      <div style="font-size:12px;color:var(--ink3);margin-bottom:12px;line-height:1.6;">Exporte toutes tes données au format CSV, directement importable dans Excel ou Google Sheets pour des analyses avancées.</div>
+      <button onclick="exportCSV()" style="padding:10px 18px;background:var(--green);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">⬇ Exporter en CSV</button>
+    </div>
+
+    <!-- Stats stockage -->
+    <div class="card">
+      <div class="card-title"><div class="card-title-accent" style="background:var(--ink3)"></div>Informations</div>
+      <div id="sync-info" style="font-size:12px;color:var(--ink2);line-height:1.8;"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ══════ NAV ══════ -->
+<!-- ══════ NAV (4 tabs) ══════ -->
 <nav class="nav">
   <div class="nt on" onclick="go('home')" id="nav-home"><div class="nt-icon">⊞</div><div>Accueil</div></div>
   <div class="nt" onclick="go('log')" id="nav-log"><div class="nt-icon">✏</div><div>Saisie</div></div>
   <div class="nt" onclick="go('sport')" id="nav-sport"><div class="nt-icon">◉</div><div>Sport</div></div>
-  <div class="nt" onclick="go('write')" id="nav-write"><div class="nt-icon">✦</div><div>Écriture</div></div>
   <div class="nt" onclick="go('cycle')" id="nav-cycle"><div class="nt-icon">◐</div><div>Cycle</div></div>
-  <div class="nt" onclick="go('cal')" id="nav-cal"><div class="nt-icon">▦</div><div>Calendrier</div></div>
 </nav>
 
 <script>
@@ -470,13 +721,92 @@ var MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','
 var MS=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
 var DAYS3=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
 var todayK=dk(now.getFullYear(),now.getMonth(),now.getDate());
-var H_M=1.59; // height Manon
+var H_M=1.59;
 
 function dk(y,m,d){return y+'-'+pad(m)+'-'+pad(d);}
 function pad(n){return String(n).padStart(2,'0');}
 function kd(k){var p=k.split('-');return new Date(+p[0],+p[1],+p[2]);}
 function fmt(n){return n>=1000?(Math.round(n/100)/10)+'k':String(n||0);}
-function save(){localStorage.setItem('j2',JSON.stringify(store));}
+
+// ── SAVE with toast ──
+function save(){
+  localStorage.setItem('j2',JSON.stringify(store));
+  showToast('✓ Enregistré','success');
+}
+
+// ── TOAST ──
+var toastTimer=null;
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast '+(type||'');
+  void t.offsetWidth;
+  t.classList.add('show');
+  if(toastTimer)clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){t.classList.remove('show');},1800);
+}
+
+// ── DARK MODE ──
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  var on=document.body.classList.contains('dark');
+  localStorage.setItem('darkMode',on?'1':'0');
+  updateDarkUI(on);
+}
+function updateDarkUI(on){
+  var sw=document.getElementById('dark-switch');
+  var btn=document.getElementById('dark-btn');
+  if(sw){sw.className='toggle-switch'+(on?' on':'');}
+  if(btn){btn.textContent=on?'☀️':'🌙';}
+}
+// Init dark mode from preference
+(function(){
+  var pref=localStorage.getItem('darkMode');
+  if(pref==='1'){document.body.classList.add('dark');updateDarkUI(true);}
+})();
+
+// ── SIDEBAR ──
+function openSidebar(){
+  document.getElementById('sidebar').classList.add('on');
+  document.getElementById('sb-overlay').classList.add('on');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('on');
+  document.getElementById('sb-overlay').classList.remove('on');
+}
+function goSb(id){
+  closeSidebar();
+  go(id);
+}
+function updateSidebarActive(id){
+  document.querySelectorAll('.sidebar-item').forEach(function(el){
+    el.classList.remove('on');
+  });
+  var el=document.getElementById('sb-'+id);
+  if(el)el.classList.add('on');
+}
+
+// ── FAB → open today's sheet ──
+function openTodaySheet(){
+  var d=now;
+  logY=d.getFullYear();logM=d.getMonth();
+  go('log');
+  // Scroll to today's row after render
+  setTimeout(function(){
+    var row=document.querySelector('tr[data-key="'+todayK+'"]');
+    if(row)row.scrollIntoView({behavior:'smooth',block:'center'});
+  },100);
+}
+
+// ── ROW FLASH feedback ──
+function flashRow(k){
+  var row=document.querySelector('tr[data-key="'+k+'"]');
+  if(row){
+    row.classList.remove('row-saved');
+    void row.offsetWidth;
+    row.classList.add('row-saved');
+  }
+}
 
 function getEntry(k){return store[k]||{};}
 function setEntry(k,field,val){
@@ -492,14 +822,19 @@ function setEntry(k,field,val){
 function go(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on');});
   document.querySelectorAll('.nt').forEach(function(n){n.classList.remove('on');});
-  document.getElementById('p-'+id).classList.add('on');
-  document.getElementById('nav-'+id).classList.add('on');
+  var pageEl=document.getElementById('p-'+id);
+  var navEl=document.getElementById('nav-'+id);
+  if(pageEl)pageEl.classList.add('on');
+  if(navEl)navEl.classList.add('on');
+  updateSidebarActive(id);
   if(id==='home')  renderHome();
   if(id==='log')   renderLog();
+  if(id==='bilan') renderBilan();
   if(id==='sport') renderSport();
   if(id==='write') renderWrite();
   if(id==='cycle') renderCycle();
   if(id==='cal')   renderCal();
+  if(id==='sync')  renderSync();
 }
 
 // ── Cycle helpers ──
@@ -672,6 +1007,266 @@ function drawWeightIMC(W){
   }
 }
 
+// ── BILAN HEBDOMADAIRE ──
+function renderBilan(){
+  var container=document.getElementById('bilan-list');
+  container.innerHTML='';
+
+  // Build list of all weeks that have data, most recent first
+  var allKeys=Object.keys(store).sort().reverse();
+  if(!allKeys.length){
+    container.innerHTML='<div style="padding:20px;text-align:center;color:var(--ink3);font-size:13px;">Aucune donnée enregistrée pour le moment.</div>';
+    return;
+  }
+
+  // Group by ISO week
+  function getWeekKey(k){
+    var d=kd(k);
+    var day=d.getDay()||7; // Mon=1 Sun=7
+    d.setDate(d.getDate()+4-day);
+    var yearStart=new Date(d.getFullYear(),0,1);
+    var weekNum=Math.ceil(((d-yearStart)/864e5+1)/7);
+    return d.getFullYear()+'-W'+String(weekNum).padStart(2,'0');
+  }
+  function getWeekBounds(wk){
+    var parts=wk.split('-W');
+    var y=parseInt(parts[0]),w=parseInt(parts[1]);
+    var simple=new Date(y,0,1+((w-1)*7));
+    var dow=simple.getDay()||7;
+    var monday=new Date(simple.setDate(simple.getDate()-dow+1));
+    var sunday=new Date(monday);sunday.setDate(monday.getDate()+6);
+    return{monday:monday,sunday:sunday};
+  }
+
+  var weeks={};
+  allKeys.forEach(function(k){
+    var wk=getWeekKey(k);
+    if(!weeks[wk])weeks[wk]=[];
+    weeks[wk].push(k);
+  });
+
+  var weekKeys=Object.keys(weeks).sort().reverse();
+
+  weekKeys.forEach(function(wk){
+    var keys=weeks[wk].sort();
+    var bounds=getWeekBounds(wk);
+    var mo=bounds.monday,su=bounds.sunday;
+
+    // Aggregate week data
+    var sport=0,write=0,wj=0,wf=0,km=0,weights=[],period=0;
+    var sportTypes={};
+    keys.forEach(function(k){
+      var e=store[k];
+      if(e.sport&&e.sport!=='repos'){
+        sport++;
+        sportTypes[e.sport]=(sportTypes[e.sport]||0)+1;
+      }
+      if(e.sport==='run'&&e.runKm)km+=parseFloat(e.runKm)||0;
+      if(e.write&&e.write!=='non')write++;
+      if(e.wordsJournal)wj+=parseInt(e.wordsJournal)||0;
+      if(e.wordsFiction)wf+=parseInt(e.wordsFiction)||0;
+      if(e.words)wj+=parseInt(e.words)||0;
+      if(e.weight)weights.push(parseFloat(e.weight));
+      if(e.period)period++;
+    });
+    var totalWords=wj+wf;
+    var lastW=weights.length?weights[weights.length-1]:null;
+    var imc=lastW?Math.round(lastW/(H_M*H_M)*10)/10:null;
+
+    // Generate text analysis
+    var analysis=generateWeekAnalysis(sport,write,totalWords,wj,wf,km,weights,period,sportTypes,keys.length);
+
+    // Format dates
+    function fdate(d){return d.getDate()+' '+MS[d.getMonth()];}
+    var title='Semaine du '+fdate(mo)+' au '+fdate(su)+' '+su.getFullYear();
+
+    // Color for sport badge
+    var sportColor=sport>=3?'var(--green)':sport>=1?'var(--amber)':'var(--ink3)';
+    var writeColor=write>=4?'var(--amber)':write>=1?'var(--blue)':'var(--ink3)';
+
+    var card=document.createElement('div');
+    card.className='card';
+    card.style.marginBottom='12px';
+    card.innerHTML=
+      '<div style="font-size:12px;font-weight:700;color:var(--ink3);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;">'+title+'</div>'
+      // Chiffres clés
+      +'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">'
+        +kpiMini(sport,'Séances',sportColor)
+        +kpiMini(fmt(totalWords),'Mots',writeColor)
+        +kpiMini(km?Math.round(km*10)/10+'km':'—','Running','var(--violet)')
+        +kpiMini(lastW?lastW.toFixed(1)+' kg':'—','Poids',imc&&imc<25?'var(--green)':imc&&imc<30?'var(--amber)':'var(--ink3)')
+      +'</div>'
+      // Barre sport par type
+      +(Object.keys(sportTypes).length?
+        '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">'
+        +Object.keys(sportTypes).map(function(t){return '<span style="padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);">'+t+' ×'+sportTypes[t]+'</span>';}).join('')
+        +(period?'<span style="padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:var(--rose-bg);color:var(--rose);border:1px solid var(--rose-bd);">règles ('+period+' j)</span>':'')
+        +'</div>':'')
+      // Analyse textuelle
+      +'<div style="background:var(--bg);border-radius:8px;padding:12px;border-left:3px solid var(--blue);font-size:12px;color:var(--ink2);line-height:1.7;">'
+        +'<span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--blue);display:block;margin-bottom:4px;">Analyse</span>'
+        +analysis
+      +'</div>';
+    container.appendChild(card);
+  });
+}
+
+function kpiMini(val,label,color){
+  return '<div style="background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 8px;text-align:center;">'
+    +'<div style="font-size:20px;font-weight:700;color:'+color+';">'+val+'</div>'
+    +'<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink3);margin-top:3px;">'+label+'</div>'
+    +'</div>';
+}
+
+function generateWeekAnalysis(sport,write,totalWords,wj,wf,km,weights,period,sportTypes,daysLogged){
+  var sentences=[];
+
+  // Sport
+  if(sport===0){
+    sentences.push('Aucune activité sportive cette semaine.');
+  } else if(sport===1){
+    sentences.push('Une seule séance de sport — c\'est un début, mais l\'idéal serait 2 à 3 séances par semaine.');
+  } else if(sport===2){
+    sentences.push('Deux séances de sport, un rythme correct à maintenir.');
+  } else if(sport>=3){
+    sentences.push('Belle semaine sportive avec '+sport+' séances — objectif atteint.');
+  }
+  if(km>0){
+    if(km<5) sentences.push(Math.round(km*10)/10+' km courus.');
+    else if(km<15) sentences.push(Math.round(km*10)/10+' km de running — bonne progression.');
+    else sentences.push(Math.round(km*10)/10+' km courus, une excellente semaine de running.');
+  }
+
+  // Écriture
+  if(write===0){
+    sentences.push('Pas d\'écriture cette semaine.');
+  } else if(write>=1&&write<=2){
+    if(totalWords>0) sentences.push(''+write+' jour'+(write>1?'s':'')+' d\'écriture, '+fmt(totalWords)+' mots au total.');
+    else sentences.push(''+write+' jour'+(write>1?'s':'')+' d\'écriture.');
+  } else if(write>=3){
+    sentences.push('Semaine productive côté écriture : '+write+' jours actifs'+( totalWords>0?', '+fmt(totalWords)+' mots':'')+'.');
+  }
+  if(wj>0&&wf>0){
+    sentences.push('Répartition : '+fmt(wj)+' mots de journal, '+fmt(wf)+' mots de fiction.');
+  } else if(wf>0&&wj===0){
+    sentences.push('Toute l\'écriture cette semaine était consacrée à la fiction.');
+  } else if(wj>0&&wf===0&&write>0){
+    sentences.push('Écriture orientée journal intime cette semaine.');
+  }
+
+  // Poids
+  if(weights.length>=2){
+    var diff=Math.round((weights[weights.length-1]-weights[0])*10)/10;
+    if(Math.abs(diff)>=0.2){
+      sentences.push('Poids : '+weights[weights.length-1].toFixed(1)+' kg en fin de semaine ('+(diff>0?'+':'')+diff+' kg sur la semaine).');
+    }
+  }
+
+  // Règles
+  if(period>0){
+    sentences.push('Règles enregistrées sur '+period+' jour'+(period>1?'s':'')+' cette semaine.');
+  }
+
+  // Global tone
+  var score=(sport>=2?2:sport)+(write>=3?2:write>=1?1:0)+(km>=10?1:0);
+  if(score>=4) sentences.push('Dans l\'ensemble, une très bonne semaine — continuez sur cette lancée !');
+  else if(score>=2) sentences.push('Semaine équilibrée dans l\'ensemble.');
+  else if(daysLogged<=2) sentences.push('Peu de données cette semaine — pensez à saisir régulièrement pour un meilleur suivi.');
+  else sentences.push('Semaine plus calme — reprendre le rythme la semaine prochaine.');
+
+  return sentences.join(' ');
+}
+
+// ── SYNC & EXPORT ──
+function renderSync(){
+  var total=Object.keys(store).length;
+  var size=Math.round(JSON.stringify(store).length/1024*10)/10;
+  var firstKey=Object.keys(store).sort()[0];
+  var lastKey=Object.keys(store).sort().reverse()[0];
+  document.getElementById('sync-info').innerHTML=
+    '<b>Entrées enregistrées :</b> '+total+' jours<br>'
+    +'<b>Taille des données :</b> '+size+' Ko<br>'
+    +(firstKey?'<b>Première entrée :</b> '+firstKey+'<br>':'')
+    +(lastKey?'<b>Dernière entrée :</b> '+lastKey+'<br>':'')
+    +'<b>Stockage :</b> localStorage du navigateur (local à cet appareil)';
+}
+
+function exportJSON(){
+  var data=JSON.stringify(store,null,2);
+  var blob=new Blob([data],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;
+  var d=new Date();
+  a.download='journal-manon-'+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importJSON(event){
+  var file=event.target.files[0];
+  if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var imported=JSON.parse(e.target.result);
+      var count=Object.keys(imported).length;
+      if(confirm('Importer '+count+' entrées ? Cela remplacera les données actuelles de cet appareil.')){
+        store=imported;
+        save();
+        var msg=document.getElementById('import-msg');
+        msg.style.display='block';
+        msg.style.color='var(--green)';
+        msg.textContent='✓ '+count+' entrées importées avec succès.';
+        renderSync();
+      }
+    } catch(err){
+      var msg=document.getElementById('import-msg');
+      msg.style.display='block';
+      msg.style.color='var(--rose)';
+      msg.textContent='Erreur : fichier invalide.';
+    }
+  };
+  reader.readAsText(file);
+  event.target.value='';
+}
+
+function exportCSV(){
+  var rows=[['Date','Jour','Sport','Distance (km)','Écriture','Mots journal','Mots fiction','Total mots','Poids (kg)','IMC','Règles']];
+  Object.keys(store).sort().forEach(function(k){
+    var e=store[k];
+    var d=kd(k);
+    var days=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+    var w=parseFloat(e.weight)||'';
+    var imc=w?Math.round(w/(H_M*H_M)*10)/10:'';
+    var wj=(parseInt(e.wordsJournal)||0)+(parseInt(e.words)||0);
+    var wf=parseInt(e.wordsFiction)||0;
+    rows.push([
+      k,
+      days[d.getDay()],
+      e.sport||'',
+      parseFloat(e.runKm)||'',
+      e.write||'',
+      wj||'',
+      wf||'',
+      (wj+wf)||'',
+      w,
+      imc,
+      e.period?'Oui':''
+    ]);
+  });
+  var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(';');}).join('\n');
+  // BOM for Excel UTF-8
+  var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;
+  var d2=new Date();
+  a.download='journal-manon-'+d2.getFullYear()+pad(d2.getMonth()+1)+pad(d2.getDate())+'.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 // ── HOME ──
 function renderHome(){
   var mn=now.getMonth(),yr=now.getFullYear();
@@ -770,6 +1365,7 @@ function renderLog(){
     var isToday=k===todayK;
     var dow=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'][date.getDay()];
     var tr2=document.createElement('tr');
+    tr2.setAttribute('data-key',k);
     // Date cell
     var tdDate=document.createElement('td');
     tdDate.innerHTML='<span class="td-date'+(isToday?' td-today':'')+'">'+dow+' '+d+'</span>';
@@ -808,9 +1404,8 @@ function makeSelectCell(k,field,val,opts){
     var v=sel.value;
     if(!store[k])store[k]={};
     if(v==='')delete store[k][field];else store[k][field]=v;
-    // clean
     var e=store[k];if(e&&!e.sport&&!e.write&&!e.weight&&!e.period&&!e.wordsJournal&&!e.wordsFiction&&!e.runKm)delete store[k];
-    save();refreshAll();
+    save();flashRow(k);refreshAll();
   });
   // Color the row tag
   if(val&&val!=='non'&&val!=='repos'&&val!==''){
@@ -830,7 +1425,7 @@ function makeNumberCell(k,field,val,placeholder){
     if(isNaN(v)||inp.value===''){delete store[k][field];}
     else{store[k][field]=v;}
     var e=store[k];if(e&&!e.sport&&!e.write&&!e.weight&&!e.period&&!e.wordsJournal&&!e.wordsFiction&&!e.runKm)delete store[k];
-    save();refreshAll();
+    save();flashRow(k);refreshAll();
   });
   td.appendChild(inp);return td;
 }
@@ -845,7 +1440,7 @@ function makeCheckCell(k,field,val){
     store[k][field]=cb.checked;
     if(!cb.checked)delete store[k][field];
     var e=store[k];if(e&&!e.sport&&!e.write&&!e.weight&&!e.period&&!e.wordsJournal&&!e.wordsFiction&&!e.runKm)delete store[k];
-    save();refreshAll();
+    save();flashRow(k);refreshAll();
   });
   td.appendChild(cb);return td;
 }
