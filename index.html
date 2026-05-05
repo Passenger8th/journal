@@ -2,537 +2,504 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Journal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Journal de Manon</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root{
-  --bg:#F4F1EC;
-  --surface:#FFFFFF;
-  --surface2:#F9F6F1;
-  --ink:#1A1614;
-  --ink2:#4A3C34;
-  --ink3:#8A7A6E;
-  --line:#E0D8CE;
-  --green:#2D7A4F;
-  --green-light:#EAF4EE;
-  --green-mid:#A8D4B8;
-  --amber:#B86820;
-  --amber-light:#FBF0E4;
-  --amber-mid:#E4B880;
-  --rose:#A83050;
-  --rose-light:#F9E8EE;
-  --rose-mid:#D4A0B0;
-  --blue:#2858A0;
-  --blue-light:#EAF0F8;
-  --blue-mid:#A0B8D8;
-  --gold:#886018;
-  --gold-light:#FAF0DC;
+  --bg:#F7F8FA;
+  --white:#FFFFFF;
+  --ink:#111827;
+  --ink2:#374151;
+  --ink3:#6B7280;
+  --ink4:#9CA3AF;
+  --line:#E5E7EB;
+  --line2:#D1D5DB;
+  --green:#16A34A;
+  --green-bg:#F0FDF4;
+  --green-bd:#BBF7D0;
+  --blue:#2563EB;
+  --blue-bg:#EFF6FF;
+  --blue-bd:#BFDBFE;
+  --amber:#D97706;
+  --amber-bg:#FFFBEB;
+  --amber-bd:#FDE68A;
+  --rose:#DC2626;
+  --rose-bg:#FEF2F2;
+  --rose-bd:#FECACA;
+  --violet:#7C3AED;
+  --violet-bg:#F5F3FF;
+  --violet-bd:#DDD6FE;
+  --teal:#0891B2;
+  --teal-bg:#ECFEFF;
+  --teal-bd:#A5F3FC;
+  --nav-h:52px;
+  --header-h:56px;
 }
 
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;}
-body{font-family:'Inter',sans-serif;font-weight:400;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:64px;font-size:14px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-size:14px;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:var(--nav-h);}
 
-/* ── NAV ── */
+/* ── TOP HEADER ── */
+.top-header{
+  background:var(--white);border-bottom:1px solid var(--line);
+  height:var(--header-h);display:flex;align-items:center;
+  padding:0 20px;gap:12px;
+  position:sticky;top:0;z-index:90;
+}
+.th-title{font-size:16px;font-weight:700;color:var(--ink);}
+.th-sub{font-size:12px;color:var(--ink3);margin-left:4px;}
+.th-date{margin-left:auto;font-size:11px;color:var(--ink4);font-weight:500;}
+
+/* ── NAV TABS ── */
 .nav{
-  position:fixed;bottom:0;left:0;right:0;z-index:100;
-  background:var(--ink);display:flex;
+  position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);
+  background:var(--white);border-top:1px solid var(--line);
+  display:flex;z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,0.06);
 }
-.ni{
-  flex:1;display:flex;flex-direction:column;align-items:center;
-  padding:8px 0 12px;cursor:pointer;gap:2px;
-  font-size:8px;letter-spacing:0.1em;text-transform:uppercase;
-  color:rgba(255,255,255,0.4);font-weight:500;transition:color 0.15s;
+.nt{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;cursor:pointer;font-size:9px;font-weight:600;
+  letter-spacing:0.04em;text-transform:uppercase;color:var(--ink4);
+  border-top:2px solid transparent;transition:all 0.15s;
 }
-.ni.on{color:#fff;}
-.ni.on .ni-dot{background:#fff;}
-.ni-icon{font-size:17px;line-height:1;}
-.ni-dot{width:4px;height:4px;border-radius:50%;background:transparent;margin-top:1px;}
+.nt.on{color:var(--blue);border-top-color:var(--blue);}
+.nt-icon{font-size:18px;line-height:1;}
 
-/* ── PAGES ── */
+/* ── PAGE ── */
 .page{display:none;}
-.page.on{display:block;animation:fi 0.18s ease;}
-@keyframes fi{from{opacity:0;}to{opacity:1;}}
+.page.on{display:block;animation:fi 0.15s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(2px);}to{opacity:1;transform:none;}}
 
-/* ── PAGE HEADER ── */
-.ph{background:var(--ink);padding:20px 16px 16px;}
-.ph-title{font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.02em;}
-.ph-sub{font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px;letter-spacing:0.06em;text-transform:uppercase;font-weight:500;}
+/* ── CONTENT WRAPPER ── */
+.content{padding:16px;max-width:900px;margin:0 auto;}
 
-/* ── SECTION LABEL ── */
-.sl{
-  font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
-  color:var(--ink3);padding:16px 16px 8px;
-  display:flex;align-items:center;gap:8px;
+/* ── SECTION HEADER ── */
+.sh{margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;}
+.sh-title{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:0.01em;}
+.sh-sub{font-size:11px;color:var(--ink3);}
+
+/* ── CARD ── */
+.card{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;}
+.card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink3);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.card-title-accent{width:3px;height:12px;border-radius:2px;}
+
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+@media(max-width:600px){.kpi-grid{grid-template-columns:1fr 1fr;}}
+.kpi{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:14px 14px 12px;position:relative;overflow:hidden;}
+.kpi-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:10px 10px 0 0;}
+.kpi-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink3);margin-bottom:8px;}
+.kpi-num{font-size:34px;font-weight:700;color:var(--ink);line-height:1;letter-spacing:-0.02em;}
+.kpi-unit{font-size:13px;font-weight:400;color:var(--ink3);margin-left:1px;}
+.kpi-trend{font-size:11px;font-weight:600;margin-top:5px;}
+.kpi-trend.up{color:var(--green);}
+.kpi-trend.dn{color:var(--rose);}
+.kpi-trend.eq{color:var(--ink4);}
+
+/* ── EXCEL TABLE ── */
+.xtable-wrap{overflow-x:auto;margin-bottom:14px;}
+table{width:100%;border-collapse:collapse;background:var(--white);border-radius:10px;overflow:hidden;border:1px solid var(--line);font-size:12px;}
+thead tr{background:var(--bg);}
+th{padding:8px 10px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink3);border-bottom:1px solid var(--line);border-right:1px solid var(--line);white-space:nowrap;}
+th:last-child{border-right:none;}
+td{padding:0;border-bottom:1px solid var(--line);border-right:1px solid var(--line);position:relative;}
+td:last-child{border-right:none;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#F9FAFB;}
+/* Editable cells */
+.xc{
+  display:block;width:100%;padding:7px 10px;
+  font-family:'Inter',sans-serif;font-size:12px;
+  border:none;background:transparent;color:var(--ink);
+  outline:none;
 }
-.sl::after{content:'';flex:1;height:1px;background:var(--line);}
-
-/* ── KPI ROW ── */
-.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px;}
-.kpi-wide{grid-column:1/-1;}
-.kc{
-  background:var(--surface);border:1px solid var(--line);border-radius:10px;
-  padding:14px 14px 12px;position:relative;overflow:hidden;
+.xc:focus{background:var(--blue-bg);box-shadow:inset 0 0 0 2px var(--blue);border-radius:0;}
+.xc:focus::placeholder{opacity:0;}
+/* Select cells */
+.xs{
+  display:block;width:100%;padding:7px 10px;
+  font-family:'Inter',sans-serif;font-size:12px;
+  border:none;background:transparent;color:var(--ink);
+  outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239CA3AF'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 8px center;
+  padding-right:22px;
 }
-.kc-bar{position:absolute;top:0;left:0;right:0;height:3px;border-radius:10px 10px 0 0;}
-.kc-icon{font-size:14px;margin-bottom:6px;display:block;}
-.kc-num{font-size:36px;font-weight:700;line-height:1;color:var(--ink);letter-spacing:-0.02em;}
-.kc-unit{font-size:14px;font-weight:400;color:var(--ink3);margin-left:2px;}
-.kc-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-top:6px;}
-.kc-trend{font-size:11px;font-weight:600;margin-top:4px;}
-.kc-trend.up{color:var(--green);}
-.kc-trend.dn{color:var(--rose);}
-.kc-trend.eq{color:var(--ink3);}
+.xs:focus{background-color:var(--blue-bg);box-shadow:inset 0 0 0 2px var(--blue);}
+.td-date{font-weight:600;color:var(--ink2);white-space:nowrap;padding:7px 10px;background:var(--bg);min-width:90px;}
+.td-today{background:var(--blue-bg) !important;color:var(--blue) !important;font-weight:700 !important;}
+/* Tag cells */
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;white-space:nowrap;}
+.tag-green{background:var(--green-bg);color:var(--green);}
+.tag-amber{background:var(--amber-bg);color:var(--amber);}
+.tag-rose{background:var(--rose-bg);color:var(--rose);}
+.tag-blue{background:var(--blue-bg);color:var(--blue);}
+.tag-gray{background:#F3F4F6;color:var(--ink3);}
+.tag-violet{background:var(--violet-bg);color:var(--violet);}
 
-/* ── SPARKLINE BAR ROW ── */
-.spark-wrap{padding:0 12px 4px;}
-.spark-row{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
-.spark-label{font-size:10px;font-weight:600;color:var(--ink3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;display:flex;justify-content:space-between;}
-.spark-bars{display:flex;align-items:flex-end;gap:3px;height:40px;}
-.sb{flex:1;border-radius:2px 2px 0 0;min-height:2px;transition:height 0.4s ease;}
-.spark-x{display:flex;gap:3px;margin-top:4px;}
-.sx{flex:1;text-align:center;font-size:7px;color:var(--ink3);font-weight:500;}
+/* ── SVG CHARTS ── */
+.chart-area{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;}
+.chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.chart-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink3);}
+.chart-total{font-size:20px;font-weight:700;color:var(--ink);}
+.chart-sub{font-size:11px;color:var(--ink3);margin-top:2px;}
+.chart-svg-wrap{position:relative;overflow:visible;}
 
 /* ── PROGRESS BARS ── */
-.prog-list{padding:0 12px 4px;display:flex;flex-direction:column;gap:8px;}
-.prog-item{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
-.prog-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
-.prog-name{font-size:13px;font-weight:600;color:var(--ink);}
-.prog-val{font-size:13px;font-weight:700;color:var(--ink);}
-.prog-track{height:8px;background:var(--line);border-radius:4px;overflow:hidden;}
+.prog-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);}
+.prog-row:last-child{border-bottom:none;}
+.prog-name{font-size:12px;font-weight:600;color:var(--ink);width:80px;flex-shrink:0;}
+.prog-track{flex:1;height:8px;background:var(--line);border-radius:4px;overflow:hidden;}
 .prog-fill{height:100%;border-radius:4px;transition:width 0.6s ease;}
-.prog-sub{font-size:11px;color:var(--ink3);margin-top:6px;}
+.prog-val{font-size:12px;font-weight:700;color:var(--ink);width:80px;text-align:right;flex-shrink:0;}
+.prog-pct{font-size:11px;color:var(--ink3);width:36px;text-align:right;flex-shrink:0;}
 
-/* ── STREAK GRID ── */
-.streak-wrap{padding:0 12px 4px;}
-.streak-grid{
-  background:var(--surface);border:1px solid var(--line);border-radius:10px;
-  padding:12px 14px;
-}
-.streak-title{font-size:10px;font-weight:600;color:var(--ink3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;}
-.streak-row{display:flex;gap:3px;}
-.sd{
-  flex:1;height:32px;border-radius:4px;
-  background:var(--line);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-size:9px;font-weight:600;color:var(--ink3);gap:1px;
-  position:relative;
-}
-.sd.sport{background:var(--green-light);color:var(--green);}
-.sd.write{background:var(--amber-light);color:var(--amber);}
-.sd.both{background:var(--green);color:#fff;}
-.sd.today{outline:2px solid var(--ink);outline-offset:1px;}
-.sd-lbl{font-size:7px;opacity:0.7;}
+/* ── STREAK ── */
+.streak-row{display:flex;gap:4px;overflow-x:auto;padding-bottom:2px;}
+.sd{flex-shrink:0;width:32px;height:36px;border-radius:6px;background:var(--line);border:1px solid var(--line2);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--ink3);gap:1px;}
+.sd.sport{background:var(--green-bg);border-color:var(--green-bd);color:var(--green);}
+.sd.write{background:var(--amber-bg);border-color:var(--amber-bd);color:var(--amber);}
+.sd.both{background:var(--blue-bg);border-color:var(--blue-bd);color:var(--blue);}
+.sd.today{outline:2px solid var(--blue);outline-offset:1px;}
+.sd-lbl{font-size:8px;font-weight:400;color:inherit;opacity:0.7;}
+
+/* ── WEIGHT CHART ── */
+.imc-legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-bottom:10px;}
+.imc-leg{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--ink3);font-weight:500;}
+.imc-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.w-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;}
+.wc{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;}
+.wc-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink3);margin-bottom:4px;}
+.wc-val{font-size:20px;font-weight:700;color:var(--ink);}
 
 /* ── CYCLE CARD ── */
-.cycle-card{margin:0 12px;background:var(--rose-light);border:1px solid var(--rose-mid);border-radius:10px;padding:14px;border-left:3px solid var(--rose);}
-.cc-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--rose);margin-bottom:4px;}
-.cc-num{font-size:32px;font-weight:700;color:var(--ink);line-height:1.1;}
-.cc-date{font-size:12px;color:var(--ink2);margin-top:4px;}
-.cc-sub{font-size:11px;color:var(--ink3);margin-top:6px;}
+.cyc-card{background:var(--rose-bg);border:1px solid var(--rose-bd);border-radius:10px;padding:16px;border-left:4px solid var(--rose);margin-bottom:14px;}
+.cyc-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--rose);margin-bottom:6px;}
+.cyc-num{font-size:36px;font-weight:700;color:var(--ink);line-height:1.1;}
+.cyc-date{font-size:12px;color:var(--ink2);font-weight:500;margin-top:5px;}
+.cyc-sub{font-size:11px;color:var(--ink3);margin-top:6px;}
+.cyc-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.cyc-kpi{background:var(--white);border:1px solid var(--line);border-radius:8px;padding:12px;border-top:2px solid var(--rose-bd);}
+.cyc-kpi-v{font-size:24px;font-weight:700;color:var(--ink);}
+.cyc-kpi-l{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink3);margin-top:4px;}
+.cyc-kpi-n{font-size:11px;color:var(--ink2);margin-top:3px;}
+.phase-wrap{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px;}
+.phase-label{font-size:11px;font-weight:600;color:var(--ink3);margin-bottom:10px;}
+.phase-bar{display:flex;height:12px;border-radius:6px;overflow:hidden;position:relative;margin-bottom:6px;}
+.pseg{height:100%;}
+.phase-labs{display:flex;}
+.plbl{font-size:9px;color:var(--ink3);flex:1;text-align:center;font-weight:500;}
+.hist-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);}
+.hist-row:last-child{border-bottom:none;}
+.hist-i{font-size:16px;font-weight:700;color:var(--rose);width:24px;}
+.hist-d{font-size:12px;color:var(--ink);flex:1;}
+.hist-bar{height:3px;background:var(--rose-bd);border-radius:2px;margin-top:3px;}
+.hist-l{font-size:16px;font-weight:700;color:var(--ink);}
+.hist-diff{font-size:10px;font-weight:600;}
+.hist-diff.up{color:var(--rose);}
+.hist-diff.dn{color:var(--green);}
 
-/* ── CALENDAR ── */
-.month-nav{display:flex;align-items:center;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--line);}
-.mn-btn{background:none;border:none;font-size:22px;color:var(--ink2);cursor:pointer;padding:0 8px;line-height:1;}
-.mn-name{flex:1;text-align:center;font-size:16px;font-weight:700;color:var(--ink);}
-.cal-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+/* ── CAL ── */
+.mn-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--white);border-bottom:1px solid var(--line);}
+.mn-btn{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:4px 12px;font-size:16px;cursor:pointer;color:var(--ink2);transition:background 0.1s;}
+.mn-btn:hover{background:var(--line);}
+.mn-name{flex:1;text-align:center;font-size:15px;font-weight:700;color:var(--ink);}
+.cal-stats{display:grid;grid-template-columns:repeat(4,1fr);margin:12px 16px 0;background:var(--white);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
 .cs{padding:10px 6px;text-align:center;border-right:1px solid var(--line);}
 .cs:last-child{border-right:none;}
 .cs-v{font-size:18px;font-weight:700;color:var(--ink);}
-.cs-l{font-size:8px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-top:2px;}
-.legend{display:flex;flex-wrap:wrap;gap:6px 12px;padding:8px 16px 4px;}
+.cs-l{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink3);margin-top:3px;}
+.leg-row{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px 4px;}
 .leg{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--ink2);font-weight:500;}
-.ldot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.cal-wrap{padding:6px 8px 0;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
+.ldot{width:7px;height:7px;border-radius:2px;flex-shrink:0;}
+.cal-grid-wrap{padding:6px 10px 0;}
+.cgrid{display:grid;grid-template-columns:repeat(7,1fr);}
 .cl{text-align:center;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);padding:4px 0 6px;}
-.day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;gap:2px;margin:1.5px;border-radius:6px;transition:background 0.1s;}
-.day:hover{background:var(--surface2);}
-.dn{font-size:13px;font-weight:600;color:var(--ink);line-height:1;}
-.day.other .dn{color:var(--line);}
-.day.today::before{content:'';position:absolute;inset:2px;background:var(--ink);border-radius:4px;z-index:0;}
-.day.today .dn,.day.today .ddots{position:relative;z-index:1;}
+.day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;gap:2px;margin:1.5px;border-radius:6px;border:1px solid transparent;transition:all 0.1s;max-height:50px;}
+.day:hover{background:var(--blue-bg);border-color:var(--blue-bd);}
+.dn{font-size:12px;font-weight:600;color:var(--ink);line-height:1;}
+.day.other .dn{color:var(--line2);}
+.day.today{background:var(--blue);border-color:var(--blue);}
 .day.today .dn{color:#fff;font-weight:700;}
-.day.period{background:var(--rose-light);}
+.day.today .ddots{display:none;}
+.day.period{background:var(--rose-bg);border-color:var(--rose-bd);}
 .day.period .dn{color:var(--rose);}
-.day.period.today::before{background:var(--rose);}
-.day.period.today .dn{color:#fff;}
-.day.predicted{outline:1px dashed var(--rose-mid);outline-offset:-2px;border-radius:6px;}
-.ddots{display:flex;gap:2px;justify-content:center;min-height:5px;}
-.dd{width:5px;height:5px;border-radius:50%;}
+.day.predicted{border:1.5px dashed var(--rose-bd);}
+.ddots{display:flex;gap:2px;justify-content:center;min-height:4px;}
+.dd{width:4px;height:4px;border-radius:1px;}
 .dd-sport{background:var(--green);}
 .dd-write{background:var(--amber);}
-.dd-weight{background:var(--gold);}
-.cycle-banner{display:none;margin:10px 12px 0;padding:10px 14px;background:var(--rose-light);border:1px solid var(--rose-mid);border-left:3px solid var(--rose);border-radius:8px;}
-.cycle-banner.on{display:block;}
-.cb-main{font-size:13px;font-weight:600;color:var(--rose);}
-.cb-sub{font-size:11px;color:var(--ink3);margin-top:2px;}
+.dd-weight{background:var(--violet);}
+.cyc-banner{display:none;margin:8px 16px 0;padding:10px 14px;background:var(--rose-bg);border:1px solid var(--rose-bd);border-left:3px solid var(--rose);border-radius:8px;}
+.cyc-banner.on{display:block;}
+.cyc-banner-main{font-size:13px;font-weight:600;color:var(--rose);}
+.cyc-banner-sub{font-size:11px;color:var(--ink3);margin-top:2px;}
 
-/* ── CHARTS ── */
-.chart-card{margin:0 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;}
-.chart-title{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
-.chart-val{font-size:20px;font-weight:700;color:var(--ink);}
-.bar-chart{display:flex;align-items:flex-end;gap:4px;height:80px;}
-.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;}
-.bb{width:100%;border-radius:3px 3px 0 0;min-height:2px;transition:height 0.5s ease;}
-.bv{font-size:7px;color:var(--ink3);font-weight:600;}
-.bl{font-size:7px;color:var(--ink3);}
-
-/* line chart */
-.line-chart{position:relative;height:80px;}
-.line-chart svg{width:100%;height:100%;overflow:visible;}
-
-/* ── SPORT PAGE ── */
-.sport-type-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 12px;}
-.stype{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 8px;text-align:center;}
-.stype-num{font-size:28px;font-weight:700;color:var(--ink);}
-.stype-lbl{font-size:10px;font-weight:600;color:var(--ink3);margin-top:4px;text-transform:uppercase;letter-spacing:0.06em;}
-
-/* ── ÉCRITURE PAGE ── */
-.write-split{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px;}
-.ws-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;}
-.ws-num{font-size:32px;font-weight:700;color:var(--ink);}
-.ws-lbl{font-size:10px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;}
-.ws-sub{font-size:11px;color:var(--ink2);margin-top:6px;}
-
-/* ── CYCLE ANALYSIS ── */
-.cyc-hero{margin:0 12px 10px;background:var(--rose-light);border:1px solid var(--rose-mid);border-left:4px solid var(--rose);border-radius:10px;padding:18px;}
-.cyc-hero-lbl{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;}
-.cyc-hero-num{font-size:48px;font-weight:700;color:var(--ink);line-height:1;}
-.cyc-hero-date{font-size:13px;color:var(--ink2);margin-top:6px;font-weight:500;}
-.cyc-hero-sub{font-size:11px;color:var(--ink3);margin-top:8px;line-height:1.6;}
-.cyc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px;}
-.ck{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;border-top:2px solid var(--rose-mid);}
-.ck-v{font-size:26px;font-weight:700;color:var(--ink);}
-.ck-l{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink3);margin-top:5px;}
-.ck-n{font-size:11px;color:var(--ink2);margin-top:4px;}
-.phase-card{margin:0 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;}
-.phase-lbl{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;}
-.phase-bar{display:flex;height:10px;border-radius:5px;overflow:hidden;position:relative;margin-bottom:6px;}
-.pseg{height:100%;}
-.phase-labels{display:flex;}
-.plbl{font-size:9px;color:var(--ink3);flex:1;text-align:center;font-weight:500;}
-.cyc-hist{padding:0 12px;}
-.cyc-hist-title{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);padding:16px 0 10px;}
-.ch-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);}
-.ch-row:last-child{border-bottom:none;}
-.ch-i{font-size:18px;font-weight:700;color:var(--rose);width:24px;}
-.ch-d{font-size:13px;color:var(--ink);flex:1;}
-.ch-l{font-size:18px;font-weight:700;color:var(--ink);}
-.ch-bar{height:4px;border-radius:2px;background:var(--rose-mid);margin-top:4px;}
-
-/* ── MODAL SHEET ── */
-.overlay{display:none;position:fixed;inset:0;background:rgba(26,22,20,0.55);z-index:200;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px);}
-.overlay.on{display:flex;}
-.sheet{background:var(--surface);width:100%;max-width:480px;border-radius:16px 16px 0 0;padding:20px 18px 44px;max-height:92vh;overflow-y:auto;animation:up 0.2s ease;border-top:3px solid var(--amber);}
-@keyframes up{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.sh-handle{width:36px;height:4px;background:var(--line);border-radius:2px;margin:0 auto 18px;}
-.sh-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
-.sh-date{font-size:20px;font-weight:700;color:var(--ink);}
-.sh-x{background:none;border:none;font-size:22px;color:var(--ink3);cursor:pointer;line-height:1;}
-.field{margin-bottom:16px;}
-.fl{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
-.chips{display:flex;gap:7px;flex-wrap:wrap;}
-.chip{padding:8px 14px;border-radius:20px;border:1.5px solid var(--line);font-size:13px;font-weight:500;color:var(--ink2);background:var(--bg);cursor:pointer;transition:all 0.12s;font-family:'Inter',sans-serif;}
-.chip.cs{background:var(--green-light);border-color:var(--green);color:var(--green);font-weight:600;}
-.chip.cw{background:var(--amber-light);border-color:var(--amber);color:var(--amber);font-weight:600;}
-.chip.cp{background:var(--rose-light);border-color:var(--rose);color:var(--rose);font-weight:600;}
-.chip.cn{background:var(--surface2);border-color:var(--ink3);color:var(--ink);font-weight:600;}
-.num-row{display:flex;align-items:center;gap:10px;}
-.num-inp{width:110px;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;font-family:'Inter',sans-serif;font-size:20px;font-weight:700;background:var(--surface2);color:var(--ink);-moz-appearance:textfield;}
-.num-inp::-webkit-inner-spin-button,.num-inp::-webkit-outer-spin-button{-webkit-appearance:none;}
-.num-inp:focus{outline:none;border-color:var(--amber);}
-.num-u{font-size:13px;color:var(--ink3);font-weight:500;}
-.sep{border:none;border-top:1px solid var(--line);margin:16px 0;}
-.btn-save{width:100%;margin-top:18px;padding:14px;background:var(--ink);color:#fff;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.06em;cursor:pointer;transition:background 0.15s;}
-.btn-save:hover{background:var(--amber);}
-.btn-save:active{background:var(--amber);}
+/* ── INLINE EDIT HINT ── */
+.edit-hint{font-size:11px;color:var(--ink4);font-style:italic;margin-bottom:8px;display:flex;align-items:center;gap:4px;}
 </style>
 </head>
 <body>
 
-<!-- ══════════ PAGE : ACCUEIL ══════════ -->
+<div class="top-header">
+  <div>
+    <div class="th-title">Tableau de bord de Manon</div>
+    <div class="th-sub" id="top-sub"></div>
+  </div>
+  <div class="th-date" id="top-date"></div>
+</div>
+
+<!-- ══════ HOME ══════ -->
 <div class="page on" id="p-home">
-  <div class="ph">
-    <div class="ph-title" id="h-title">Tableau de bord</div>
-    <div class="ph-sub" id="h-sub"></div>
-  </div>
+  <div class="content">
 
-  <!-- KPI row -->
-  <div class="sl">Ce mois-ci</div>
-  <div class="kpi-row" id="kpi-row"></div>
+    <!-- KPIs -->
+    <div class="kpi-grid" id="kpi-grid"></div>
 
-  <!-- Sparkline 12 mois — sport -->
-  <div class="sl">Tendances — 12 mois</div>
-  <div class="spark-wrap" id="spark-sport-wrap">
-    <div class="spark-row">
-      <div class="spark-label"><span>Séances sport</span><span id="spark-sport-total" style="color:var(--ink);font-size:13px;"></span></div>
-      <div class="spark-bars" id="spark-sport"></div>
-      <div class="spark-x" id="spark-sport-x"></div>
+    <!-- Sparklines -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;" id="spark-grid">
+      <div class="chart-area" style="margin:0;">
+        <div class="chart-header">
+          <div><div class="chart-name">Sport — 12 mois</div></div>
+          <div class="chart-total" id="spark-sport-total">—</div>
+        </div>
+        <div class="chart-svg-wrap"><svg id="spark-sport-svg" height="50" style="width:100%;display:block;overflow:visible;"></svg></div>
+        <div style="display:flex;gap:3px;margin-top:4px;" id="spark-sport-x"></div>
+      </div>
+      <div class="chart-area" style="margin:0;">
+        <div class="chart-header">
+          <div><div class="chart-name">Mots — 12 mois</div></div>
+          <div class="chart-total" id="spark-words-total">—</div>
+        </div>
+        <div class="chart-svg-wrap"><svg id="spark-words-svg" height="50" style="width:100%;display:block;overflow:visible;"></svg></div>
+        <div style="display:flex;gap:3px;margin-top:4px;" id="spark-words-x"></div>
+      </div>
     </div>
-  </div>
-  <div class="spark-wrap" style="margin-top:8px;" id="spark-words-wrap">
-    <div class="spark-row">
-      <div class="spark-label"><span>Mots écrits</span><span id="spark-words-total" style="color:var(--ink);font-size:13px;"></span></div>
-      <div class="spark-bars" id="spark-words"></div>
-      <div class="spark-x" id="spark-words-x"></div>
+
+    <!-- Progress objectives -->
+    <div class="card">
+      <div class="card-title"><div class="card-title-accent" style="background:var(--blue)"></div>Objectifs du mois</div>
+      <div id="prog-list"></div>
     </div>
-  </div>
 
-  <!-- Progress vs objectifs -->
-  <div class="sl">Objectifs du mois</div>
-  <div class="prog-list" id="prog-list"></div>
-
-  <!-- Streak 14j -->
-  <div class="sl">Activité — 14 jours</div>
-  <div class="streak-wrap">
-    <div class="streak-grid">
-      <div class="streak-title">Vert = sport · Orange = écriture · Les deux = les deux</div>
+    <!-- Streak -->
+    <div class="card">
+      <div class="card-title"><div class="card-title-accent" style="background:var(--amber)"></div>Activité — 14 derniers jours</div>
       <div class="streak-row" id="streak-row"></div>
+      <div style="display:flex;gap:14px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line);">
+        <div class="leg"><div class="ldot" style="background:var(--green)"></div>Sport</div>
+        <div class="leg"><div class="ldot" style="background:var(--amber)"></div>Écriture</div>
+        <div class="leg"><div class="ldot" style="background:var(--blue)"></div>Les deux</div>
+      </div>
     </div>
-  </div>
 
-  <!-- Cycle mini -->
-  <div class="sl">Cycle</div>
-  <div style="padding:0 12px 20px;">
-    <div class="cycle-card" id="cycle-home" style="display:none">
-      <div class="cc-label">Prochaines règles</div>
-      <div class="cc-num" id="cyc-home-num"></div>
-      <div class="cc-date" id="cyc-home-date"></div>
-      <div class="cc-sub" id="cyc-home-sub"></div>
+    <!-- Weight + IMC -->
+    <div class="chart-area">
+      <div class="chart-header">
+        <div><div class="chart-name">Poids &amp; IMC</div><div class="chart-sub">Taille : 159 cm</div></div>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <div class="leg"><div style="width:14px;height:2px;background:var(--blue);"></div>Poids</div>
+          <div class="leg"><div style="width:14px;height:2px;background:var(--amber);border-top:1px dashed var(--amber);border-bottom:none;"></div>Zones IMC</div>
+        </div>
+      </div>
+      <div class="imc-legend">
+        <div class="imc-leg"><div class="imc-dot" style="background:#DBEAFE;border:1px solid #93C5FD;"></div>&lt;18.5 Maigreur</div>
+        <div class="imc-leg"><div class="imc-dot" style="background:#DCFCE7;border:1px solid #86EFAC;"></div>18.5–24.9 Normal</div>
+        <div class="imc-leg"><div class="imc-dot" style="background:#FEF9C3;border:1px solid #FDE047;"></div>25–29.9 Surpoids</div>
+        <div class="imc-leg"><div class="imc-dot" style="background:#FEE2E2;border:1px solid #FCA5A5;"></div>≥30 Obésité</div>
+      </div>
+      <div style="position:relative;height:130px;">
+        <svg id="wbmi-svg" style="width:100%;height:130px;overflow:visible;display:block;"></svg>
+      </div>
+      <div class="w-cards">
+        <div class="wc"><div class="wc-label">Poids actuel</div><div class="wc-val" id="wc-weight">—</div></div>
+        <div class="wc"><div class="wc-label">IMC</div><div class="wc-val" id="wc-imc">—</div></div>
+        <div class="wc"><div class="wc-label">Statut</div><div class="wc-val" style="font-size:14px;" id="wc-status">—</div></div>
+      </div>
     </div>
-    <div id="cyc-home-empty" style="display:none;font-size:13px;color:var(--ink3);padding:6px 0;">Enregistre au moins 2 cycles pour voir les prévisions.</div>
+
+    <!-- Cycle summary -->
+    <div id="cyc-home-wrap"></div>
+
   </div>
 </div>
 
-<!-- ══════════ PAGE : CALENDRIER ══════════ -->
+<!-- ══════ SAISIE (Excel table) ══════ -->
+<div class="page" id="p-log">
+  <div class="content">
+    <div class="sh">
+      <div><div class="sh-title">Saisie du mois</div><div class="sh-sub" id="log-sub"></div></div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="logNav(-1)" style="background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:4px 12px;font-size:14px;cursor:pointer;color:var(--ink2);">‹</button>
+        <div id="log-month-name" style="font-size:13px;font-weight:700;color:var(--ink);display:flex;align-items:center;padding:0 8px;"></div>
+        <button onclick="logNav(1)" style="background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:4px 12px;font-size:14px;cursor:pointer;color:var(--ink2);">›</button>
+      </div>
+    </div>
+    <div class="edit-hint">✏️ Cliquez sur une cellule pour modifier directement — les graphiques se mettent à jour automatiquement</div>
+    <div class="xtable-wrap">
+      <table id="log-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Sport</th>
+            <th>Distance (km)</th>
+            <th>Écriture</th>
+            <th>Mots journal</th>
+            <th>Mots fiction</th>
+            <th>Poids (kg)</th>
+            <th>Règles</th>
+          </tr>
+        </thead>
+        <tbody id="log-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ SPORT ══════ -->
+<div class="page" id="p-sport">
+  <div class="content">
+    <div class="sh"><div class="sh-title">Sport</div></div>
+    <div class="kpi-grid" id="sport-kpis" style="grid-template-columns:repeat(2,1fr);"></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;" id="sport-types"></div>
+    <div class="chart-area">
+      <div class="chart-header"><div class="chart-name">Séances / mois</div><div class="chart-total" id="sport-bar-total"></div></div>
+      <svg id="sport-bar-svg" height="80" style="width:100%;display:block;overflow:visible;"></svg>
+      <div style="display:flex;gap:3px;margin-top:4px;" id="sport-bar-x"></div>
+    </div>
+    <div class="chart-area">
+      <div class="chart-header"><div class="chart-name">Kilomètres running / mois</div><div class="chart-total" id="run-bar-total"></div></div>
+      <svg id="run-bar-svg" height="80" style="width:100%;display:block;overflow:visible;"></svg>
+      <div style="display:flex;gap:3px;margin-top:4px;" id="run-bar-x"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-title-accent" style="background:var(--green)"></div>Régularité</div>
+      <div id="sport-reg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ ÉCRITURE ══════ -->
+<div class="page" id="p-write">
+  <div class="content">
+    <div class="sh"><div class="sh-title">Écriture</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;" id="write-kpis"></div>
+    <div class="chart-area">
+      <div class="chart-header"><div class="chart-name">Mots écrits / mois</div><div class="chart-total" id="write-bar-total"></div></div>
+      <svg id="write-bar-svg" height="80" style="width:100%;display:block;overflow:visible;"></svg>
+      <div style="display:flex;gap:3px;margin-top:4px;" id="write-bar-x"></div>
+    </div>
+    <div class="chart-area">
+      <div class="chart-header"><div class="chart-name">Journal vs Fiction — 12 mois</div></div>
+      <svg id="write-split-svg" height="80" style="width:100%;display:block;overflow:visible;"></svg>
+      <div style="display:flex;gap:3px;margin-top:4px;" id="write-split-x"></div>
+      <div style="display:flex;gap:16px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line);">
+        <div class="leg"><div class="ldot" style="background:var(--amber)"></div>Journal</div>
+        <div class="leg"><div class="ldot" style="background:var(--violet)"></div>Fiction</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ CYCLE ══════ -->
+<div class="page" id="p-cycle">
+  <div class="content">
+    <div class="sh"><div class="sh-title">Cycle</div></div>
+    <div id="cyc-page-hero"></div>
+    <div class="sh" style="margin-top:4px;"><div class="sh-title">Indicateurs</div></div>
+    <div class="cyc-kpis" id="cyc-kpis"></div>
+    <div class="phase-wrap" id="phase-wrap" style="display:none">
+      <div class="phase-label" id="phase-label">Phase actuelle</div>
+      <div class="phase-bar" id="phase-bar"></div>
+      <div class="phase-labs"><div class="plbl">Mens.</div><div class="plbl">Follic.</div><div class="plbl">Ovul.</div><div class="plbl">Lutéale</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-title-accent" style="background:var(--rose)"></div>Historique</div>
+      <div id="cyc-hist"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ CAL ══════ -->
 <div class="page" id="p-cal">
-  <div class="ph">
-    <div class="ph-title">Calendrier</div>
-  </div>
-  <div class="month-nav">
-    <button class="mn-btn" onclick="nav(-1)">&#8249;</button>
+  <div class="mn-bar">
+    <button class="mn-btn" onclick="nav(-1)">‹</button>
     <div class="mn-name" id="mn-label"></div>
-    <button class="mn-btn" onclick="nav(1)">&#8250;</button>
+    <button class="mn-btn" onclick="nav(1)">›</button>
   </div>
-  <div class="cycle-banner" id="cbanner">
-    <div class="cb-main" id="cb-main"></div>
-    <div class="cb-sub" id="cb-sub"></div>
-  </div>
+  <div class="cyc-banner" id="cbanner"><div class="cyc-banner-main" id="cb-main"></div><div class="cyc-banner-sub" id="cb-sub"></div></div>
   <div class="cal-stats">
     <div class="cs"><div class="cs-v" id="cs-sport">—</div><div class="cs-l">Sport</div></div>
     <div class="cs"><div class="cs-v" id="cs-words">—</div><div class="cs-l">Mots</div></div>
     <div class="cs"><div class="cs-v" id="cs-weight">—</div><div class="cs-l">Poids</div></div>
     <div class="cs"><div class="cs-v" id="cs-cycle">—</div><div class="cs-l">Cycle</div></div>
   </div>
-  <div class="legend">
+  <div class="leg-row">
     <div class="leg"><div class="ldot" style="background:var(--green)"></div>Sport</div>
     <div class="leg"><div class="ldot" style="background:var(--amber)"></div>Écriture</div>
-    <div class="leg"><div class="ldot" style="background:var(--gold)"></div>Poids</div>
+    <div class="leg"><div class="ldot" style="background:var(--violet)"></div>Poids</div>
     <div class="leg"><div class="ldot" style="background:var(--rose)"></div>Règles</div>
   </div>
-  <div class="cal-wrap">
-    <div class="cal-grid" id="cal">
+  <div class="cal-grid-wrap">
+    <div class="cgrid" id="cal">
       <div class="cl">L</div><div class="cl">M</div><div class="cl">M</div>
       <div class="cl">J</div><div class="cl">V</div><div class="cl">S</div><div class="cl">D</div>
     </div>
   </div>
 </div>
 
-<!-- ══════════ PAGE : SPORT ══════════ -->
-<div class="page" id="p-sport">
-  <div class="ph">
-    <div class="ph-title">Sport</div>
-    <div class="ph-sub">Analyse détaillée</div>
-  </div>
-
-  <div class="sl">Ce mois-ci</div>
-  <div class="kpi-row" id="sport-kpi"></div>
-
-  <div class="sl">Par type d'activité — 12 mois</div>
-  <div class="sport-type-row" id="sport-types"></div>
-
-  <div class="sl">Séances / mois — 12 mois</div>
-  <div class="chart-card">
-    <div class="chart-title"><span>Séances</span><span class="chart-val" id="sport-total-val"></span></div>
-    <div class="bar-chart" id="sport-bar"></div>
-    <div style="display:flex;gap:4px;margin-top:6px;" id="sport-bar-x"></div>
-  </div>
-
-  <div class="sl">Kilomètres courus — 12 mois</div>
-  <div class="chart-card">
-    <div class="chart-title"><span>Running</span><span class="chart-val" id="run-total-val"></span></div>
-    <div class="bar-chart" id="run-bar"></div>
-    <div style="display:flex;gap:4px;margin-top:6px;" id="run-bar-x"></div>
-  </div>
-
-  <div class="sl">Régularité hebdomadaire</div>
-  <div class="prog-list" id="sport-reg-list"></div>
-</div>
-
-<!-- ══════════ PAGE : ÉCRITURE ══════════ -->
-<div class="page" id="p-write">
-  <div class="ph">
-    <div class="ph-title">Écriture</div>
-    <div class="ph-sub">Analyse détaillée</div>
-  </div>
-
-  <div class="sl">Ce mois-ci</div>
-  <div class="write-split" id="write-kpi"></div>
-
-  <div class="sl">Total mots — 12 mois</div>
-  <div class="chart-card">
-    <div class="chart-title"><span>Mots écrits</span><span class="chart-val" id="write-total-val"></span></div>
-    <div class="bar-chart" id="write-bar"></div>
-    <div style="display:flex;gap:4px;margin-top:6px;" id="write-bar-x"></div>
-  </div>
-
-  <div class="sl">Journal vs Fiction — 12 mois</div>
-  <div class="chart-card" style="margin-bottom:0;">
-    <div class="chart-title"><span>Répartition</span></div>
-    <div class="bar-chart" id="write-split-bar"></div>
-    <div style="display:flex;gap:4px;margin-top:6px;" id="write-split-x"></div>
-    <div style="display:flex;gap:16px;margin-top:8px;">
-      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink2);font-weight:500;">
-        <div style="width:10px;height:10px;border-radius:2px;background:var(--amber);flex-shrink:0;"></div>Journal
-      </div>
-      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink2);font-weight:500;">
-        <div style="width:10px;height:10px;border-radius:2px;background:var(--blue);flex-shrink:0;"></div>Fiction
-      </div>
-    </div>
-  </div>
-  <div style="height:16px;"></div>
-</div>
-
-<!-- ══════════ PAGE : CYCLE ══════════ -->
-<div class="page" id="p-cycle">
-  <div class="ph">
-    <div class="ph-title">Cycle</div>
-    <div class="ph-sub">Analyse &amp; prévisions</div>
-  </div>
-  <div class="sl">Prévision</div>
-  <div id="cyc-hero-wrap"></div>
-  <div class="sl">Indicateurs</div>
-  <div class="cyc-grid" id="cyc-grid"></div>
-  <div class="phase-card" id="phase-card" style="display:none;margin:10px 12px;">
-    <div class="phase-lbl" id="phase-lbl-text">Phase actuelle</div>
-    <div class="phase-bar" id="phase-bar"></div>
-    <div class="phase-labels">
-      <div class="plbl">Mens.</div><div class="plbl">Follic.</div>
-      <div class="plbl">Ovul.</div><div class="plbl">Lutéale</div>
-    </div>
-  </div>
-  <div class="cyc-hist" id="cyc-hist-wrap">
-    <div class="cyc-hist-title">Historique des cycles</div>
-    <div id="cyc-hist-list"></div>
-  </div>
-</div>
-
-<!-- ══════════ NAV ══════════ -->
+<!-- ══════ NAV ══════ -->
 <nav class="nav">
-  <div class="ni on" onclick="go('home')" id="nav-home"><div class="ni-icon">⊞</div><div>Accueil</div><div class="ni-dot"></div></div>
-  <div class="ni" onclick="go('cal')" id="nav-cal"><div class="ni-icon">⊟</div><div>Calendrier</div><div class="ni-dot"></div></div>
-  <div class="ni" onclick="go('sport')" id="nav-sport"><div class="ni-icon">◎</div><div>Sport</div><div class="ni-dot"></div></div>
-  <div class="ni" onclick="go('write')" id="nav-write"><div class="ni-icon">✦</div><div>Écriture</div><div class="ni-dot"></div></div>
-  <div class="ni" onclick="go('cycle')" id="nav-cycle"><div class="ni-icon">◐</div><div>Cycle</div><div class="ni-dot"></div></div>
+  <div class="nt on" onclick="go('home')" id="nav-home"><div class="nt-icon">⊞</div><div>Accueil</div></div>
+  <div class="nt" onclick="go('log')" id="nav-log"><div class="nt-icon">✏</div><div>Saisie</div></div>
+  <div class="nt" onclick="go('sport')" id="nav-sport"><div class="nt-icon">◉</div><div>Sport</div></div>
+  <div class="nt" onclick="go('write')" id="nav-write"><div class="nt-icon">✦</div><div>Écriture</div></div>
+  <div class="nt" onclick="go('cycle')" id="nav-cycle"><div class="nt-icon">◐</div><div>Cycle</div></div>
+  <div class="nt" onclick="go('cal')" id="nav-cal"><div class="nt-icon">▦</div><div>Calendrier</div></div>
 </nav>
 
-<!-- ══════════ SHEET ══════════ -->
-<div class="overlay" id="overlay" onclick="closeSheet(event)">
-<div class="sheet">
-  <div class="sh-handle"></div>
-  <div class="sh-head">
-    <div class="sh-date" id="sh-date"></div>
-    <button class="sh-x" onclick="closeSheet()">&#215;</button>
-  </div>
-  <div class="field">
-    <div class="fl">Sport</div>
-    <div class="chips">
-      <div class="chip" id="c-repos" onclick="setSport('repos')">Repos</div>
-      <div class="chip" id="c-run" onclick="setSport('run')">Running</div>
-      <div class="chip" id="c-pilates" onclick="setSport('pilates')">Pilates</div>
-      <div class="chip" id="c-badminton" onclick="setSport('badminton')">Badminton</div>
-    </div>
-  </div>
-  <div class="field" id="run-field" style="display:none">
-    <div class="fl">Distance</div>
-    <div class="num-row">
-      <input class="num-inp" type="number" id="run-val" step="0.1" min="0" placeholder="0">
-      <span class="num-u">km</span>
-    </div>
-  </div>
-  <hr class="sep">
-  <div class="field">
-    <div class="fl">Écriture</div>
-    <div class="chips">
-      <div class="chip" id="c-wno" onclick="setWrite('non')">Rien</div>
-      <div class="chip" id="c-journal" onclick="setWrite('journal')">Journal</div>
-      <div class="chip" id="c-fiction" onclick="setWrite('fiction')">Fiction</div>
-      <div class="chip" id="c-both" onclick="setWrite('les deux')">Les deux</div>
-    </div>
-  </div>
-  <div class="field" id="wj-field" style="display:none">
-    <div class="fl">Mots — Journal</div>
-    <div class="num-row">
-      <input class="num-inp" type="number" id="wj-val" min="0" placeholder="0">
-      <span class="num-u">mots</span>
-    </div>
-  </div>
-  <div class="field" id="wf-field" style="display:none">
-    <div class="fl">Mots — Fiction</div>
-    <div class="num-row">
-      <input class="num-inp" type="number" id="wf-val" min="0" placeholder="0">
-      <span class="num-u">mots</span>
-    </div>
-  </div>
-  <hr class="sep">
-  <div class="field">
-    <div class="fl">Poids</div>
-    <div class="num-row">
-      <input class="num-inp" type="number" id="weight-val" step="0.1" min="30" placeholder="—">
-      <span class="num-u">kg</span>
-    </div>
-  </div>
-  <hr class="sep">
-  <div class="field">
-    <div class="fl">Règles</div>
-    <div class="chips">
-      <div class="chip" id="c-pno" onclick="setPeriod(false)">Non</div>
-      <div class="chip" id="c-pyes" onclick="setPeriod(true)">Oui</div>
-    </div>
-  </div>
-  <button class="btn-save" onclick="save()">Enregistrer</button>
-</div>
-</div>
-
 <script>
-// ── Core data ──
+// ── Core ──
 var store=JSON.parse(localStorage.getItem('j2')||'{}');
 var now=new Date(),vy=now.getFullYear(),vm=now.getMonth();
-var eKey=null,tmp={};
+var logY=now.getFullYear(),logM=now.getMonth();
 var MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 var MS=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
-var DAYS=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+var DAYS3=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
 var todayK=dk(now.getFullYear(),now.getMonth(),now.getDate());
+var H_M=1.59; // height Manon
 
 function dk(y,m,d){return y+'-'+pad(m)+'-'+pad(d);}
 function pad(n){return String(n).padStart(2,'0');}
 function kd(k){var p=k.split('-');return new Date(+p[0],+p[1],+p[2]);}
 function fmt(n){return n>=1000?(Math.round(n/100)/10)+'k':String(n||0);}
+function save(){localStorage.setItem('j2',JSON.stringify(store));}
+
+function getEntry(k){return store[k]||{};}
+function setEntry(k,field,val){
+  if(!store[k])store[k]={};
+  store[k][field]=val;
+  // Clean empty
+  var e=store[k];
+  if(!e.sport&&!e.write&&!e.weight&&!e.period&&!e.wordsJournal&&!e.wordsFiction&&!e.runKm)delete store[k];
+  save();
+}
 
 // ── Nav ──
 function go(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on');});
-  document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('on');});
+  document.querySelectorAll('.nt').forEach(function(n){n.classList.remove('on');});
   document.getElementById('p-'+id).classList.add('on');
   document.getElementById('nav-'+id).classList.add('on');
   if(id==='home')  renderHome();
-  if(id==='cal')   renderCal();
+  if(id==='log')   renderLog();
   if(id==='sport') renderSport();
   if(id==='write') renderWrite();
   if(id==='cycle') renderCycle();
+  if(id==='cal')   renderCal();
 }
 
 // ── Cycle helpers ──
@@ -550,139 +517,470 @@ function cycleInfo(){
 }
 function predSet(){
   var ci=cycleInfo();if(!ci)return{};
-  var s={};
-  for(var i=-2;i<=4;i++){var d=new Date(ci.next.getTime()+i*864e5);s[dk(d.getFullYear(),d.getMonth(),d.getDate())]=true;}
-  return s;
+  var set={};
+  for(var i=-2;i<=4;i++){var d=new Date(ci.next.getTime()+i*864e5);set[dk(d.getFullYear(),d.getMonth(),d.getDate())]=true;}
+  return set;
 }
 
-// ── Month aggregation ──
+// ── Aggregation ──
 function mdata(y,m){
-  var sc=0,wc=0,wj=0,wf=0,km=0,wts=[],per=0,run=0,pilates=0,badm=0;
+  var sc=0,wc=0,wj=0,wf=0,km=0,wts=[],per=0,run=0,pil=0,bad=0;
   Object.keys(store).forEach(function(k){
     var p=k.split('-');if(+p[0]!==y||+p[1]!==m)return;
     var e=store[k];
-    if(e.sport&&e.sport!=='repos'){sc++;if(e.sport==='run')run++;if(e.sport==='pilates')pilates++;if(e.sport==='badminton')badm++;}
-    if(e.sport==='run'&&e.runKm)km+=e.runKm;
+    if(e.sport&&e.sport!=='repos'){sc++;if(e.sport==='run')run++;if(e.sport==='pilates')pil++;if(e.sport==='badminton')bad++;}
+    if(e.sport==='run'&&e.runKm)km+=parseFloat(e.runKm)||0;
     if(e.write&&e.write!=='non')wc++;
-    if(e.wordsJournal)wj+=e.wordsJournal;
-    if(e.wordsFiction)wf+=e.wordsFiction;
-    if(e.words)wj+=e.words;
-    if(e.weight)wts.push({d:new Date(+p[0],+p[1],+p[2]),v:e.weight});
+    if(e.wordsJournal)wj+=parseInt(e.wordsJournal)||0;
+    if(e.wordsFiction)wf+=parseInt(e.wordsFiction)||0;
+    if(e.words)wj+=parseInt(e.words)||0;
+    if(e.weight)wts.push({k:k,v:parseFloat(e.weight)});
     if(e.period)per++;
   });
-  return{sport:sc,write:wc,wj:wj,wf:wf,words:wj+wf,km:km,wts:wts,period:per,run:run,pilates:pilates,badminton:badm};
+  return{sport:sc,write:wc,wj:wj,wf:wf,words:wj+wf,km:km,wts:wts,period:per,run:run,pilates:pil,badminton:bad};
 }
-
 function last12(){
   var mn=now.getMonth(),yr=now.getFullYear(),res=[];
-  for(var i=11;i>=0;i--){
-    var m=mn-i,y=yr;while(m<0){m+=12;y--;}
-    res.push({lbl:MS[m],m:m,y:y,d:mdata(y,m),cur:i===0});
-  }
+  for(var i=11;i>=0;i--){var m=mn-i,y=yr;while(m<0){m+=12;y--;}res.push({lbl:MS[m],m:m,y:y,d:mdata(y,m)});}
   return res;
 }
 
-// ── Greeting ──
-function greet(){var h=now.getHours();return h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';}
+// ── SVG helpers ──
+function svgEl(tag,attrs){
+  var el=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  Object.keys(attrs).forEach(function(a){el.setAttribute(a,attrs[a]);});
+  return el;
+}
+
+function drawBars(svgId,xId,vals,color,W,H){
+  var svg=document.getElementById(svgId);
+  if(!svg)return;
+  svg.innerHTML='';
+  var m12=last12();
+  var max=Math.max.apply(null,vals.map(function(v){return v||0;}));
+  if(!max)max=1;
+  var n=vals.length,gap=2,bw=Math.max(4,(W-gap*(n-1))/n);
+  var W2=svg.parentElement.clientWidth||300;
+  svg.setAttribute('width',W2);svg.setAttribute('height',H);
+  svg.setAttribute('viewBox','0 0 '+W2+' '+H);
+  var bwActual=(W2-gap*(n-1))/n;
+  vals.forEach(function(v,i){
+    var h=Math.round(((v||0)/max)*(H-4));
+    var x=i*(bwActual+gap);
+    var rect=svgEl('rect',{x:x,y:H-h,width:Math.max(bwActual,2),height:Math.max(h,1),fill:i===n-1?color:color+'55',rx:'2'});
+    svg.appendChild(rect);
+    if(v&&i===n-1){
+      var t=svgEl('text',{x:x+bwActual/2,y:H-h-3,'text-anchor':'middle','font-family':'Inter,sans-serif','font-size':'8','font-weight':'600',fill:color});
+      t.textContent=v;svg.appendChild(t);
+    }
+  });
+  var xEl=document.getElementById(xId);
+  if(xEl){xEl.innerHTML='';vals.forEach(function(v,i){var d=document.createElement('div');d.style.cssText='flex:1;text-align:center;font-size:7px;color:var(--ink4);font-weight:500;';d.textContent=m12[i].lbl;xEl.appendChild(d);});}
+}
+
+function drawSparkLine(svgId,xId,vals,color){
+  var svg=document.getElementById(svgId);if(!svg)return;
+  svg.innerHTML='';
+  var m12=last12();
+  var W=svg.parentElement.clientWidth||300;
+  var H=50;
+  svg.setAttribute('width',W);svg.setAttribute('height',H);
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  var max=Math.max.apply(null,vals.map(function(v){return v||0;}));if(!max)max=1;
+  var n=vals.length,pad2=4;
+  var gap=2,bw=(W-gap*(n-1))/n;
+  vals.forEach(function(v,i){
+    var h=Math.round(((v||0)/max)*(H-pad2));
+    var x=i*(bw+gap);
+    svg.appendChild(svgEl('rect',{x:x,y:H-h,width:Math.max(bw,2),height:Math.max(h,1),fill:i===n-1?color:color+'44',rx:'2'}));
+  });
+  var xEl=document.getElementById(xId);
+  if(xEl){xEl.innerHTML='';vals.forEach(function(v,i){var d=document.createElement('div');d.style.cssText='flex:1;text-align:center;font-size:6px;color:var(--ink4);';d.textContent=m12[i].lbl;xEl.appendChild(d);});}
+}
+
+function drawWeightIMC(W){
+  var svg=document.getElementById('wbmi-svg');if(!svg)return;
+  svg.innerHTML='';
+  var allW=[];
+  Object.keys(store).sort().forEach(function(k){var e=store[k];if(e.weight)allW.push({k:k,v:parseFloat(e.weight)});});
+  var lastW=allW.length?allW[allW.length-1]:null;
+  var wcEl=document.getElementById('wc-weight'),imcEl=document.getElementById('wc-imc'),stEl=document.getElementById('wc-status');
+  if(lastW){
+    var imc=Math.round(lastW.v/(H_M*H_M)*10)/10;
+    wcEl.textContent=lastW.v.toFixed(1)+' kg';
+    imcEl.textContent=imc;
+    var s,c;
+    if(imc<18.5){s='Maigreur';c='var(--blue)';}
+    else if(imc<25){s='Normal ✓';c='var(--green)';}
+    else if(imc<30){s='Surpoids';c='var(--amber)';}
+    else{s='Obésité';c='var(--rose)';}
+    imcEl.style.color=c;stEl.textContent=s;stEl.style.color=c;
+  } else {wcEl.textContent='—';imcEl.textContent='—';stEl.textContent='—';}
+
+  if(allW.length<2){
+    svg.innerHTML='<text x="50%" y="70" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#9CA3AF">Renseignez votre poids pour voir l\'évolution</text>';
+    return;
+  }
+  var W2=svg.parentElement.clientWidth||300,H=130;
+  var p={t:16,r:52,b:22,l:36};
+  var cw=W2-p.l-p.r,ch=H-p.t-p.b;
+  svg.setAttribute('width',W2);svg.setAttribute('height',H);svg.setAttribute('viewBox','0 0 '+W2+' '+H);
+  var wMin=Math.min.apply(null,allW.map(function(d){return d.v;}))-2;
+  var wMax=Math.max.apply(null,allW.map(function(d){return d.v;}))+2;
+  function wx(i){return p.l+(i/(Math.max(allW.length-1,1)))*cw;}
+  function wy(v){return p.t+ch-((v-wMin)/(wMax-wMin))*ch;}
+  function i2w(imc){return imc*H_M*H_M;}
+  // Zones
+  [{min:0,max:18.5,c:'rgba(219,234,254,0.6)'},{min:18.5,max:25,c:'rgba(220,252,231,0.6)'},{min:25,max:30,c:'rgba(254,249,195,0.6)'},{min:30,max:60,c:'rgba(254,226,226,0.6)'}].forEach(function(z){
+    var y1=wy(Math.min(wMax,i2w(z.max))),y2=wy(Math.max(wMin,i2w(z.min)));
+    if(y2>y1)svg.appendChild(svgEl('rect',{x:p.l,y:y1,width:cw,height:y2-y1,fill:z.c}));
+  });
+  // IMC lines
+  [18.5,25,30].forEach(function(iv){
+    var wv=i2w(iv);if(wv<wMin||wv>wMax)return;
+    var y=wy(wv);
+    svg.appendChild(svgEl('line',{x1:p.l,x2:p.l+cw,y1:y,y2:y,stroke:'#D1D5DB','stroke-width':'0.8','stroke-dasharray':'3,3'}));
+    var t=svgEl('text',{x:p.l+cw+4,y:y+3,'font-family':'Inter,sans-serif','font-size':'8',fill:'#9CA3AF'});
+    t.textContent='IMC '+iv;svg.appendChild(t);
+  });
+  // Y axis
+  for(var ti=0;ti<=3;ti++){
+    var wv2=wMin+(wMax-wMin)*ti/3;
+    var t2=svgEl('text',{x:p.l-4,y:wy(wv2)+3,'text-anchor':'end','font-family':'Inter,sans-serif','font-size':'8',fill:'#9CA3AF'});
+    t2.textContent=Math.round(wv2);svg.appendChild(t2);
+  }
+  // Area
+  var ap='M '+wx(0)+','+(p.t+ch)+' L '+wx(0)+','+wy(allW[0].v);
+  for(var i=1;i<allW.length;i++)ap+=' L '+wx(i)+','+wy(allW[i].v);
+  ap+=' L '+wx(allW.length-1)+','+(p.t+ch)+' Z';
+  svg.appendChild(svgEl('path',{d:ap,fill:'rgba(37,99,235,0.07)'}));
+  // Line
+  var pts=allW.map(function(d,i){return wx(i)+','+wy(d.v);}).join(' ');
+  svg.appendChild(svgEl('polyline',{points:pts,fill:'none',stroke:'#2563EB','stroke-width':'2','stroke-linejoin':'round','stroke-linecap':'round'}));
+  // Dots
+  allW.forEach(function(d,i){
+    var isLast=i===allW.length-1;
+    svg.appendChild(svgEl('circle',{cx:wx(i),cy:wy(d.v),r:isLast?'4':'2',fill:isLast?'#2563EB':'rgba(37,99,235,0.5)',stroke:isLast?'#fff':'none','stroke-width':'1.5'}));
+  });
+  // X labels first/last
+  if(allW.length>=2){
+    [0,allW.length-1].forEach(function(i){
+      var parts=allW[i].k.split('-');
+      var t3=svgEl('text',{x:wx(i),y:H-4,'text-anchor':i===0?'start':'end','font-family':'Inter,sans-serif','font-size':'8',fill:'#9CA3AF'});
+      t3.textContent=parts[2]+'/'+parts[1];svg.appendChild(t3);
+    });
+  }
+}
 
 // ── HOME ──
 function renderHome(){
   var mn=now.getMonth(),yr=now.getFullYear();
-  var cur=mdata(yr,mn);
-  var prevM=mn===0?11:mn-1,prevY=mn===0?yr-1:yr;
-  var prev=mdata(prevY,prevM);
+  var cur=mdata(yr,mn),pM=mn===0?11:mn-1,pY=mn===0?yr-1:yr,prev=mdata(pY,pM);
   var lastW=cur.wts.length?cur.wts[cur.wts.length-1].v:null;
   var prevW=prev.wts.length?prev.wts[prev.wts.length-1].v:null;
-
-  document.getElementById('h-title').textContent=greet();
-  document.getElementById('h-sub').textContent=now.getDate()+' '+MONTHS[mn]+' '+yr;
+  var today=now;
+  document.getElementById('top-sub').textContent=MONTHS[mn]+' '+yr;
+  document.getElementById('top-date').textContent=today.getDate()+' '+MONTHS[mn]+' '+yr;
 
   // KPIs
-  var kr=document.getElementById('kpi-row');kr.innerHTML='';
+  var kg=document.getElementById('kpi-grid');kg.innerHTML='';
   var wDiff=lastW&&prevW?Math.round((lastW-prevW)*10)/10:null;
-  function trend(v,p){if(v>p)return'up';if(v<p)return'dn';return'eq';}
-  function ttext(v,p,unit){
-    var d=v-p;
-    if(d===0)return'= stable';
-    return(d>0?'↑ +':('↓ '))+Math.abs(d)+(unit||'');
-  }
+  function tr(v,p){return v>p?'up':v<p?'dn':'eq';}
+  function tt(a,b,u){var d=a-b;if(d===0)return'= stable';return(d>0?'↑ +':'↓ ')+Math.abs(d)+(u||'');}
   [
-    {n:cur.sport,u:'',l:'Séances sport',c:'#2D7A4F',tr:trend(cur.sport,prev.sport),tt:ttext(cur.sport,prev.sport,' séances')},
-    {n:fmt(cur.words),u:'',l:'Mots écrits',c:'#B86820',tr:trend(cur.words,prev.words),tt:cur.words>prev.words?'↑ progression':cur.words<prev.words?'↓ moins':'= stable'},
-    {n:lastW?lastW.toFixed(1):'—',u:lastW?'kg':'',l:'Poids actuel',c:'#886018',tr:wDiff!==null?(wDiff<=0?'up':'dn'):'eq',tt:wDiff!==null?(wDiff>0?'↑ +'+wDiff+' kg':wDiff<0?'↓ '+Math.abs(wDiff)+' kg':'stable'):''},
-    {n:Math.round(cur.km*10)/10||'—',u:cur.km?'km':'',l:'Km running',c:'#2858A0',tr:trend(cur.km,prev.km),tt:ttext(Math.round(cur.km),Math.round(prev.km),' km')}
+    {n:cur.sport,u:'',l:'Séances sport',c:'var(--green)',tr:tr(cur.sport,prev.sport),tt:tt(cur.sport,prev.sport,'')},
+    {n:fmt(cur.words),u:'',l:'Mots écrits',c:'var(--amber)',tr:tr(cur.words,prev.words),tt:cur.words>prev.words?'↑ progression':cur.words<prev.words?'↓ moins':'= stable'},
+    {n:lastW?lastW.toFixed(1):'—',u:lastW?'kg':'',l:'Poids actuel',c:'var(--blue)',tr:wDiff!==null?(wDiff<=0?'up':'dn'):'eq',tt:wDiff!==null?tt(wDiff,0,' kg'):''},
+    {n:Math.round(cur.km*10)/10||'—',u:cur.km?'km':'',l:'Km running',c:'var(--violet)',tr:tr(cur.km,prev.km),tt:tt(Math.round(cur.km),Math.round(prev.km),' km')}
   ].forEach(function(c){
-    var d=document.createElement('div');d.className='kc';
-    d.innerHTML='<div class="kc-bar" style="background:'+c.c+'"></div>'
-      +'<div class="kc-num">'+c.n+'<span class="kc-unit">'+c.u+'</span></div>'
-      +'<div class="kc-label">'+c.l+'</div>'
-      +(c.tt?'<div class="kc-trend '+c.tr+'">'+c.tt+'</div>':'');
-    kr.appendChild(d);
+    var d=document.createElement('div');d.className='kpi';
+    d.innerHTML='<div class="kpi-accent" style="background:'+c.c+'"></div>'
+      +'<div class="kpi-label">'+c.l+'</div>'
+      +'<div class="kpi-num">'+c.n+'<span class="kpi-unit">'+c.u+'</span></div>'
+      +(c.tt?'<div class="kpi-trend '+c.tr+'">'+c.tt+'</div>':'');
+    kg.appendChild(d);
   });
 
   // Sparklines
   var m12=last12();
-  function buildSpark(barEl,xEl,vals,color,totEl,totFn){
-    barEl.innerHTML='';xEl.innerHTML='';
-    var max=Math.max.apply(null,vals.map(function(v){return v||0;}));if(!max)max=1;
-    vals.forEach(function(v,i){
-      var b=document.createElement('div');b.className='sb';
-      b.style.height=Math.round(((v||0)/max)*36)+'px';
-      b.style.background=i===11?color:color+'55';
-      b.style.borderRadius='2px 2px 0 0';b.style.flex='1';
-      barEl.appendChild(b);
-      var x=document.createElement('div');x.className='sx';x.textContent=m12[i].lbl;
-      xEl.appendChild(x);
-    });
-    if(totEl) totEl.textContent=totFn();
-  }
-  buildSpark(document.getElementById('spark-sport'),document.getElementById('spark-sport-x'),
-    m12.map(function(m){return m.d.sport;}),'#2D7A4F',document.getElementById('spark-sport-total'),
-    function(){return m12.reduce(function(a,m){return a+m.d.sport;},0)+' séances';});
-  buildSpark(document.getElementById('spark-words'),document.getElementById('spark-words-x'),
-    m12.map(function(m){return m.d.words;}),'#B86820',document.getElementById('spark-words-total'),
-    function(){return fmt(m12.reduce(function(a,m){return a+m.d.words;},0))+' mots';});
+  drawSparkLine('spark-sport-svg','spark-sport-x',m12.map(function(m){return m.d.sport;}),'#16A34A');
+  document.getElementById('spark-sport-total').textContent=m12.reduce(function(a,m){return a+m.d.sport;},0)+' séances';
+  drawSparkLine('spark-words-svg','spark-words-x',m12.map(function(m){return m.d.words;}),'#D97706');
+  document.getElementById('spark-words-total').textContent=fmt(m12.reduce(function(a,m){return a+m.d.words;},0))+' mots';
 
-  // Progress bars
+  // Progress
   var pl=document.getElementById('prog-list');pl.innerHTML='';
-  var daysInM=new Date(yr,mn+1,0).getDate(),daysPast=now.getDate();
-  [{name:'Sport',v:cur.sport,goal:12,color:'#2D7A4F',sub:'Objectif : 12 séances / mois'},
-   {name:'Écriture',v:cur.write,goal:20,color:'#B86820',sub:'Objectif : 20 jours écrits / mois'},
-   {name:'Running',v:Math.round(cur.km),goal:30,color:'#2858A0',sub:'Objectif : 30 km / mois',unit:'km'}
-  ].forEach(function(p){
-    var pct=Math.min(100,Math.round((p.v/(p.goal||1))*100));
-    var d=document.createElement('div');d.className='prog-item';
-    d.innerHTML='<div class="prog-header"><span class="prog-name">'+p.name+'</span><span class="prog-val">'+(p.unit?p.v+' '+p.unit:p.v)+' / '+(p.unit?p.goal+' '+p.unit:p.goal)+'</span></div>'
-      +'<div class="prog-track"><div class="prog-fill" style="width:'+pct+'%;background:'+p.color+'"></div></div>'
-      +'<div class="prog-sub">'+pct+'% — '+p.sub+'</div>';
+  [{name:'Sport',v:cur.sport,g:12,c:'#16A34A'},{name:'Écriture',v:cur.write,g:20,c:'#D97706'},{name:'Running',v:Math.round(cur.km),g:30,c:'#7C3AED',u:'km'}].forEach(function(p){
+    var pct=Math.min(100,Math.round(p.v/(p.g||1)*100));
+    var d=document.createElement('div');d.className='prog-row';
+    d.innerHTML='<div class="prog-name">'+p.name+'</div>'
+      +'<div class="prog-track"><div class="prog-fill" style="width:'+pct+'%;background:'+p.c+';"></div></div>'
+      +'<div class="prog-val">'+(p.u?p.v+' '+p.u:p.v)+' / '+(p.u?p.g+' '+p.u:p.g)+'</div>'
+      +'<div class="prog-pct">'+pct+'%</div>';
     pl.appendChild(d);
   });
 
   // Streak
   var sr=document.getElementById('streak-row');sr.innerHTML='';
   for(var i=13;i>=0;i--){
-    var d=new Date(now.getTime()-i*864e5);
-    var k=dk(d.getFullYear(),d.getMonth(),d.getDate());
+    var d2=new Date(now.getTime()-i*864e5);
+    var k=dk(d2.getFullYear(),d2.getMonth(),d2.getDate());
     var e=store[k]||{};
     var hs=e.sport&&e.sport!=='repos',hw=e.write&&e.write!=='non';
     var dv=document.createElement('div');
     dv.className='sd'+(hs&&hw?' both':hs?' sport':hw?' write':'')+(i===0?' today':'');
-    dv.innerHTML='<span>'+d.getDate()+'</span><span class="sd-lbl">'+['D','L','M','M','J','V','S'][d.getDay()]+'</span>';
+    dv.innerHTML='<span>'+d2.getDate()+'</span><span class="sd-lbl">'+DAYS3[d2.getDay()]+'</span>';
     sr.appendChild(dv);
   }
 
+  // Weight + IMC
+  setTimeout(function(){drawWeightIMC();},50);
+
   // Cycle
   var ci=cycleInfo();
-  var cm=document.getElementById('cycle-home'),ce=document.getElementById('cyc-home-empty');
+  var chw=document.getElementById('cyc-home-wrap');
   if(ci){
-    cm.style.display='block';ce.style.display='none';
     var t=new Date();t.setHours(0,0,0,0);
     var diff=Math.round((ci.next-t)/864e5);
     var ds=ci.next.getDate()+' '+MONTHS[ci.next.getMonth()];
-    document.getElementById('cyc-home-num').textContent=diff===0?"Aujourd'hui":diff<0?'Retard de '+Math.abs(diff)+' j':diff===1?'Demain':'Dans '+diff+' jours';
-    document.getElementById('cyc-home-date').textContent=ds;
-    document.getElementById('cyc-home-sub').textContent='Cycle moyen : '+ci.avg+' j · '+ci.count+' cycle'+(ci.count>1?'s':'')+' enregistré'+(ci.count>1?'s':'');
-  } else {cm.style.display='none';ce.style.display='block';}
+    chw.innerHTML='<div class="cyc-card">'
+      +'<div class="cyc-label">Prochaines règles</div>'
+      +'<div class="cyc-num">'+(diff===0?"Aujourd'hui":diff<0?'Retard de '+Math.abs(diff)+' j':diff===1?'Demain':'Dans '+diff+' jours')+'</div>'
+      +'<div class="cyc-date">'+ds+'</div>'
+      +'<div class="cyc-sub">Cycle moyen : '+ci.avg+' j · '+ci.count+' cycle'+(ci.count>1?'s':'')+' enregistré'+(ci.count>1?'s':'')+'</div>'
+      +'</div>';
+  } else {
+    chw.innerHTML='<div style="padding:12px 0;font-size:12px;color:var(--ink3);">Enregistre au moins 2 cycles pour voir les prévisions.</div>';
+  }
+}
+
+// ── LOG (Excel table) ──
+function logNav(d){logM+=d;if(logM<0){logM=11;logY--;}if(logM>11){logM=0;logY++;}renderLog();}
+
+function renderLog(){
+  document.getElementById('log-month-name').textContent=MONTHS[logM]+' '+logY;
+  document.getElementById('log-sub').textContent='Cliquez sur une cellule pour modifier';
+  var dim=new Date(logY,logM+1,0).getDate();
+  var tbody=document.getElementById('log-tbody');
+  tbody.innerHTML='';
+  for(var d=1;d<=dim;d++){
+    var k=dk(logY,logM,d);
+    var e=getEntry(k);
+    var date=new Date(logY,logM,d);
+    var isToday=k===todayK;
+    var dow=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'][date.getDay()];
+    var tr2=document.createElement('tr');
+    // Date cell
+    var tdDate=document.createElement('td');
+    tdDate.innerHTML='<span class="td-date'+(isToday?' td-today':'')+'">'+dow+' '+d+'</span>';
+    tr2.appendChild(tdDate);
+    // Sport select
+    tr2.appendChild(makeSelectCell(k,'sport',e.sport||'',
+      [{v:'',l:'—'},{v:'repos',l:'Repos'},{v:'run',l:'Running'},{v:'pilates',l:'Pilates'},{v:'badminton',l:'Badminton'}]));
+    // Distance
+    tr2.appendChild(makeNumberCell(k,'runKm',e.runKm||'','0.0'));
+    // Écriture select
+    tr2.appendChild(makeSelectCell(k,'write',e.write||'',
+      [{v:'',l:'—'},{v:'non',l:'Non'},{v:'journal',l:'Journal'},{v:'fiction',l:'Fiction'},{v:'les deux',l:'Les deux'}]));
+    // Mots journal
+    tr2.appendChild(makeNumberCell(k,'wordsJournal',e.wordsJournal||'','0'));
+    // Mots fiction
+    tr2.appendChild(makeNumberCell(k,'wordsFiction',e.wordsFiction||'','0'));
+    // Poids
+    tr2.appendChild(makeNumberCell(k,'weight',e.weight||'','0.0'));
+    // Règles
+    tr2.appendChild(makeCheckCell(k,'period',!!e.period));
+    tbody.appendChild(tr2);
+  }
+}
+
+function makeSelectCell(k,field,val,opts){
+  var td=document.createElement('td');
+  var sel=document.createElement('select');
+  sel.className='xs';
+  opts.forEach(function(o){
+    var op=document.createElement('option');
+    op.value=o.v;op.textContent=o.l;
+    if(o.v===val)op.selected=true;
+    sel.appendChild(op);
+  });
+  sel.addEventListener('change',function(){
+    var v=sel.value;
+    if(!store[k])store[k]={};
+    if(v==='')delete store[k][field];else store[k][field]=v;
+    // clean
+    var e=store[k];if(e&&!e.sport&&!e.write&&!e.weight&&!e.period&&!e.wordsJournal&&!e.wordsFiction&&!e.runKm)delete store[k];
+    save();refreshAll();
+  });
+  // Color the row tag
+  if(val&&val!=='non'&&val!=='repos'&&val!==''){
+    sel.style.color='var(--green)';sel.style.fontWeight='600';
+  }
+  td.appendChild(sel);return td;
+}
+
+function makeNumberCell(k,field,val,placeholder){
+  var td=document.createElement('td');
+  var inp=document.createElement('input');
+  inp.type='number';inp.className='xc';
+  inp.value=val||'';inp.placeholder=placeholder;inp.step='any';inp.min='0';
+  inp.addEventListener('change',function(){
+    var v=parseFloat(inp.value);
+    if(!store[k])store[k]={};
+    if(isNaN(v)||inp.value===''){delete store[k][field];}
+    else{store[k][field]=v;}
+    var e=store[k];if(e&&!e.sport&&!e.write&&!e.weight&&!e.period&&!e.wordsJournal&&!e.wordsFiction&&!e.runKm)delete store[k];
+    save();refreshAll();
+  });
+  td.appendChild(inp);return td;
+}
+
+function makeCheckCell(k,field,val){
+  var td=document.createElement('td');td.style.textAlign='center';
+  var cb=document.createElement('input');cb.type='checkbox';
+  cb.checked=!!val;
+  cb.style.cssText='width:16px;height:16px;cursor:pointer;accent-color:var(--rose);margin:7px auto;display:block;';
+  cb.addEventListener('change',function(){
+    if(!store[k])store[k]={};
+    store[k][field]=cb.checked;
+    if(!cb.checked)delete store[k][field];
+    var e=store[k];if(e&&!e.sport&&!e.write&&!e.weight&&!e.period&&!e.wordsJournal&&!e.wordsFiction&&!e.runKm)delete store[k];
+    save();refreshAll();
+  });
+  td.appendChild(cb);return td;
+}
+
+function refreshAll(){
+  // Re-render current page + update any visible charts
+  var cur=document.querySelector('.page.on');
+  if(cur){
+    var id=cur.id.replace('p-','');
+    go(id);
+  }
+}
+
+// ── SPORT ──
+function renderSport(){
+  var m12=last12();
+  var mn=now.getMonth(),yr=now.getFullYear();
+  var cur=mdata(yr,mn),pM=mn===0?11:mn-1,pY=mn===0?yr-1:yr,prev=mdata(pY,pM);
+  var kg=document.getElementById('sport-kpis');kg.innerHTML='';
+  [{n:cur.sport,u:'',l:'Séances ce mois',c:'var(--green)'},{n:Math.round(cur.km*10)/10||'—',u:cur.km?'km':'',l:'Km courus',c:'var(--violet)'}].forEach(function(c){
+    var d=document.createElement('div');d.className='kpi';
+    d.innerHTML='<div class="kpi-accent" style="background:'+c.c+'"></div><div class="kpi-label">'+c.l+'</div><div class="kpi-num">'+c.n+'<span class="kpi-unit">'+c.u+'</span></div>';
+    kg.appendChild(d);
+  });
+  var types={run:0,pil:0,bad:0,other:0};
+  m12.forEach(function(m){types.run+=m.d.run;types.pil+=m.d.pilates;types.bad+=m.d.badminton;types.other+=Math.max(0,m.d.sport-m.d.run-m.d.pilates-m.d.badminton);});
+  var st=document.getElementById('sport-types');st.innerHTML='';
+  [{v:types.run,l:'Running'},{v:types.pil,l:'Pilates'},{v:types.bad,l:'Badminton'},{v:types.other,l:'Autre'}].forEach(function(t){
+    var d=document.createElement('div');d.className='kpi';d.style.textAlign='center';
+    d.innerHTML='<div class="kpi-num" style="font-size:28px;">'+t.v+'</div><div class="kpi-label" style="margin-top:4px;">'+t.l+'</div>';
+    st.appendChild(d);
+  });
+  var vals=m12.map(function(m){return m.d.sport;});
+  setTimeout(function(){
+    drawBars('sport-bar-svg','sport-bar-x',vals,'#16A34A',null,80);
+    document.getElementById('sport-bar-total').textContent=vals.reduce(function(a,b){return a+b;},0)+' séances';
+    drawBars('run-bar-svg','run-bar-x',m12.map(function(m){return Math.round(m.d.km);}), '#7C3AED',null,80);
+    document.getElementById('run-bar-total').textContent=Math.round(m12.reduce(function(a,m){return a+m.d.km;},0))+' km';
+  },30);
+  var sportDays=Object.keys(store).filter(function(k){var e=store[k];return e.sport&&e.sport!=='repos';});
+  var total=Object.keys(store).length;
+  var pct=total>0?Math.round(sportDays.length/total*100):0;
+  var rl=document.getElementById('sport-reg');rl.innerHTML='';
+  var d2=document.createElement('div');d2.className='prog-row';
+  d2.innerHTML='<div class="prog-name">Actifs</div><div class="prog-track"><div class="prog-fill" style="width:'+pct+'%;background:#16A34A;"></div></div><div class="prog-val">'+sportDays.length+' / '+total+' j</div><div class="prog-pct">'+pct+'%</div>';
+  rl.appendChild(d2);
+}
+
+// ── WRITE ──
+function renderWrite(){
+  var m12=last12();
+  var mn=now.getMonth(),yr=now.getFullYear();
+  var cur=mdata(yr,mn);
+  var totalJ=m12.reduce(function(a,m){return a+m.d.wj;},0);
+  var totalF=m12.reduce(function(a,m){return a+m.d.wf;},0);
+  var wk=document.getElementById('write-kpis');wk.innerHTML='';
+  [{n:fmt(cur.words),l:'Mots ce mois',s:fmt(cur.wj)+' journal · '+fmt(cur.wf)+' fiction',c:'var(--amber)'},
+   {n:fmt(totalJ+totalF),l:'Total 12 mois',s:fmt(totalJ)+' journal · '+fmt(totalF)+' fiction',c:'var(--violet)'}
+  ].forEach(function(c){
+    var d=document.createElement('div');d.className='kpi';
+    d.innerHTML='<div class="kpi-accent" style="background:'+c.c+'"></div><div class="kpi-label">'+c.l+'</div><div class="kpi-num" style="font-size:28px;">'+c.n+'</div><div style="font-size:11px;color:var(--ink3);margin-top:4px;">'+c.s+'</div>';
+    wk.appendChild(d);
+  });
+  document.getElementById('write-bar-total').textContent=fmt(totalJ+totalF)+' mots';
+  setTimeout(function(){
+    drawBars('write-bar-svg','write-bar-x',m12.map(function(m){return m.d.words;}),'#D97706',null,80);
+    // Stacked
+    var svg=document.getElementById('write-split-svg');
+    if(!svg)return;
+    svg.innerHTML='';
+    var W=svg.parentElement.clientWidth||300,H=80;
+    svg.setAttribute('width',W);svg.setAttribute('height',H);svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    var maxS=Math.max.apply(null,m12.map(function(m){return(m.d.wj||0)+(m.d.wf||0);}));if(!maxS)maxS=1;
+    var n=m12.length,gap=2,bw=(W-gap*(n-1))/n;
+    m12.forEach(function(m,i){
+      var hj=Math.round((m.d.wj/maxS)*(H-4));
+      var hf=Math.round((m.d.wf/maxS)*(H-4));
+      var x=i*(bw+gap);
+      if(hj>0)svg.appendChild(svgEl('rect',{x:x,y:H-hj,width:Math.max(bw,2),height:hj,fill:i===n-1?'#D97706':'#D9770655',rx:'2 2 0 0'}));
+      if(hf>0)svg.appendChild(svgEl('rect',{x:x,y:H-hj-hf,width:Math.max(bw,2),height:hf,fill:i===n-1?'#7C3AED':'#7C3AED55',rx:'0'}));
+    });
+    var xEl=document.getElementById('write-split-x');
+    if(xEl){xEl.innerHTML='';m12.forEach(function(m){var d=document.createElement('div');d.style.cssText='flex:1;text-align:center;font-size:7px;color:var(--ink4);';d.textContent=m.lbl;xEl.appendChild(d);});}
+  },30);
+}
+
+// ── CYCLE ──
+function renderCycle(){
+  var ci=cycleInfo();
+  var ch=document.getElementById('cyc-page-hero');
+  var cg=document.getElementById('cyc-kpis');
+  var hl=document.getElementById('cyc-hist');
+  cg.innerHTML='';hl.innerHTML='';
+
+  if(!ci){
+    ch.innerHTML='<div style="padding:14px;background:var(--rose-bg);border:1px solid var(--rose-bd);border-radius:10px;font-size:13px;color:var(--ink2);line-height:1.7;margin-bottom:14px;">Enregistre tes règles sur au moins 2 cycles pour voir l\'analyse.</div>';
+    document.getElementById('phase-wrap').style.display='none';return;
+  }
+  var t=new Date();t.setHours(0,0,0,0);
+  var diff=Math.round((ci.next-t)/864e5);
+  var ds=ci.next.getDate()+' '+MONTHS[ci.next.getMonth()]+' '+ci.next.getFullYear();
+  ch.innerHTML='<div class="cyc-card">'
+    +'<div class="cyc-label">Prochaines règles</div>'
+    +'<div class="cyc-num">'+(diff<0?'Retard de '+Math.abs(diff)+' j':diff===0?"Aujourd'hui":diff===1?'Demain':'Dans '+diff+' j')+'</div>'
+    +'<div class="cyc-date">'+ds+'</div>'
+    +'<div class="cyc-sub">'+ci.count+' cycle'+(ci.count>1?'s':'')+' · Cycle moyen : '+ci.avg+' jours</div>'
+    +'</div>';
+  var mn2=Math.min.apply(null,ci.gaps),mx2=Math.max.apply(null,ci.gaps),v=mx2-mn2;
+  [{v:ci.avg+' j',l:'Durée moyenne',n:'de ton cycle'},{v:v<=3?'Très régulier':v<=6?'Assez régulier':'Variable',l:'Régularité',n:'écart : '+v+' j'},{v:mn2+' j',l:'Plus court',n:''},{v:mx2+' j',l:'Plus long',n:''}].forEach(function(k){
+    var d=document.createElement('div');d.className='cyc-kpi';
+    d.innerHTML='<div class="cyc-kpi-v">'+k.v+'</div><div class="cyc-kpi-l">'+k.l+'</div>'+(k.n?'<div class="cyc-kpi-n">'+k.n+'</div>':'');
+    cg.appendChild(d);
+  });
+  var ls=ci.starts[ci.starts.length-1];
+  var dic=Math.round((t-ls)/864e5)+1;
+  if(dic>0&&dic<=ci.avg){
+    document.getElementById('phase-wrap').style.display='block';
+    var phases=[{d:5,c:'#DC2626'},{d:8,c:'#D97706'},{d:3,c:'#16A34A'},{d:ci.avg-16,c:'#7C3AED'}];
+    var pb=document.getElementById('phase-bar');pb.innerHTML='';
+    phases.forEach(function(ph){var s=document.createElement('div');s.className='pseg';s.style.width=Math.round(ph.d/ci.avg*100)+'%';s.style.background=ph.c;s.style.opacity='0.7';pb.appendChild(s);});
+    var mk=document.createElement('div');mk.style.cssText='position:absolute;left:calc('+Math.round(dic/ci.avg*100)+'% - 1.5px);top:-4px;width:3px;height:20px;background:var(--ink);border-radius:2px;';pb.appendChild(mk);
+    var pn=['Menstruelle (j1–5)','Folliculaire (j6–13)','Ovulation (j14–16)','Lutéale (j17–'+ci.avg+')'];
+    document.getElementById('phase-label').textContent='Jour '+dic+' — '+pn[dic<=5?0:dic<=13?1:dic<=16?2:3];
+  } else {document.getElementById('phase-wrap').style.display='none';}
+  ci.starts.forEach(function(s,i){
+    if(i===0)return;
+    var row=document.createElement('div');row.className='hist-row';
+    var len=ci.gaps[i-1],d3=len-ci.avg;
+    row.innerHTML='<div class="hist-i">'+i+'</div>'
+      +'<div style="flex:1"><div class="hist-d">'+s.getDate()+' '+MS[s.getMonth()]+' '+s.getFullYear()+'</div>'
+      +'<div class="hist-bar" style="width:'+Math.round(len/ci.avg*80)+'px"></div></div>'
+      +'<div style="text-align:right"><div class="hist-l">'+len+' j</div>'
+      +'<div class="hist-diff '+(d3===0?'':d3>0?'up':'dn')+'">'+(d3===0?'=':d3>0?'+'+d3:d3)+' j</div></div>';
+    hl.insertBefore(row,hl.firstChild);
+  });
 }
 
 // ── CALENDAR ──
@@ -699,8 +997,7 @@ function renderCal(){
   var nd=1;while(cells.length%7!==0)cells.push({d:nd++,m:vm+1,y:vy,o:true});
   cells.forEach(function(c){
     var k=dk(c.y,c.m,c.d),e=store[k]||{};
-    var isToday=k===todayK&&!c.o;
-    var isPeriod=!c.o&&e.period,isPred=!c.o&&pred[k]&&!e.period;
+    var isToday=k===todayK&&!c.o,isPeriod=!c.o&&e.period,isPred=!c.o&&pred[k]&&!e.period;
     var div=document.createElement('div');
     div.className='day'+(c.o?' other':'')+(isToday?' today':'')+(isPeriod?' period':isPred?' predicted':'');
     var num=document.createElement('div');num.className='dn';num.textContent=c.d;div.appendChild(num);
@@ -711,7 +1008,7 @@ function renderCal(){
       if(e.weight){var r=document.createElement('div');r.className='dd dd-weight';dots.appendChild(r);}
       div.appendChild(dots);
     }
-    if(!c.o)(function(cy,cm,cd){div.onclick=function(){openSheet(cy,cm,cd);};})(c.y,c.m,c.d);
+    if(!c.o)(function(cy,cm2,cd){div.onclick=function(){logY=cy;logM=cm2;go('log');};})(c.y,c.m,c.d);
     cal.appendChild(div);
   });
   var md=mdata(vy,vm);
@@ -732,209 +1029,9 @@ function renderCal(){
 }
 function nav(d){vm+=d;if(vm<0){vm=11;vy--;}if(vm>11){vm=0;vy++;}renderCal();}
 
-// ── SPORT ──
-function renderSport(){
-  var m12=last12();
-  var mn=now.getMonth(),yr=now.getFullYear();
-  var cur=mdata(yr,mn),prevM=mn===0?11:mn-1,prevY=mn===0?yr-1:yr,prev=mdata(prevY,prevM);
-
-  var kr=document.getElementById('sport-kpi');kr.innerHTML='';
-  [{n:cur.sport,u:'',l:'Séances ce mois',c:'#2D7A4F'},{n:Math.round(cur.km*10)/10||'—',u:cur.km?'km':'',l:'Km courus',c:'#2858A0'}].forEach(function(c){
-    var d=document.createElement('div');d.className='kc';
-    d.innerHTML='<div class="kc-bar" style="background:'+c.c+'"></div><div class="kc-num">'+c.n+'<span class="kc-unit">'+c.u+'</span></div><div class="kc-label">'+c.l+'</div>';
-    kr.appendChild(d);
-  });
-
-  // By type 12 months
-  var types={run:0,pilates:0,badminton:0,autre:0};
-  m12.forEach(function(m){types.run+=m.d.run;types.pilates+=m.d.pilates;types.badminton+=m.d.badminton;types.autre+=m.d.sport-m.d.run-m.d.pilates-m.d.badminton;});
-  var tr=document.getElementById('sport-types');tr.innerHTML='';
-  [{v:types.run,l:'Running'},{v:types.pilates,l:'Pilates'},{v:types.badminton,l:'Badminton'},{v:Math.max(0,types.autre),l:'Autre'}].forEach(function(t){
-    var d=document.createElement('div');d.className='stype';
-    d.innerHTML='<div class="stype-num">'+t.v+'</div><div class="stype-lbl">'+t.l+'</div>';
-    tr.appendChild(d);
-  });
-
-  // Bar charts
-  function barChart(barEl,xEl,vals,color,totEl,suffix){
-    barEl.innerHTML='';xEl.innerHTML='';
-    var max=Math.max.apply(null,vals.map(function(v){return v||0;}));if(!max)max=1;
-    vals.forEach(function(v,i){
-      var col=document.createElement('div');col.className='bc';
-      var bar=document.createElement('div');bar.className='bb';
-      bar.style.height=Math.round(((v||0)/max)*72)+'px';
-      bar.style.background=i===11?color:color+'44';
-      var bv=document.createElement('div');bv.className='bv';bv.textContent=v||'';
-      var bl=document.createElement('div');bl.className='bl';bl.textContent=m12[i].lbl;
-      col.appendChild(bar);col.appendChild(bv);col.appendChild(bl);barEl.appendChild(col);
-    });
-    if(totEl)totEl.textContent=vals.reduce(function(a,v){return a+(v||0);},0)+(suffix||'');
-  }
-  barChart(document.getElementById('sport-bar'),document.getElementById('sport-bar-x'),m12.map(function(m){return m.d.sport;}),'#2D7A4F',document.getElementById('sport-total-val'),' séances');
-  barChart(document.getElementById('run-bar'),document.getElementById('run-bar-x'),m12.map(function(m){return Math.round(m.d.km);}),'#2858A0',document.getElementById('run-total-val'),' km');
-
-  // Regularity
-  var rl=document.getElementById('sport-reg-list');rl.innerHTML='';
-  var sportDays=Object.keys(store).filter(function(k){var e=store[k];return e.sport&&e.sport!=='repos';});
-  var totalDays=Object.keys(store).length;
-  var pct=totalDays>0?Math.round(sportDays.length/totalDays*100):0;
-  var d=document.createElement('div');d.className='prog-item';
-  d.innerHTML='<div class="prog-header"><span class="prog-name">Jours actifs / jours saisis</span><span class="prog-val">'+sportDays.length+' / '+totalDays+'</span></div>'
-    +'<div class="prog-track"><div class="prog-fill" style="width:'+pct+'%;background:#2D7A4F"></div></div>'
-    +'<div class="prog-sub">'+pct+'% des jours enregistrés</div>';
-  rl.appendChild(d);
-}
-
-// ── ÉCRITURE ──
-function renderWrite(){
-  var m12=last12();
-  var mn=now.getMonth(),yr=now.getFullYear();
-  var cur=mdata(yr,mn);
-
-  var wk=document.getElementById('write-kpi');wk.innerHTML='';
-  var totalJ=m12.reduce(function(a,m){return a+m.d.wj;},0);
-  var totalF=m12.reduce(function(a,m){return a+m.d.wf;},0);
-  [{n:fmt(cur.words),l:'Mots ce mois',s:fmt(cur.wj)+' journal · '+fmt(cur.wf)+' fiction'},
-   {n:fmt(totalJ+totalF),l:'Total 12 mois',s:fmt(totalJ)+' journal · '+fmt(totalF)+' fiction'}
-  ].forEach(function(c){
-    var d=document.createElement('div');d.className='ws-card';
-    d.innerHTML='<div class="ws-num">'+c.n+'</div><div class="ws-lbl">'+c.l+'</div><div class="ws-sub">'+c.s+'</div>';
-    wk.appendChild(d);
-  });
-
-  document.getElementById('write-total-val').textContent=fmt(totalJ+totalF)+' mots';
-  var wb=document.getElementById('write-bar'),wx=document.getElementById('write-bar-x');
-  wb.innerHTML='';wx.innerHTML='';
-  var max=Math.max.apply(null,m12.map(function(m){return m.d.words||0;}));if(!max)max=1;
-  m12.forEach(function(m,i){
-    var col=document.createElement('div');col.className='bc';
-    var bar=document.createElement('div');bar.className='bb';
-    bar.style.height=Math.round(((m.d.words||0)/max)*72)+'px';
-    bar.style.background=i===11?'#B86820':'#B8682044';
-    var bv=document.createElement('div');bv.className='bv';bv.textContent=m.d.words?fmt(m.d.words):'';
-    var bl=document.createElement('div');bl.className='bl';bl.textContent=m.lbl;
-    col.appendChild(bar);col.appendChild(bv);col.appendChild(bl);wb.appendChild(col);
-    var x=document.createElement('div');x.style.cssText='flex:1;font-size:7px;color:var(--ink3);text-align:center;';x.textContent=m.lbl;wx.appendChild(x);
-  });
-
-  // Stacked journal vs fiction
-  var sb=document.getElementById('write-split-bar'),sx=document.getElementById('write-split-x');
-  sb.innerHTML='';sx.innerHTML='';
-  var maxS=Math.max.apply(null,m12.map(function(m){return(m.d.wj||0)+(m.d.wf||0);}));if(!maxS)maxS=1;
-  m12.forEach(function(m,i){
-    var col=document.createElement('div');col.className='bc';col.style.flexDirection='column-reverse';
-    var bj=document.createElement('div');bj.className='bb';
-    bj.style.height=Math.round(((m.d.wj||0)/maxS)*72)+'px';
-    bj.style.background=i===11?'#B86820':'#B8682055';
-    bj.style.borderRadius='0';
-    var bf=document.createElement('div');bf.className='bb';
-    bf.style.height=Math.round(((m.d.wf||0)/maxS)*72)+'px';
-    bf.style.background=i===11?'#2858A0':'#2858A044';
-    bf.style.borderRadius='3px 3px 0 0';
-    var bl=document.createElement('div');bl.className='bl';bl.textContent=m.lbl;
-    col.appendChild(bf);col.appendChild(bj);col.appendChild(bl);sb.appendChild(col);
-  });
-}
-
-// ── CYCLE ──
-function renderCycle(){
-  var ci=cycleInfo();
-  var hw=document.getElementById('cyc-hero-wrap');
-  var cg=document.getElementById('cyc-grid');
-  var hl=document.getElementById('cyc-hist-list');
-  cg.innerHTML='';hl.innerHTML='';
-
-  if(!ci){
-    hw.innerHTML='<div style="margin:0 12px 10px;padding:16px;background:var(--rose-light);border:1px solid var(--rose-mid);border-radius:10px;font-size:13px;color:var(--ink2);line-height:1.7;">Enregistre tes règles sur au moins 2 cycles pour voir l\'analyse.</div>';
-    document.getElementById('phase-card').style.display='none';return;
-  }
-
-  var t=new Date();t.setHours(0,0,0,0);
-  var diff=Math.round((ci.next-t)/864e5);
-  var ds=ci.next.getDate()+' '+MONTHS[ci.next.getMonth()]+' '+ci.next.getFullYear();
-  hw.innerHTML='<div class="cyc-hero">'
-    +'<div class="cyc-hero-lbl">Prochaines règles</div>'
-    +'<div class="cyc-hero-num">'+(diff<0?'Retard de '+Math.abs(diff)+' j':diff===0?"Aujourd'hui":diff===1?'Demain':'Dans '+diff+' j')+'</div>'
-    +'<div class="cyc-hero-date">'+ds+'</div>'
-    +'<div class="cyc-hero-sub">'+ci.count+' cycle'+(ci.count>1?'s':'')+' enregistré'+(ci.count>1?'s':'')+' · Cycle moyen : '+ci.avg+' jours</div>'
-    +'</div>';
-
-  var mn=Math.min.apply(null,ci.gaps),mx=Math.max.apply(null,ci.gaps),v=mx-mn;
-  [{v:ci.avg+' j',l:'Durée moyenne',n:'de ton cycle'},{v:v<=3?'Très régulier':v<=6?'Assez régulier':'Variable',l:'Régularité',n:'écart : '+v+' j'},{v:mn+' j',l:'Plus court',n:''},{v:mx+' j',l:'Plus long',n:''}].forEach(function(k){
-    var d=document.createElement('div');d.className='ck';
-    d.innerHTML='<div class="ck-v">'+k.v+'</div><div class="ck-l">'+k.l+'</div>'+(k.n?'<div class="ck-n">'+k.n+'</div>':'');
-    cg.appendChild(d);
-  });
-
-  var ls=ci.starts[ci.starts.length-1];
-  var dic=Math.round((t-ls)/864e5)+1;
-  if(dic>0&&dic<=ci.avg){
-    document.getElementById('phase-card').style.display='block';
-    var phases=[{d:5,c:'#A83050'},{d:8,c:'#B86820'},{d:3,c:'#2D7A4F'},{d:ci.avg-16,c:'#886018'}];
-    var pb=document.getElementById('phase-bar');pb.innerHTML='';
-    phases.forEach(function(ph){var s=document.createElement('div');s.className='pseg';s.style.width=Math.round(ph.d/ci.avg*100)+'%';s.style.background=ph.c;pb.appendChild(s);});
-    var mk=document.createElement('div');mk.style.cssText='position:absolute;left:calc('+Math.round(dic/ci.avg*100)+'% - 2px);top:-3px;width:3px;height:16px;background:var(--ink);border-radius:2px;';pb.appendChild(mk);
-    var pn=['Menstruelle (j1-5)','Folliculaire (j6-13)','Ovulation (j14-16)','Lutéale (j17-'+ci.avg+')'];
-    document.getElementById('phase-lbl-text').textContent='Jour '+dic+' — '+pn[dic<=5?0:dic<=13?1:dic<=16?2:3];
-  } else {document.getElementById('phase-card').style.display='none';}
-
-  ci.starts.forEach(function(s,i){
-    if(i===0)return;
-    var row=document.createElement('div');row.className='ch-row';
-    var len=ci.gaps[i-1];
-    var diff2=len-ci.avg;
-    row.innerHTML='<div class="ch-i">'+i+'</div>'
-      +'<div style="flex:1"><div class="ch-d">'+s.getDate()+' '+MS[s.getMonth()]+' '+s.getFullYear()+'</div>'
-      +'<div class="ch-bar" style="width:'+Math.round(len/ci.avg*80)+'px;margin-top:4px;"></div></div>'
-      +'<div><div class="ch-l">'+len+' j</div><div style="font-size:10px;color:'+(diff2===0?'var(--ink3)':diff2>0?'#A83050':'#2D7A4F')+';">'+(diff2===0?'=':diff2>0?'+'+diff2:diff2)+' j</div></div>';
-    hl.insertBefore(row,hl.firstChild);
-  });
-}
-
-// ── SHEET ──
-function openSheet(y,m,d){
-  eKey=dk(y,m,d);
-  var e=store[eKey]||{};
-  tmp={sport:e.sport||'repos',runKm:e.runKm||'',write:e.write||'non',wj:e.wordsJournal||0,wf:e.wordsFiction||0,weight:e.weight||'',period:!!e.period};
-  var date=new Date(y,m,d);
-  document.getElementById('sh-date').textContent=DAYS[date.getDay()]+' '+d+' '+MONTHS[m];
-  document.getElementById('run-val').value=tmp.runKm||'';
-  document.getElementById('wj-val').value=tmp.wj||'';
-  document.getElementById('wf-val').value=tmp.wf||'';
-  document.getElementById('weight-val').value=tmp.weight||'';
-  syncChips();
-  document.getElementById('overlay').classList.add('on');
-}
-function closeSheet(e){if(!e||e.target===document.getElementById('overlay'))document.getElementById('overlay').classList.remove('on');}
-function setSport(v){tmp.sport=v;syncChips();}
-function setWrite(v){tmp.write=v;syncChips();}
-function setPeriod(v){tmp.period=v;syncChips();}
-function syncChips(){
-  ['repos','run','pilates','badminton'].forEach(function(s){var el=document.getElementById('c-'+s);if(el)el.className='chip'+(tmp.sport===s?' cs':'');});
-  ['wno','journal','fiction','both'].forEach(function(s){var map={wno:'non',journal:'journal',fiction:'fiction',both:'les deux'};var el=document.getElementById('c-'+s);if(el)el.className='chip'+(tmp.write===map[s]?' cw':'');});
-  document.getElementById('wj-field').style.display=(tmp.write==='journal'||tmp.write==='les deux')?'block':'none';
-  document.getElementById('wf-field').style.display=(tmp.write==='fiction'||tmp.write==='les deux')?'block':'none';
-  document.getElementById('run-field').style.display=(tmp.sport==='run')?'block':'none';
-  document.getElementById('c-pno').className='chip'+(tmp.period?'':' cn');
-  document.getElementById('c-pyes').className='chip'+(tmp.period?' cp':'');
-}
-function save(){
-  var w=parseFloat(document.getElementById('weight-val').value);
-  var wj=parseInt(document.getElementById('wj-val').value)||0;
-  var wf=parseInt(document.getElementById('wf-val').value)||0;
-  var km=parseFloat(document.getElementById('run-val').value)||0;
-  tmp.weight=isNaN(w)?null:w;
-  tmp.wj=(tmp.write==='journal'||tmp.write==='les deux')?wj:0;
-  tmp.wf=(tmp.write==='fiction'||tmp.write==='les deux')?wf:0;
-  tmp.runKm=(tmp.sport==='run')?km:0;
-  var empty=tmp.sport==='repos'&&tmp.write==='non'&&!tmp.weight&&!tmp.period&&!tmp.wj&&!tmp.wf;
-  if(empty)delete store[eKey];
-  else store[eKey]={sport:tmp.sport,runKm:tmp.runKm,write:tmp.write,wordsJournal:tmp.wj,wordsFiction:tmp.wf,weight:tmp.weight,period:tmp.period};
-  localStorage.setItem('j2',JSON.stringify(store));
-  document.getElementById('overlay').classList.remove('on');
-  var cur=document.querySelector('.page.on').id.replace('p-','');
-  go(cur);
-}
+// Init
+document.getElementById('top-sub').textContent=MONTHS[now.getMonth()]+' '+now.getFullYear();
+document.getElementById('top-date').textContent=now.getDate()+' '+MONTHS[now.getMonth()]+' '+now.getFullYear();
 renderHome();
 </script>
 </body>
