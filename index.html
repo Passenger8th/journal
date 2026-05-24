@@ -67,7 +67,7 @@ body.dark{
 
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;font-size:14px;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:var(--nav-h);transition:background 0.2s,color 0.2s;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:calc(var(--nav-h) + 24px);transition:background 0.2s,color 0.2s;}
 
 .top-header{background:var(--white);border-bottom:1px solid var(--line);height:var(--header-h);display:flex;align-items:center;padding:0 16px;gap:12px;position:sticky;top:0;z-index:90;transition:background 0.2s,border-color 0.2s;}
 .th-burger{width:36px;height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;border-radius:8px;background:none;border:none;padding:0;flex-shrink:0;}
@@ -546,7 +546,7 @@ tr:hover td{background:#F9FAFB;}
 
 <!-- ══ ALIMENTATION ══ -->
 <div class="page" id="p-alim">
-  <div class="content">
+  <div class="content" style="padding-bottom:32px;">
     <div class="sh"><div class="sh-title">Alimentation</div><div class="sh-sub">Suivi nutritionnel quotidien</div></div>
 
     <!-- Navigation jour -->
@@ -1219,100 +1219,386 @@ function alimNav(d){
 // Format: [nom, kcal_par_portion, desc_portion]
 // ═══════════════════════════════════════
 var FOOD_DB = [
-  // Boissons
-  ["Café noir",2,"1 tasse (200ml)"],["Café au lait (lait écrémé)",30,"1 tasse"],["Café au lait (lait entier)",60,"1 tasse"],
-  ["Thé nature",2,"1 tasse"],["Tisane",3,"1 tasse"],["Eau",0,"1 verre"],
-  ["Jus d'orange (pressé)",55,"1 verre (150ml)"],["Jus de pomme",70,"1 verre (150ml)"],
-  ["Lait entier",75,"1 verre (150ml)"],["Lait demi-écrémé",55,"1 verre (150ml)"],
-  ["Lait d'amande",20,"1 verre (150ml)"],["Lait de soja",50,"1 verre (150ml)"],
-  ["Lait d'avoine",60,"1 verre (150ml)"],["Smoothie fruits",120,"1 verre (200ml)"],
-  ["Soda (Coca-Cola)",90,"1 canette (250ml)"],["Eau gazeuse",0,"1 verre"],
-  // Petit-déjeuner
-  ["Yaourt nature (0%)",57,"1 pot (125g)"],["Yaourt grec nature",88,"1 pot (100g)"],
-  ["Yaourt aux fruits",105,"1 pot (125g)"],["Skyr nature",65,"1 pot (125g)"],
-  ["Fromage blanc 0%",48,"1 pot (100g)"],["Fromage blanc 20%",75,"1 pot (100g)"],
-  ["Pain complet (tranche)",70,"1 tranche (30g)"],["Pain de mie blanc (tranche)",65,"1 tranche (25g)"],
-  ["Baguette (portion)",130,"1/6 baguette (50g)"],["Pain au son",60,"1 tranche (25g)"],
-  ["Flocons d'avoine",150,"1 portion (40g)"],["Müesli",180,"1 portion (45g)"],
-  ["Granola",230,"1 portion (50g)"],["Corn flakes",140,"1 portion (35g)"],
-  ["Beurre",75,"1 noisette (10g)"],["Margarine",72,"1 noisette (10g)"],
-  ["Confiture",50,"1 c. à soupe (15g)"],["Miel",50,"1 c. à soupe (15g)"],
-  ["Nutella",100,"1 c. à soupe (15g)"],
-  ["Oeuf à la coque",75,"1 oeuf (55g)"],["Oeufs brouillés (2)",165,"2 oeufs avec beurre"],
-  ["Omelette nature (2 oeufs)",155,"2 oeufs"],
-  ["Banane",95,"1 banane moyenne (100g)"],["Pomme",55,"1 pomme (130g)"],
-  ["Poire",55,"1 poire (130g)"],["Orange",55,"1 orange (130g)"],
-  ["Kiwi",40,"1 kiwi (70g)"],["Fraises",30,"1 portion (100g)"],
-  ["Framboises",25,"1 portion (80g)"],["Myrtilles",45,"1 portion (100g)"],
-  ["Pastèque",30,"1 portion (150g)"],["Melon",40,"1 portion (150g)"],
-  ["Raisin",60,"1 grappe (80g)"],["Ananas",40,"1 portion (100g)"],
-  ["Mangue",60,"1 portion (100g)"],
-  // Déjeuner / dîner - protéines
-  ["Poulet rôti (blanc)",165,"1 portion (150g)"],["Poulet sauté (avec huile)",210,"1 portion (150g)"],
-  ["Filet de saumon grillé",260,"1 portion (150g)"],["Cabillaud vapeur",120,"1 portion (150g)"],
-  ["Thon (boîte au naturel)",150,"1 boîte (120g)"],["Sardines (huile égouttées)",175,"1 portion (100g)"],
-  ["Crevettes",80,"1 portion (100g)"],["Steak haché 5%",155,"1 steak (120g)"],
-  ["Steak haché 15%",195,"1 steak (120g)"],["Boeuf bourguignon",280,"1 portion (300g)"],
-  ["Escalope de dinde",130,"1 portion (120g)"],["Jambon blanc (tranche)",35,"1 tranche (40g)"],
-  ["Jambon de pays (tranche)",60,"1 tranche (30g)"],["Oeufs durs (2)",155,"2 oeufs"],
-  ["Tofu nature",80,"1 portion (100g)"],["Tofu sauté",120,"1 portion (100g)"],
-  ["Lentilles cuites",116,"1 portion (150g)"],["Pois chiches cuits",160,"1 portion (150g)"],
-  ["Haricots rouges cuits",130,"1 portion (150g)"],["Haricots blancs cuits",124,"1 portion (150g)"],
-  // Féculents
-  ["Riz blanc cuit",175,"1 portion (175g)"],["Riz complet cuit",145,"1 portion (175g)"],
-  ["Pâtes cuites",210,"1 portion (200g)"],["Pâtes complètes cuites",195,"1 portion (200g)"],
-  ["Pommes de terre vapeur",130,"2 pommes de terre (150g)"],["Pommes de terre sautées",200,"1 portion (150g)"],
-  ["Purée de pommes de terre",180,"1 portion (200g)"],["Frites",320,"1 portion (150g)"],
-  ["Quinoa cuit",185,"1 portion (180g)"],["Boulgour cuit",150,"1 portion (180g)"],
-  ["Semoule cuite",170,"1 portion (180g)"],["Pain (sandwich complet)",120,"1/2 baguette (80g)"],
-  // Légumes
-  ["Salade verte",15,"1 portion (80g)"],["Tomates",20,"1 tomate (120g)"],
-  ["Concombre",12,"1 portion (100g)"],["Carottes râpées",40,"1 portion (100g)"],
-  ["Brocolis vapeur",35,"1 portion (150g)"],["Courgettes poêlées",50,"1 portion (150g)"],
-  ["Épinards",35,"1 portion (150g)"],["Haricots verts",35,"1 portion (150g)"],
-  ["Champignons poêlés",40,"1 portion (100g)"],["Poivrons",35,"1 portion (120g)"],
-  ["Asperges",30,"1 portion (120g)"],["Aubergines",45,"1 portion (150g)"],
-  ["Avocat",160,"1/2 avocat (80g)"],["Maïs",80,"1 portion (80g)"],
-  ["Petits pois",80,"1 portion (100g)"],
-  // Fromages
-  ["Emmental (tranche)",95,"1 tranche (25g)"],["Comté (tranche)",100,"1 tranche (25g)"],
-  ["Camembert (portion)",85,"1 portion (30g)"],["Brie (portion)",100,"1 portion (30g)"],
-  ["Chèvre frais",50,"1 rondelle (20g)"],["Feta",50,"1 portion (30g)"],
-  ["Mozzarella",80,"1 portion (35g)"],["Parmesan râpé",25,"1 c. à soupe (8g)"],
-  ["Gruyère râpé",100,"1 portion (25g)"],
-  // Snacks / collations
-  ["Barre de chocolat noir (1 carré)",50,"1 carré (10g)"],["Chocolat noir (tablette)",175,"2 rangées (35g)"],
-  ["Amandes",170,"1 poignée (30g)"],["Noix",185,"1 poignée (30g)"],
+  // ── BOISSONS CHAUDES ──
+  ["Café noir",2,"1 tasse (200ml)"],["Café allongé",3,"1 tasse (250ml)"],
+  ["Café au lait lait écrémé",30,"1 grand bol (250ml)"],["Café au lait lait demi-écrémé",55,"1 grand bol (250ml)"],
+  ["Café au lait lait entier",80,"1 grand bol (250ml)"],["Café noisette",20,"1 tasse"],
+  ["Cappuccino",80,"1 tasse (150ml)"],["Latte macchiato",140,"1 grand verre (300ml)"],
+  ["Café latte soja",90,"1 grand verre (250ml)"],["Expresso",5,"1 tasse (30ml)"],
+  ["Thé nature",2,"1 tasse"],["Thé vert",2,"1 tasse"],["Thé noir",2,"1 tasse"],
+  ["Thé au lait",40,"1 tasse avec lait demi-écrémé"],["Tisane",3,"1 tasse"],
+  ["Infusion fruits",4,"1 tasse"],["Chocolat chaud lait demi-écrémé",180,"1 bol (250ml)"],
+  ["Chocolat chaud lait écrémé",130,"1 bol (250ml)"],["Lait chaud entier",150,"1 bol (250ml)"],
+  ["Lait chaud demi-écrémé",115,"1 bol (250ml)"],
+
+  // ── BOISSONS FROIDES ──
+  ["Eau",0,"1 verre (250ml)"],["Eau gazeuse",0,"1 verre (250ml)"],
+  ["Eau citronnée",8,"1 grand verre"],["Limonade maison",45,"1 verre (200ml)"],
+  ["Jus d'orange pressé",55,"1 verre (150ml)"],["Jus d'orange industriel",70,"1 verre (200ml)"],
+  ["Jus de pomme",75,"1 verre (200ml)"],["Jus de raisin",120,"1 verre (200ml)"],
+  ["Jus de tomate",35,"1 verre (200ml)"],["Jus de carotte",60,"1 verre (200ml)"],
+  ["Jus de pamplemousse",65,"1 verre (200ml)"],["Jus d'ananas",90,"1 verre (200ml)"],
+  ["Smoothie fruits rouges",130,"1 verre (250ml)"],["Smoothie banane mangue",180,"1 verre (250ml)"],
+  ["Lait demi-écrémé",95,"1 verre (200ml)"],["Lait entier",125,"1 verre (200ml)"],
+  ["Lait écrémé",65,"1 verre (200ml)"],["Lait d'amande non sucré",25,"1 verre (200ml)"],
+  ["Lait d'amande sucré",60,"1 verre (200ml)"],["Lait de soja nature",65,"1 verre (200ml)"],
+  ["Lait d'avoine",80,"1 verre (200ml)"],["Lait de coco (boisson)",40,"1 verre (200ml)"],
+  ["Lait de riz",95,"1 verre (200ml)"],
+  ["Soda cola",105,"1 canette (330ml)"],["Soda cola zéro",2,"1 canette (330ml)"],
+  ["Limonade/sprite",100,"1 canette (330ml)"],["Orangeade",90,"1 canette (330ml)"],
+  ["Ice tea pêche",90,"1 canette (330ml)"],["Ice tea citron",85,"1 canette (330ml)"],
+  ["Kombucha",35,"1 bouteille (330ml)"],["Kéfir de fruit",40,"1 verre (200ml)"],
+
+  // ── PRODUITS LAITIERS PETIT-DÉJ ──
+  ["Yaourt nature (0%)",57,"1 pot (125g)"],["Yaourt nature (3,5%)",80,"1 pot (125g)"],
+  ["Yaourt grec nature",88,"1 pot (100g)"],["Yaourt grec 0%",57,"1 pot (100g)"],
+  ["Yaourt aux fruits sucré",110,"1 pot (125g)"],["Yaourt aromatisé",95,"1 pot (125g)"],
+  ["Yaourt brassé nature",80,"1 pot (125g)"],["Yaourt à boire",95,"1 bouteille (100ml)"],
+  ["Skyr nature",65,"1 pot (125g)"],["Skyr vanille",95,"1 pot (125g)"],
+  ["Fromage blanc 0%",55,"1 pot (100g)"],["Fromage blanc 20%",80,"1 pot (100g)"],
+  ["Fromage blanc 40%",120,"1 pot (100g)"],["Faisselle 0%",45,"1 pot (100g)"],
+  ["Petit suisse nature",65,"2 pots (60g)"],["Petit suisse sucré",90,"2 pots (60g)"],
+  ["Fromage frais type Saint-Morêt",70,"1 portion (30g)"],
+  ["Crème fraîche épaisse",200,"2 c. à soupe (30ml)"],["Crème fraîche légère",90,"2 c. à soupe (30ml)"],
+
+  // ── PAINS & CÉRÉALES ──
+  ["Pain complet (tranche)",70,"1 tranche (30g)"],["Pain de campagne (tranche)",80,"1 tranche (35g)"],
+  ["Pain de seigle (tranche)",65,"1 tranche (28g)"],["Pain aux céréales (tranche)",80,"1 tranche (32g)"],
+  ["Pain de mie blanc (tranche)",65,"1 tranche (25g)"],["Pain de mie complet (tranche)",60,"1 tranche (25g)"],
+  ["Baguette tradition (1/4)",135,"1/4 de baguette (65g)"],["Baguette (1/6)",90,"1/6 de baguette (43g)"],
+  ["Croissant",230,"1 croissant (60g)"],["Pain au chocolat",280,"1 pain au chocolat (70g)"],
+  ["Brioche (tranche)",100,"1 tranche épaisse (35g)"],["Brioche individuelle",165,"1 brioche (55g)"],
+  ["Biscotte",35,"1 biscotte (10g)"],["Cracotte",30,"1 cracotte (8g)"],
+  ["Flocons d'avoine",150,"1 portion (40g)"],["Flocons d'avoine fins",145,"1 portion (40g)"],
+  ["Müesli sans sucre ajouté",170,"1 portion (45g)"],["Müesli aux fruits",190,"1 portion (45g)"],
+  ["Granola aux amandes",240,"1 portion (50g)"],["Granola miel noix",255,"1 portion (50g)"],
+  ["Corn flakes",135,"1 portion (35g)"],["Corn flakes miel",145,"1 portion (35g)"],
+  ["Special K",135,"1 portion (30g)"],["All Bran",105,"1 portion (40g)"],
+  ["Weetabix",130,"2 biscuits (37g)"],["Porridge (eau)",130,"1 bol préparé (250g)"],
+  ["Porridge (lait demi-écrémé)",190,"1 bol préparé (250g)"],
+  ["Granola bowl yaourt fruits",380,"1 bol complet"],
+
+  // ── TARTINABLES ──
+  ["Beurre doux",75,"1 noisette (10g)"],["Beurre demi-sel",75,"1 noisette (10g)"],
+  ["Margarine végétale",72,"1 noisette (10g)"],["Beurre allégé",40,"1 noisette (10g)"],
+  ["Confiture fraise",50,"1 c. à soupe (15g)"],["Confiture abricot",48,"1 c. à soupe (15g)"],
+  ["Confiture allégée",25,"1 c. à soupe (15g)"],["Miel",50,"1 c. à café (15g)"],
+  ["Sirop d'agave",45,"1 c. à café (15g)"],["Nutella",100,"1 c. à soupe (15g)"],
+  ["Pâte à tartiner allégée",75,"1 c. à soupe (15g)"],["Purée d'amandes complètes",95,"1 c. à soupe (15g)"],
+  ["Purée de cacahuètes",95,"1 c. à soupe (15g)"],["Tahini (purée sésame)",90,"1 c. à soupe (15g)"],
+  ["Houmous",50,"2 c. à soupe (30g)"],["Guacamole",55,"2 c. à soupe (30g)"],
+  ["Caviar d'aubergine",25,"2 c. à soupe (30g)"],
+
+  // ── ŒUFS ──
+  ["Œuf à la coque",75,"1 œuf (55g)"],["Œuf dur",75,"1 œuf (55g)"],
+  ["Œuf mollet",75,"1 œuf (55g)"],["Œuf poché",75,"1 œuf (55g)"],
+  ["Œuf au plat (sans matière grasse)",80,"1 œuf"],["Œuf au plat (avec beurre)",115,"1 œuf"],
+  ["Œufs brouillés nature",160,"2 œufs"],["Œufs brouillés au beurre",195,"2 œufs"],
+  ["Omelette nature (2 œufs)",160,"2 œufs"],["Omelette champignons (2 œufs)",185,"2 œufs"],
+  ["Omelette fromage (2 œufs)",250,"2 œufs + fromage"],
+  ["Omelette jambon fromage",295,"2 œufs + jambon + fromage"],
+
+  // ── FRUITS FRAIS ──
+  ["Pomme",55,"1 pomme (130g)"],["Poire",60,"1 poire (150g)"],
+  ["Banane",90,"1 banane (100g)"],["Orange",55,"1 orange (130g)"],
+  ["Mandarine",35,"2 mandarines (100g)"],["Clémentine",35,"2 clémentines (100g)"],
+  ["Pamplemousse",40,"1/2 pamplemousse (130g)"],["Citron",20,"1 citron (80g)"],
+  ["Kiwi",42,"1 kiwi (70g)"],["Fraises",30,"1 portion (100g)"],
+  ["Framboises",26,"1 portion (80g)"],["Myrtilles",45,"1 portion (100g)"],
+  ["Mûres",25,"1 portion (80g)"],["Cerises",60,"1 portion (100g)"],
+  ["Abricot",40,"2 abricots (100g)"],["Pêche",45,"1 pêche (130g)"],
+  ["Nectarine",50,"1 nectarine (130g)"],["Prune",45,"2 prunes (90g)"],
+  ["Mirabelles",55,"1 portion (100g)"],["Raisin blanc",70,"1 grappe (100g)"],
+  ["Raisin noir",65,"1 grappe (100g)"],["Pastèque",30,"1 tranche (200g)"],
+  ["Melon",35,"1 tranche (150g)"],["Ananas",50,"2 tranches (120g)"],
+  ["Mangue",65,"1/2 mangue (120g)"],["Papaye",45,"1 portion (120g)"],
+  ["Litchi",65,"6 litchis (100g)"],["Grenade",80,"1 grenade (180g)"],
+  ["Figues fraîches",75,"2 figues (100g)"],["Avocat",160,"1/2 avocat (80g)"],
+  ["Fruits rouges mélange",35,"1 portion (100g)"],
+  ["Salade de fruits maison",90,"1 bol (200g)"],
+
+  // ── FRUITS SÉCHÉS & OLÉAGINEUX ──
+  ["Amandes",170,"1 poignée (30g)"],["Noix",185,"4 cerneaux (30g)"],
   ["Noix de cajou",165,"1 poignée (30g)"],["Noisettes",180,"1 poignée (30g)"],
-  ["Chips (sachet)",265,"1 sachet (50g)"],["Crackers (3)",100,"3 crackers (25g)"],
-  ["Galette de riz",40,"1 galette (10g)"],["Biscuit sec (petit beurre)",60,"2 biscuits (14g)"],
-  ["Compote sans sucre",55,"1 gourde (100g)"],
-  // Plats composés courants
-  ["Salade composée",200,"1 portion (300g)"],["Quiche lorraine (part)",400,"1 part (150g)"],
-  ["Pizza margherita (part)",250,"1 part (150g)"],["Sandwich jambon beurre",380,"1 sandwich (200g)"],
-  ["Wrap poulet crudités",350,"1 wrap (200g)"],["Soupe de légumes",80,"1 bol (250ml)"],
-  ["Soupe à l'oignon",120,"1 bol (250ml)"],["Velouté tomate",110,"1 bol (250ml)"],
-  ["Ratatouille",120,"1 portion (250g)"],["Gratin dauphinois",280,"1 portion (200g)"],
-  ["Tarte aux légumes",320,"1 part (150g)"],["Bolognaise (sauce)",180,"1 portion (150g)"],
-  // Desserts
-  ["Yaourt à la grecque sucré",120,"1 pot (100g)"],["Compote de pommes",70,"1 pot (100g)"],
-  ["Mousse au chocolat",180,"1 portion (90g)"],["Crème brûlée",250,"1 ramequin (120g)"],
-  ["Tarte aux pommes (part)",280,"1 part (120g)"],["Gâteau au chocolat (part)",350,"1 part (80g)"],
-  ["Sorbet citron",115,"1 boule (80g)"],["Glace vanille",170,"1 boule (80g)"],
-  // Huiles / matières grasses
-  ["Huile d'olive (c. à soupe)",90,"1 c. à soupe (10ml)"],["Huile (c. à café)",40,"1 c. à café (5ml)"],
-  ["Vinaigrette maison",80,"1 c. à soupe"],
+  ["Pistaches",175,"1 poignée (30g)"],["Noix de macadamia",200,"1 poignée (30g)"],
+  ["Noix du Brésil",185,"4 noix (30g)"],["Cacahuètes nature",175,"1 poignée (30g)"],
+  ["Cacahuètes grillées salées",180,"1 poignée (30g)"],
+  ["Raisins secs",85,"1 c. à soupe (25g)"],["Dattes",75,"2 dattes (30g)"],
+  ["Abricots secs",55,"3 abricots (25g)"],["Pruneaux",60,"3 pruneaux (30g)"],
+  ["Figues sèches",65,"2 figues (30g)"],["Cranberries séchées",90,"1 c. à soupe (25g)"],
+  ["Mélange noix-fruits secs",160,"1 poignée (30g)"],
+  ["Mix trail running",190,"1 portion (40g)"],
+
+  // ── LÉGUMES ──
+  ["Salade verte (laitue)",15,"1 assiette (80g)"],["Roquette",20,"1 assiette (60g)"],
+  ["Épinards crus",25,"1 assiette (80g)"],["Mâche",20,"1 assiette (60g)"],
+  ["Tomate",20,"1 tomate (120g)"],["Tomates cerises",25,"10 tomates (100g)"],
+  ["Concombre",12,"1/2 concombre (100g)"],["Poivron rouge",30,"1/2 poivron (100g)"],
+  ["Poivron vert",20,"1/2 poivron (100g)"],["Poivron jaune",28,"1/2 poivron (100g)"],
+  ["Carottes crues",35,"1 carotte (80g)"],["Carottes râpées",40,"1 portion (100g)"],
+  ["Céleri branche",10,"2 branches (80g)"],["Céleri rave râpé",25,"1 portion (80g)"],
+  ["Radis",15,"1 botte (80g)"],["Betterave cuite",45,"1 portion (100g)"],
+  ["Brocolis vapeur",35,"1 portion (150g)"],["Chou-fleur vapeur",30,"1 portion (150g)"],
+  ["Chou blanc cru",25,"1 portion (100g)"],["Chou rouge cru",27,"1 portion (100g)"],
+  ["Choux de Bruxelles",45,"1 portion (120g)"],["Chou kale",35,"1 portion (80g)"],
+  ["Courgettes poêlées",50,"1 courgette (150g)"],["Courgettes vapeur",30,"1 courgette (150g)"],
+  ["Aubergines rôties",55,"1/2 aubergine (150g)"],["Poireaux vapeur",30,"1 poireau (120g)"],
+  ["Asperges vertes",30,"6 asperges (120g)"],["Asperges blanches",25,"6 asperges (120g)"],
+  ["Haricots verts",30,"1 portion (150g)"],["Haricots beurre",35,"1 portion (150g)"],
+  ["Épinards vapeur",30,"1 portion (150g)"],["Blettes",25,"1 portion (150g)"],
+  ["Artichaut",50,"1 artichaut (200g cuit)"],["Fenouil braisé",30,"1/2 fenouil (120g)"],
+  ["Champignons de Paris",25,"1 portion (100g)"],["Champignons poêlés",40,"1 portion (100g)"],
+  ["Girolles sautées",35,"1 portion (80g)"],["Champignons shiitake",35,"1 portion (80g)"],
+  ["Endive braisée",25,"1 endive (120g)"],["Endive crue",15,"1 endive (100g)"],
+  ["Petits pois frais",70,"1 portion (100g)"],["Petits pois surgelés",75,"1 portion (100g)"],
+  ["Maïs cuit",90,"1 portion (100g)"],["Mais en boîte",75,"1 portion (80g)"],
+  ["Edamame",100,"1 portion (100g)"],
+
+  // ── FÉCULENTS ──
+  ["Riz blanc cuit",175,"1 portion (175g)"],["Riz complet cuit",160,"1 portion (175g)"],
+  ["Riz basmati cuit",180,"1 portion (175g)"],["Riz jasmin cuit",180,"1 portion (175g)"],
+  ["Riz sauté à l'huile",235,"1 portion (175g)"],
+  ["Pâtes cuites nature",210,"1 portion (200g)"],["Pâtes complètes cuites",200,"1 portion (200g)"],
+  ["Spaghetti cuits",200,"1 portion (180g)"],["Pâtes au beurre",300,"1 portion (200g)"],
+  ["Gnocchi cuits",195,"1 portion (200g)"],["Gnocchi sautés",260,"1 portion (200g)"],
+  ["Quinoa cuit",185,"1 portion (180g)"],["Boulgour cuit",145,"1 portion (180g)"],
+  ["Semoule cuite (couscous)",170,"1 portion (180g)"],["Polenta",120,"1 portion (150g)"],
+  ["Orge cuit",175,"1 portion (180g)"],["Épeautre cuit",195,"1 portion (180g)"],
+  ["Lentilles vertes cuites",116,"1 portion (150g)"],["Lentilles corail cuites",110,"1 portion (150g)"],
+  ["Pois chiches cuits",160,"1 portion (150g)"],["Haricots rouges cuits",130,"1 portion (150g)"],
+  ["Haricots blancs cuits",125,"1 portion (150g)"],["Fèves cuites",100,"1 portion (120g)"],
+  ["Pomme de terre vapeur",130,"2 pommes de terre (150g)"],
+  ["Pommes de terre sautées",200,"1 portion (150g)"],
+  ["Pommes de terre four",150,"1 portion (150g)"],
+  ["Pomme de terre au four farcie",320,"1 pomme de terre + garniture"],
+  ["Purée maison",180,"1 portion (200g)"],["Purée industrielle",155,"1 portion (200g)"],
+  ["Frites four",220,"1 portion (150g)"],["Frites friteuse",320,"1 portion (150g)"],
+  ["Frites surgelées",260,"1 portion (150g)"],
+  ["Pain burger",150,"1 pain (60g)"],["Tortilla (galette)",140,"1 tortilla (50g)"],
+  ["Wrap (galette complète)",160,"1 galette (60g)"],
+
+  // ── PROTÉINES ANIMALES ──
+  ["Blanc de poulet grillé",165,"1 filet (150g)"],["Blanc de poulet vapeur",155,"1 filet (150g)"],
+  ["Poulet rôti (cuisse)",220,"1 cuisse (150g)"],["Poulet rôti (blanc)",175,"1 portion (150g)"],
+  ["Filet de dinde grillé",130,"1 filet (120g)"],["Escalope de dinde",135,"1 escalope (120g)"],
+  ["Filet de saumon grillé",265,"1 portion (150g)"],["Saumon vapeur",250,"1 portion (150g)"],
+  ["Saumon fumé",130,"2 tranches (80g)"],["Truite grillée",200,"1 portion (150g)"],
+  ["Cabillaud vapeur",120,"1 portion (150g)"],["Cabillaud poêlé",145,"1 portion (150g)"],
+  ["Colin vapeur",115,"1 portion (150g)"],["Filet de sole",110,"1 portion (120g)"],
+  ["Filet de tilapia",145,"1 portion (150g)"],["Lieu noir",130,"1 portion (150g)"],
+  ["Sardines à l'huile égouttées",175,"1 portion (100g)"],["Sardines au naturel",120,"1 portion (100g)"],
+  ["Thon en boîte au naturel",150,"1 boîte (120g)"],["Thon en boîte à l'huile",195,"1 boîte (120g)"],
+  ["Maquereau grillé",230,"1 portion (150g)"],["Crevettes cuites",80,"1 portion (100g)"],
+  ["Crevettes sautées ail",120,"1 portion (100g)"],["Moules marinières",175,"1 portion (200g)"],
+  ["Saint-Jacques poêlées",140,"3 noix (120g)"],
+  ["Steak haché 5% MG",155,"1 steak (120g)"],["Steak haché 15% MG",200,"1 steak (120g)"],
+  ["Bœuf grillé (rumsteak)",200,"1 portion (150g)"],["Bœuf bourguignon",285,"1 portion (300g)"],
+  ["Veau grillé",160,"1 portion (130g)"],["Côtelette d'agneau grillée",250,"2 côtelettes (150g)"],
+  ["Porc filet grillé",175,"1 portion (150g)"],["Côte de porc grillée",230,"1 côte (180g)"],
+  ["Foie de veau",170,"1 portion (130g)"],
+  ["Jambon blanc (tranche)",35,"1 tranche (40g)"],["Jambon blanc 2 tranches",70,"2 tranches (80g)"],
+  ["Jambon de Bayonne",60,"2 tranches (40g)"],["Jambon de pays",65,"2 tranches (40g)"],
+  ["Jambon sec (charcuterie)",95,"3 tranches (40g)"],["Chorizo",160,"6 rondelles (40g)"],
+  ["Saucisson sec",170,"4 tranches (40g)"],["Lardons fumés nature",120,"1 portion (50g)"],
+  ["Lardons allégés",85,"1 portion (50g)"],["Saucisse de Francfort",140,"2 saucisses (80g)"],
+  ["Merguez grillée",220,"2 merguez (100g)"],
+
+  // ── PROTÉINES VÉGÉTALES ──
+  ["Tofu nature",80,"1 portion (100g)"],["Tofu fumé",115,"1 portion (100g)"],
+  ["Tofu soyeux",55,"1 portion (100g)"],["Tofu sauté",130,"1 portion (100g)"],
+  ["Tempeh",190,"1 portion (100g)"],["Seitan",120,"1 portion (100g)"],
+  ["Steak de soja",160,"1 steak (100g)"],["Galette végétale",185,"1 galette (100g)"],
+  ["Protéines de soja texturées",130,"1 portion reconstituée (100g)"],
+  ["Falafels",250,"3 falafels (100g)"],
+
+  // ── FROMAGES ──
+  ["Emmental",95,"1 tranche (25g)"],["Gruyère",105,"1 tranche (25g)"],
+  ["Comté 24 mois",115,"1 tranche (25g)"],["Beaufort",110,"1 tranche (25g)"],
+  ["Gouda",95,"1 tranche (25g)"],["Édam",85,"1 tranche (25g)"],
+  ["Cheddar",105,"1 tranche (25g)"],["Mimolette",100,"1 tranche (25g)"],
+  ["Camembert",85,"1 portion (30g)"],["Brie",100,"1 portion (30g)"],
+  ["Coulommiers",95,"1 portion (30g)"],["Munster",90,"1 portion (30g)"],
+  ["Reblochon",100,"1 portion (30g)"],["Maroilles",100,"1 portion (30g)"],
+  ["Chèvre frais (bûche)",50,"1 rondelle (20g)"],["Chèvre sec",85,"1 rondelle (25g)"],
+  ["Feta",50,"1 portion (30g)"],["Halloumi grillé",90,"2 tranches (60g)"],
+  ["Mozzarella",85,"1/4 boule (35g)"],["Burrata",120,"1/2 burrata (60g)"],
+  ["Ricotta",60,"2 c. à soupe (60g)"],["Mascarpone",120,"1 c. à soupe (30g)"],
+  ["Parmesan râpé",30,"1 c. à soupe (8g)"],["Grana Padano",30,"1 c. à soupe (8g)"],
+  ["Roquefort",100,"1 portion (30g)"],["Gorgonzola",105,"1 portion (30g)"],
+  ["Fromage à tartiner (Kiri)",40,"1 portion (20g)"],
+  ["Philadelphia",65,"1 c. à soupe (25g)"],
+  ["Vache qui rit",35,"1 triangle (17g)"],["Babybel",63,"1 Babybel (20g)"],
+
+  // ── SOUPES & VELOUTÉS ──
+  ["Soupe de légumes maison",80,"1 bol (250ml)"],["Soupe à l'oignon",125,"1 bol (250ml)"],
+  ["Soupe de poireaux pommes de terre",110,"1 bol (250ml)"],
+  ["Velouté de tomates",115,"1 bol (250ml)"],["Velouté de champignons",130,"1 bol (250ml)"],
+  ["Velouté de courge",100,"1 bol (250ml)"],["Velouté de carottes",95,"1 bol (250ml)"],
+  ["Velouté de poireaux",120,"1 bol (250ml)"],["Soupe miso",35,"1 bol (250ml)"],
+  ["Gaspacho tomates",65,"1 bol (250ml)"],["Bouillon de légumes",15,"1 bol (250ml)"],
+  ["Bouillon de poulet",20,"1 bol (250ml)"],["Minestrone",130,"1 bol (250ml)"],
+  ["Soupe de potimarron",105,"1 bol (250ml)"],
+
+  // ── SALADES COMPOSÉES ──
+  ["Salade verte vinaigrette",50,"1 assiette"],
+  ["Salade tomates mozzarella",220,"1 assiette"],
+  ["Salade niçoise",280,"1 assiette"],["Salade César poulet",350,"1 assiette"],
+  ["Salade de lentilles",230,"1 assiette"],["Salade de quinoa légumes",280,"1 assiette"],
+  ["Salade de pois chiches",260,"1 assiette"],["Taboulé",280,"1 portion (200g)"],
+  ["Salade grecque",220,"1 assiette"],["Salade de betterave chèvre",195,"1 assiette"],
+  ["Salade piémontaise",280,"1 assiette"],["Salade de riz thon",310,"1 assiette"],
+  ["Bowl végétarien",400,"1 bowl complet"],["Bowl poulet avocat",480,"1 bowl complet"],
+  ["Buddha bowl",420,"1 bowl complet"],
+
+  // ── PLATS COMPOSÉS ──
+  ["Quiche lorraine",420,"1 part (160g)"],["Quiche légumes",360,"1 part (160g)"],
+  ["Tarte aux légumes",320,"1 part (150g)"],["Pizza margherita",250,"1 part (150g)"],
+  ["Pizza 4 fromages",310,"1 part (150g)"],["Pizza jambon champignons",275,"1 part (150g)"],
+  ["Lasagnes bolognaise",380,"1 portion (300g)"],["Lasagnes végétariennes",340,"1 portion (300g)"],
+  ["Gratin dauphinois",280,"1 portion (200g)"],["Gratin de courgettes",200,"1 portion (200g)"],
+  ["Gratin de pâtes jambon",380,"1 portion (300g)"],
+  ["Ratatouille",120,"1 portion (250g)"],["Tian de légumes",140,"1 portion (250g)"],
+  ["Poêlée de légumes",120,"1 portion (250g)"],
+  ["Risotto parmesan",380,"1 assiette (300g)"],["Risotto champignons",360,"1 assiette (300g)"],
+  ["Paella au poulet",420,"1 assiette (350g)"],
+  ["Couscous poulet légumes",520,"1 assiette complète"],
+  ["Tajine poulet citron",420,"1 portion (350g)"],
+  ["Curry de légumes",280,"1 portion (300g)"],["Curry de poulet",340,"1 portion (300g)"],
+  ["Dal de lentilles",260,"1 portion (300g)"],
+  ["Wok légumes tofu",220,"1 wok (300g)"],["Wok poulet",300,"1 wok (300g)"],
+  ["Bœuf haché sauce tomates",280,"1 portion (250g)"],
+  ["Bolognaise (sauce sur pâtes)",490,"pâtes + sauce (400g)"],
+  ["Poulet basquaise",310,"1 portion (300g)"],["Poulet rôti entier",245,"1 portion (150g)"],
+  ["Blanquette de veau",320,"1 portion (280g)"],
+  ["Bœuf bourguignon",290,"1 portion (300g)"],["Pot-au-feu",300,"1 portion (350g)"],
+  ["Hachis parmentier",350,"1 portion (300g)"],["Brandade de morue",280,"1 portion (200g)"],
+
+  // ── SANDWICHS & FAST FOOD ──
+  ["Sandwich jambon beurre",380,"1 sandwich demi-baguette"],
+  ["Sandwich jambon fromage",430,"1 sandwich demi-baguette"],
+  ["Sandwich poulet crudités",360,"1 sandwich complet"],
+  ["Sandwich thon mayo",400,"1 sandwich complet"],
+  ["Sandwich veggie",320,"1 sandwich complet"],
+  ["Wrap poulet crudités",350,"1 wrap (200g)"],["Wrap végétarien",310,"1 wrap (180g)"],
+  ["Hot dog",380,"1 hot dog complet"],
+  ["Burger bœuf",550,"1 burger complet"],["Burger poulet",490,"1 burger complet"],
+  ["Burger végétarien",460,"1 burger complet"],
+  ["Kebab",650,"1 kebab complet"],["Falafel pita",480,"1 pita garnie"],
+  ["Croque-monsieur",360,"1 croque-monsieur"],["Croque-madame",420,"1 croque-madame"],
+
+  // ── FROMAGES FONDUS / PLATS CHAUDS SIMPLES ──
+  ["Œuf cocotte",180,"1 ramequin"],["Welsh",480,"1 portion"],
+  ["Raclette (portion fromage)",175,"100g fromage fondu"],
+  ["Fondue savoyarde",380,"1 portion (150g fromage)"],
+  ["Tartiflette",480,"1 part (200g)"],
+
+  // ── DESSERTS ──
+  ["Compote de pommes",70,"1 pot (100g)"],["Compote sans sucre",50,"1 gourde (90g)"],
+  ["Yaourt à la grecque miel",150,"1 pot (100g)"],
+  ["Panna cotta",220,"1 verrine (120g)"],["Crème caramel",155,"1 ramequin (100g)"],
+  ["Crème brûlée",260,"1 ramequin (120g)"],["Crème dessert chocolat",175,"1 pot (125g)"],
+  ["Crème dessert vanille",155,"1 pot (125g)"],["Île flottante",185,"1 portion"],
+  ["Mousse au chocolat",185,"1 portion (90g)"],["Mousse au citron",145,"1 portion (80g)"],
+  ["Tarte aux pommes",280,"1 part (120g)"],["Tarte tatin",330,"1 part (130g)"],
+  ["Tarte aux fraises",245,"1 part (120g)"],["Tarte citron meringuée",340,"1 part (120g)"],
+  ["Gâteau au yaourt",280,"1 part (80g)"],["Quatre-quarts",330,"1 tranche (70g)"],
+  ["Gâteau au chocolat",360,"1 part (80g)"],["Fondant au chocolat",380,"1 part (80g)"],
+  ["Madeleine",85,"1 madeleine (25g)"],["Financier",100,"1 financier (25g)"],
+  ["Éclair au chocolat",250,"1 éclair (85g)"],["Choux à la crème",195,"1 choux (65g)"],
+  ["Millefeuille",380,"1 part (130g)"],["Paris-Brest",420,"1 part (130g)"],
+  ["Macaron",70,"1 macaron (20g)"],["Cookie chocolat",130,"1 gros cookie (35g)"],
+  ["Muffin myrtilles",280,"1 muffin (80g)"],
+  ["Sorbet citron",115,"1 boule (80g)"],["Sorbet framboise",105,"1 boule (80g)"],
+  ["Glace vanille",175,"1 boule (80g)"],["Glace chocolat",185,"1 boule (80g)"],
+  ["Glace stracciatella",195,"1 boule (80g)"],["Magnum amande",275,"1 bâtonnet"],
+  ["Carte d'Or vanille",200,"2 boules (100g)"],
+  ["Tiramisu",320,"1 portion (150g)"],["Panna cotta fruits rouges",230,"1 verrine"],
+  ["Riz au lait",195,"1 pot (150g)"],["Semoule au lait",170,"1 pot (150g)"],
+  ["Flan pâtissier",260,"1 part (120g)"],["Kouign-amann",380,"1 part (80g)"],
+  ["Cannelé",90,"1 cannelé (30g)"],
+
+  // ── SNACKS & APÉRITIF ──
+  ["Chips nature",265,"1 petit sachet (50g)"],["Chips allégées",220,"1 petit sachet (50g)"],
+  ["Crackers",100,"3 crackers (25g)"],["Tucs",130,"5 Tucs (25g)"],
+  ["Galette de riz nature",40,"1 galette (10g)"],["Galette de riz chocolat",55,"1 galette (13g)"],
+  ["Biscotte complète",35,"1 biscotte (9g)"],
+  ["Biscuit LU Petit Beurre",60,"2 biscuits (14g)"],
+  ["Biscuit Prince",85,"1 biscuit (30g)"],["Biscuit Oreo",67,"2 biscuits (22g)"],
+  ["Biscuit Speculoos",80,"2 biscuits (20g)"],
+  ["Barre de céréales",90,"1 barre (25g)"],["Barre Kind amandes",200,"1 barre (40g)"],
+  ["Chocolat noir (2 carrés)",95,"2 carrés (19g)"],["Chocolat au lait (2 carrés)",105,"2 carrés (20g)"],
+  ["Carré de chocolat noir 85%",50,"1 carré (10g)"],
+  ["Cacahuètes apéritif",175,"1 poignée (30g)"],["Mix apéritif",180,"1 poignée (30g)"],
+  ["Olives vertes",35,"10 olives (30g)"],["Olives noires",40,"10 olives (30g)"],
+  ["Chips de légumes",150,"1 portion (30g)"],["Pop-corn nature",110,"1 bol (25g)"],
+  ["Pop-corn beurre",150,"1 bol (25g)"],
+
+  // ── CONDIMENTS & MATIÈRES GRASSES ──
+  ["Huile d'olive (c. à soupe)",90,"1 c. à soupe (10ml)"],
+  ["Huile de colza (c. à soupe)",90,"1 c. à soupe (10ml)"],
+  ["Huile de coco (c. à soupe)",90,"1 c. à soupe (10ml)"],
+  ["Huile (c. à café)",40,"1 c. à café (5ml)"],
+  ["Vinaigrette huile/vinaigre",80,"1 c. à soupe"],["Vinaigrette légère",30,"1 c. à soupe"],
+  ["Mayonnaise",100,"1 c. à soupe (15g)"],["Mayonnaise allégée",50,"1 c. à soupe (15g)"],
+  ["Ketchup",20,"1 c. à soupe (15g)"],["Moutarde",10,"1 c. à café (5g)"],
+  ["Sauce soja",8,"1 c. à soupe (15ml)"],["Sauce yaourt concombre",35,"2 c. à soupe (30g)"],
+  ["Crème fraîche (c. à soupe)",65,"1 c. à soupe (15ml)"],
+  ["Sauce béchamel",85,"2 c. à soupe (50ml)"],
 ];
+
+function normalize(s){return(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 
 function foodSearch(query){
   if(!query||query.length<2)return[];
-  var q=query.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-  return FOOD_DB.filter(function(f){
-    var name=f[0].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-    return name.includes(q);
-  }).slice(0,6);
+  var q=normalize(query);
+  return FOOD_DB.filter(function(f){return normalize(f[0]).includes(q);}).slice(0,6);
 }
 
+// ── Open Food Facts live search ──
+var offDebounceTimer=null;
+var offCache={};
+
+function searchOpenFoodFacts(query,callback){
+  if(!query||query.length<3){callback([]);return;}
+  var q=query.trim();
+  if(offCache[q]){callback(offCache[q]);return;}
+  if(offDebounceTimer)clearTimeout(offDebounceTimer);
+  offDebounceTimer=setTimeout(function(){
+    var url='https://world.openfoodfacts.org/cgi/search.pl'
+      +'?search_terms='+encodeURIComponent(q)
+      +'&search_simple=1&action=process&json=1&lc=fr&cc=fr'
+      +'&fields=product_name,nutriments,serving_size,quantity'
+      +'&page_size=10&sort_by=unique_scans_n';
+    fetch(url)
+      .then(function(r){return r.json();})
+      .then(function(data){
+        var results=(data.products||[])
+          .filter(function(p){
+            return p.product_name
+              && p.nutriments
+              && (p.nutriments['energy-kcal_100g']||p.nutriments['energy-kcal']);
+          })
+          .map(function(p){
+            var kcal100=p.nutriments['energy-kcal_100g']||0;
+            var serving=100,servingLabel='100g';
+            if(p.serving_size){
+              var m=p.serving_size.match(/([\d,.]+)\s*g/i);
+              if(m){serving=parseFloat(m[1].replace(',','.'));servingLabel=Math.round(serving)+'g';}
+            }
+            var kcalPortion=Math.round(kcal100*(serving/100));
+            if(kcalPortion<1)return null;
+            var name=p.product_name.replace(/\s+/g,' ').trim();
+            if(name.length>50)name=name.substring(0,48)+'…';
+            return{name:name,kcal:kcalPortion,portion:servingLabel,source:'off'};
+          })
+          .filter(Boolean)
+          .slice(0,5);
+        offCache[q]=results;
+        callback(results);
+      })
+      .catch(function(){callback([]);});
+  },400);
+}
 function sportLevelFromStore(k){
   var e=store[k];if(!e||!e.sport||e.sport==='repos'||e.sport==='')return'none';
   if(e.sport==='run'||e.sport==='natation'||e.sport==='badminton')return'intense';
@@ -1416,24 +1702,62 @@ function renderMealItems(meal,fd){
     descInp.autocomplete='off';
     // Suggestions dropdown
     var sugBox=document.createElement('div');sugBox.className='food-suggestions';sugBox.style.display='none';
-    function showSugs(query){
-      var results=foodSearch(query);
-      sugBox.innerHTML='';
-      if(!results.length){sugBox.style.display='none';return;}
+    function renderSug(results,isOFF){
+      // Remove existing OFF results or local results based on type
+      var existingClass=isOFF?'sug-off':'sug-local';
+      Array.from(sugBox.querySelectorAll('.'+existingClass)).forEach(function(el){el.remove();});
       results.forEach(function(f){
-        var item2=document.createElement('div');item2.className='food-sug-item';
-        item2.innerHTML='<span class="food-sug-name">'+f[0]+'</span><span class="food-sug-kcal">'+f[1]+' kcal <span style="font-weight:400;font-size:10px;">'+f[2]+'</span></span>';
+        var name=isOFF?f.name:f[0];
+        var kcal=isOFF?f.kcal:f[1];
+        var portion=isOFF?f.portion:f[2];
+        var item2=document.createElement('div');
+        item2.className='food-sug-item '+(isOFF?'sug-off':'sug-local');
+        var badge=isOFF
+          ?'<span style="font-size:9px;background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd);border-radius:8px;padding:1px 5px;margin-left:4px;font-weight:600;flex-shrink:0;">OFF</span>'
+          :'<span style="font-size:9px;background:var(--bg);color:var(--ink4);border:1px solid var(--line);border-radius:8px;padding:1px 5px;margin-left:4px;flex-shrink:0;">Base</span>';
+        item2.innerHTML='<span class="food-sug-name" style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+name+'</span>'
+          +badge
+          +'<span class="food-sug-kcal" style="flex-shrink:0;margin-left:6px;">'+kcal+' kcal<span style="font-weight:400;font-size:9px;margin-left:3px;">'+portion+'</span></span>';
         item2.onmousedown=function(ev){ev.preventDefault();
-          descInp.value=f[0];
-          getFoodDay(alimDateK).items[meal][idx].desc=f[0];
-          getFoodDay(alimDateK).items[meal][idx].kcal=f[1];
-          kcalInp.value=f[1];
+          descInp.value=name;
+          getFoodDay(alimDateK).items[meal][idx].desc=name;
+          getFoodDay(alimDateK).items[meal][idx].kcal=kcal;
+          kcalInp.value=kcal;
           sugBox.style.display='none';
           saveFoodAndRefresh();
         };
         sugBox.appendChild(item2);
       });
-      sugBox.style.display='block';
+      if(sugBox.children.length>0)sugBox.style.display='block';
+      else sugBox.style.display='none';
+    }
+    function showSugs(query){
+      sugBox.innerHTML='';
+      if(!query||query.length<2){sugBox.style.display='none';return;}
+      // 1. Local results immediately
+      var localResults=foodSearch(query);
+      if(localResults.length){renderSug(localResults,false);}
+      // 2. OFF results asynchronously (only if query >= 3 chars)
+      if(query.length>=3){
+        // Show loading indicator while waiting
+        var loadEl=document.getElementById('off-loading-'+meal+'-'+idx);
+        if(!loadEl){
+          loadEl=document.createElement('div');
+          loadEl.id='off-loading-'+meal+'-'+idx;
+          loadEl.style.cssText='padding:6px 12px;font-size:10px;color:var(--ink4);font-style:italic;';
+          loadEl.textContent='Recherche Open Food Facts…';
+        }
+        if(!localResults.length){sugBox.appendChild(loadEl);sugBox.style.display='block';}
+        searchOpenFoodFacts(query,function(offResults){
+          // Remove loading
+          if(loadEl.parentNode)loadEl.parentNode.removeChild(loadEl);
+          if(offResults.length){
+            renderSug(offResults,true);
+          } else if(!localResults.length){
+            sugBox.style.display='none';
+          }
+        });
+      }
     }
     descInp.oninput=function(){
       getFoodDay(alimDateK).items[meal][idx].desc=descInp.value;
