@@ -99,10 +99,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);paddin
 .toggle-switch::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);}
 .toggle-switch.on::after{transform:translateX(18px);}
 
-.nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:var(--white);border-top:1px solid var(--line);display:flex;z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,0.06);transition:background 0.2s,border-color 0.2s;}
-.nt{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;font-size:9px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink4);border-top:2px solid transparent;transition:all 0.15s;}
+.nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:var(--white);border-top:1px solid var(--line);display:flex;z-index:9999;box-shadow:0 -2px 12px rgba(0,0,0,0.1);transition:background 0.2s,border-color 0.2s;}
+.nt{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;font-size:8px;font-weight:600;letter-spacing:0.02em;text-transform:uppercase;color:var(--ink4);border-top:2px solid transparent;transition:all 0.15s;padding:0 2px;min-width:0;}
 .nt.on{color:var(--blue);border-top-color:var(--blue);}
-.nt-icon{font-size:18px;line-height:1;}
+.nt-icon{font-size:17px;line-height:1;display:flex;align-items:center;justify-content:center;}
+.nt span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
 
 .fab{position:fixed;bottom:calc(var(--nav-h) + 16px);right:16px;width:54px;height:54px;border-radius:50%;background:var(--blue);color:#fff;border:none;cursor:pointer;font-size:26px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,99,235,0.4);z-index:95;transition:transform 0.15s,box-shadow 0.15s,background 0.15s;line-height:1;}
 .fab:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(37,99,235,0.5);}
@@ -345,6 +346,16 @@ tr:hover td{background:#F9FAFB;}
 .awb{flex:1;border-radius:3px 3px 0 0;min-height:2px;cursor:pointer;transition:opacity 0.1s;position:relative;}
 .awb:hover{opacity:0.8;}
 .awb-lbl{font-size:8px;text-align:center;color:var(--ink3);margin-top:3px;}
+
+/* ── Food autocomplete ── */
+.food-autocomplete-wrap{position:relative;flex:1;}
+.food-suggestions{position:absolute;top:100%;left:0;right:0;background:var(--white);border:1px solid var(--line);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);z-index:500;max-height:180px;overflow-y:auto;margin-top:2px;}
+.food-sug-item{padding:7px 12px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:12px;border-bottom:1px solid var(--line);}
+.food-sug-item:last-child{border-bottom:none;}
+.food-sug-item:hover{background:var(--blue-bg);}
+.food-sug-name{color:var(--ink);font-weight:500;}
+.food-sug-kcal{color:var(--ink3);font-size:11px;background:var(--bg);border-radius:10px;padding:1px 7px;font-weight:600;}
+.food-sug-item:hover .food-sug-kcal{background:var(--blue-bd);color:var(--blue);}
 </style>
 </head>
 <body>
@@ -359,13 +370,13 @@ tr:hover td{background:#F9FAFB;}
 
   <div class="sidebar-section">Principal</div>
   <div class="sidebar-item on" id="sb-home" onclick="goSb('home')"><span class="sidebar-item-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;"><path d="M3 9.5L10 3l7 6.5V17a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M7.5 18V12.5h5V18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Accueil</div>
-  <div class="sidebar-item" id="sb-log" onclick="goSb('log')"><span class="sidebar-item-icon">✏</span>Saisie</div>
-  <div class="sidebar-item" id="sb-bilan" onclick="goSb('bilan')"><span class="sidebar-item-icon">📋</span>Bilan hebdo</div>
+  <div class="sidebar-item" id="sb-log" onclick="goSb('log')"><span class="sidebar-item-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M14.5 2.5a2.121 2.121 0 0 1 3 3L6 17H3v-3L14.5 2.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>Saisie</div>
+  <div class="sidebar-item" id="sb-bilan" onclick="goSb('bilan')"><span class="sidebar-item-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;"><rect x="4" y="4" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 4V3a2 2 0 1 1 4 0v1" stroke="currentColor" stroke-width="1.5"/><path d="M7 9h6M7 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Bilan hebdo</div>
 
   <div class="sidebar-section">Analyses</div>
   <div class="sidebar-item" id="sb-sport" onclick="goSb('sport')"><span class="sidebar-item-icon">◉</span>Sport</div>
   <div class="sidebar-item" id="sb-alim" onclick="goSb('alim')"><span class="sidebar-item-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.6"/><path d="M7 8c0-1.657.895-3 2-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6.5 11h7M7.5 13.5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="8.5" r="1" fill="currentColor"/></svg></span>Alimentation</div>
-  <div class="sidebar-item" id="sb-write" onclick="goSb('write')"><span class="sidebar-item-icon">✦</span>Écriture</div>
+  <div class="sidebar-item" id="sb-write" onclick="goSb('write')"><span class="sidebar-item-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;"><path d="M10 2l1.5 5.5L17 10l-5.5 1.5L10 18l-1.5-6.5L3 10l6.5-1.5L10 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>Écriture</div>
   <div class="sidebar-item" id="sb-cycle" onclick="goSb('cycle')"><span class="sidebar-item-icon">◐</span>Cycle</div>
 
   <div class="sidebar-section">Outils</div>
@@ -390,7 +401,7 @@ tr:hover td{background:#F9FAFB;}
   </div>
   <div class="th-right">
     <div class="th-date" id="top-date"></div>
-    <button class="dark-toggle" onclick="toggleDark()" title="Mode sombre" id="dark-btn">🌙</button>
+    <button class="dark-toggle" onclick="toggleDark()" title="Mode sombre" id="dark-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M17 11.5A7 7 0 1 1 8.5 3a5.5 5.5 0 0 0 8.5 8.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
   </div>
 </div>
 
@@ -417,15 +428,36 @@ tr:hover td{background:#F9FAFB;}
       <div class="card-title"><div class="card-title-accent" style="background:var(--blue)"></div>Objectifs du mois</div>
       <div id="prog-list"></div>
     </div>
-    <div class="card">
-      <div class="card-title"><div class="card-title-accent" style="background:var(--amber)"></div>Activité — 14 derniers jours</div>
-      <div class="streak-row" id="streak-row"></div>
-      <div style="display:flex;gap:14px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line);">
-        <div class="leg"><div class="ldot" style="background:var(--green)"></div>Sport</div>
-        <div class="leg"><div class="ldot" style="background:var(--amber)"></div>Écriture</div>
-        <div class="leg"><div class="ldot" style="background:var(--blue)"></div>Les deux</div>
+    <!-- ── Activité redesigned ── -->
+    <div class="card" id="activity-card">
+      <div class="card-title"><div class="card-title-accent" style="background:var(--blue)"></div>Activité — 14 derniers jours</div>
+      <div id="activity-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:10px;"></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;" id="activity-stats"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <div class="leg"><div style="width:10px;height:10px;border-radius:3px;background:var(--green);flex-shrink:0;"></div>Sport</div>
+        <div class="leg"><div style="width:10px;height:10px;border-radius:3px;background:var(--amber);flex-shrink:0;"></div>Écriture</div>
+        <div class="leg"><div style="width:10px;height:10px;border-radius:3px;background:var(--blue);flex-shrink:0;"></div>Sport + Écriture</div>
+        <div class="leg"><div style="width:10px;height:10px;border-radius:3px;background:var(--line2);flex-shrink:0;"></div>Repos</div>
       </div>
     </div>
+    <!-- Écriture BEFORE poids -->
+    <div class="chart-area">
+      <div class="chart-header">
+        <div><div class="chart-name">Écriture — progression</div><div class="chart-sub" id="write-home-sub">Total mots cumulés</div></div>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <div class="leg"><div class="ldot" style="background:var(--amber)"></div>Journal</div>
+          <div class="leg"><div class="ldot" style="background:var(--violet)"></div>Fiction</div>
+          <div class="leg"><div class="ldot" style="background:var(--pink)"></div>Gabrielle</div>
+        </div>
+      </div>
+      <div style="position:relative;height:130px;"><svg id="write-home-svg" style="width:100%;height:130px;overflow:visible;display:block;"></svg></div>
+      <div class="w-cards">
+        <div class="wc"><div class="wc-label">Mots ce mois</div><div class="wc-val" id="wh-month">—</div></div>
+        <div class="wc"><div class="wc-label">Fiction totale</div><div class="wc-val" id="wh-fiction">—</div></div>
+        <div class="wc"><div class="wc-label">Gabrielle</div><div class="wc-val" style="color:var(--pink);" id="wh-gabrielle">—</div></div>
+      </div>
+    </div>
+    <!-- Poids AFTER écriture -->
     <div class="chart-area">
       <div class="chart-header">
         <div><div class="chart-name">Poids &amp; IMC</div><div class="chart-sub">Taille : 159 cm</div></div>
@@ -446,22 +478,6 @@ tr:hover td{background:#F9FAFB;}
         <div class="wc"><div class="wc-label">Statut</div><div class="wc-val" style="font-size:14px;" id="wc-status">—</div></div>
       </div>
     </div>
-    <div class="chart-area">
-      <div class="chart-header">
-        <div><div class="chart-name">Écriture — progression</div><div class="chart-sub" id="write-home-sub">Total mots cumulés</div></div>
-        <div style="display:flex;gap:12px;align-items:center;">
-          <div class="leg"><div class="ldot" style="background:var(--amber)"></div>Journal</div>
-          <div class="leg"><div class="ldot" style="background:var(--violet)"></div>Fiction</div>
-          <div class="leg"><div class="ldot" style="background:var(--pink)"></div>Gabrielle</div>
-        </div>
-      </div>
-      <div style="position:relative;height:130px;"><svg id="write-home-svg" style="width:100%;height:130px;overflow:visible;display:block;"></svg></div>
-      <div class="w-cards">
-        <div class="wc"><div class="wc-label">Mots ce mois</div><div class="wc-val" id="wh-month">—</div></div>
-        <div class="wc"><div class="wc-label">Fiction totale</div><div class="wc-val" id="wh-fiction">—</div></div>
-        <div class="wc"><div class="wc-label">Gabrielle</div><div class="wc-val" style="color:var(--pink);" id="wh-gabrielle">—</div></div>
-      </div>
-    </div>
     <div id="cyc-home-wrap"></div>
   </div>
 </div>
@@ -477,7 +493,7 @@ tr:hover td{background:#F9FAFB;}
         <button onclick="logNav(1)" style="background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:4px 12px;font-size:14px;cursor:pointer;color:var(--ink2);">›</button>
       </div>
     </div>
-    <div class="edit-hint">✏️ Cliquez sur une cellule pour modifier directement — les graphiques se mettent à jour automatiquement</div>
+    <div class="edit-hint"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;"><path d="M14.5 2.5a2.121 2.121 0 0 1 3 3L6 17H3v-3L14.5 2.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg> Cliquez sur une cellule pour modifier directement — les graphiques se mettent à jour automatiquement</div>
     <div class="xtable-wrap">
       <table id="log-table">
         <thead>
@@ -576,7 +592,7 @@ tr:hover td{background:#F9FAFB;}
     <!-- Petit-déjeuner -->
     <div class="meal-card" id="meal-petitdej">
       <div class="meal-header">
-        <div class="meal-icon">☀️</div>
+        <div class="meal-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;"><circle cx="10" cy="11" r="3.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 4v2M4.22 6.22l1.42 1.42M15.78 6.22l-1.42 1.42M2 11h2M16 11h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M3 16h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         <div class="meal-title">Petit-déjeuner</div>
         <div class="meal-kcal-badge" id="kcal-petitdej">0 kcal</div>
       </div>
@@ -587,13 +603,14 @@ tr:hover td{background:#F9FAFB;}
         </div>
         <div id="items-petitdej"></div>
         <button class="alim-add-btn" onclick="addAlimItem('petitdej')">+ Ajouter un aliment</button>
+        <div style="font-size:10px;color:var(--ink4);margin-top:4px;font-style:italic;">Tapez un aliment pour voir les suggestions et calories automatiques</div>
       </div>
     </div>
 
     <!-- Déjeuner -->
     <div class="meal-card" id="meal-dejeuner">
       <div class="meal-header">
-        <div class="meal-icon">🍽️</div>
+        <div class="meal-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;"><path d="M7 2v5a2 2 0 0 1-2 2v9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M5 2v4M9 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 2c0 0 2 1.5 2 5s-2 4-2 4v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="meal-title">Déjeuner</div>
         <div class="meal-kcal-badge" id="kcal-dejeuner">0 kcal</div>
       </div>
@@ -606,7 +623,7 @@ tr:hover td{background:#F9FAFB;}
     <!-- Dîner + collations + boissons -->
     <div class="meal-card" id="meal-diner">
       <div class="meal-header">
-        <div class="meal-icon">🌙</div>
+        <div class="meal-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;"><path d="M13 4A6 6 0 1 1 6 14a6 6 0 0 0 7-10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M16 3l.5.5M17.5 6h.5M15 7l.5-.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
         <div class="meal-title">Dîner, collations &amp; boissons</div>
         <div class="meal-kcal-badge" id="kcal-diner">0 kcal</div>
       </div>
@@ -753,16 +770,16 @@ tr:hover td{background:#F9FAFB;}
   <div class="content">
     <div class="sh"><div class="sh-title">Synchronisation &amp; Export</div></div>
     <div style="background:#FFFBEB;border:1px solid #FDE68A;border-left:4px solid #D97706;border-radius:10px;padding:14px 16px;margin-bottom:16px;">
-      <div style="font-size:12px;font-weight:700;color:#D97706;margin-bottom:6px;">⚠ À propos de la synchronisation</div>
+      <div style="font-size:12px;font-weight:700;color:#D97706;margin-bottom:6px;">! À propos de la synchronisation</div>
       <div style="font-size:12px;color:#374151;line-height:1.6;">Les données sont stockées localement dans le navigateur de chaque appareil. Pour synchroniser ton PC et ton iPhone, utilise <strong>Exporter les données</strong> sur l'appareil source, puis <strong>Importer</strong> sur l'autre.</div>
     </div>
     <div class="card">
       <div class="card-title"><div class="card-title-accent" style="background:var(--blue)"></div>Données complètes (JSON)</div>
       <div style="font-size:12px;color:var(--ink3);margin-bottom:12px;line-height:1.6;">Exporte toutes tes données pour les sauvegarder ou les transférer sur un autre appareil.</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <button onclick="exportJSON()" style="padding:10px 18px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">⬇ Exporter les données</button>
+        <button onclick="exportJSON()" style="padding:10px 18px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">↓ Exporter les données</button>
         <label style="padding:10px 18px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink2);">
-          ⬆ Importer des données
+          ↑ Importer des données
           <input type="file" accept=".json" onchange="importJSON(event)" style="display:none;">
         </label>
       </div>
@@ -771,7 +788,7 @@ tr:hover td{background:#F9FAFB;}
     <div class="card">
       <div class="card-title"><div class="card-title-accent" style="background:var(--green)"></div>Export CSV</div>
       <div style="font-size:12px;color:var(--ink3);margin-bottom:12px;line-height:1.6;">Exporte toutes tes données au format CSV, directement importable dans Excel ou Google Sheets.</div>
-      <button onclick="exportCSV()" style="padding:10px 18px;background:var(--green);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">⬇ Exporter en CSV</button>
+      <button onclick="exportCSV()" style="padding:10px 18px;background:var(--green);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">↓ Exporter en CSV</button>
     </div>
     <div class="card">
       <div class="card-title"><div class="card-title-accent" style="background:var(--ink3)"></div>Informations</div>
@@ -782,11 +799,12 @@ tr:hover td{background:#F9FAFB;}
 
 <!-- ══ NAV ══ -->
 <nav class="nav">
-  <div class="nt on" onclick="go('home')" id="nav-home"><div class="nt-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M3 9.5L10 3l7 6.5V17a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7.5 18V12.5h5V18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div>Accueil</div></div>
-  <div class="nt" onclick="go('log')" id="nav-log"><div class="nt-icon">✏</div><div>Saisie</div></div>
-  <div class="nt" onclick="go('sport')" id="nav-sport"><div class="nt-icon">◉</div><div>Sport</div></div>
-  <div class="nt" onclick="go('alim')" id="nav-alim"><div class="nt-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.6"/><path d="M7 8c0-1.657.895-3 2-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6.5 11h7M7.5 13.5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="8.5" r="1" fill="currentColor"/></svg></div><div>Alim.</div></div>
-  <div class="nt" onclick="go('cycle')" id="nav-cycle"><div class="nt-icon">◐</div><div>Cycle</div></div>
+  <div class="nt on" onclick="go('home')" id="nav-home"><div class="nt-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M3 9.5L10 3l7 6.5V17a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7.5 18V12.5h5V18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Accueil</span></div>
+  <div class="nt" onclick="go('log')" id="nav-log"><div class="nt-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M14.5 2.5a2.121 2.121 0 0 1 3 3L6 17H3v-3L14.5 2.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div><span>Saisie</span></div>
+  <div class="nt" onclick="go('sport')" id="nav-sport"><div class="nt-icon">◉</div><span>Sport</span></div>
+  <div class="nt" onclick="go('alim')" id="nav-alim"><div class="nt-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.6"/><path d="M7 8c0-1.657.895-3 2-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6.5 11h7M7.5 13.5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="8.5" r="1" fill="currentColor"/></svg></div><span>Alim.</span></div>
+  <div class="nt" onclick="go('bilan')" id="nav-bilan"><div class="nt-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><rect x="4" y="4" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 4V3a2 2 0 1 1 4 0v1" stroke="currentColor" stroke-width="1.5"/><path d="M7 9h6M7 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><span>Bilan</span></div>
+  <div class="nt" onclick="go('cycle')" id="nav-cycle"><div class="nt-icon">◐</div><span>Cycle</span></div>
 </nav>
 
 <script>
@@ -837,10 +855,12 @@ function toggleDark(){
   localStorage.setItem('darkMode',on?'1':'0');
   updateDarkUI(on);
 }
+var SVG_MOON='<svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 11.5A7 7 0 1 1 8.5 3a5.5 5.5 0 0 0 8.5 8.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+var SVG_SUN='<svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
 function updateDarkUI(on){
   var sw=document.getElementById('dark-switch'),btn=document.getElementById('dark-btn');
   if(sw)sw.className='toggle-switch'+(on?' on':'');
-  if(btn)btn.textContent=on?'☀️':'🌙';
+  if(btn)btn.innerHTML=on?SVG_SUN:SVG_MOON;
 }
 (function(){if(localStorage.getItem('darkMode')==='1'){document.body.classList.add('dark');updateDarkUI(true);}})();
 
@@ -983,14 +1003,43 @@ function renderHome(){
     d.innerHTML='<div class="prog-name">'+p.name+'</div><div class="prog-track"><div class="prog-fill" style="width:'+pct+'%;background:'+p.c+';"></div></div><div class="prog-val">'+(p.u?p.v+' '+p.u:p.v)+' / '+(p.u?p.g+' '+p.u:p.g)+'</div><div class="prog-pct">'+pct+'%</div>';
     pl.appendChild(d);
   });
-  var sr=document.getElementById('streak-row');sr.innerHTML='';
-  for(var i=13;i>=0;i--){
-    var d2=new Date(now.getTime()-i*864e5);var k=dk(d2.getFullYear(),d2.getMonth(),d2.getDate());var e=store[k]||{};
-    var hs=e.sport&&e.sport!=='repos',hw=e.write&&e.write!=='non';
-    var dv=document.createElement('div');
-    dv.className='sd'+(hs&&hw?' both':hs?' sport':hw?' write':'')+(i===0?' today':'');
-    dv.innerHTML='<span>'+d2.getDate()+'</span><span class="sd-lbl">'+DAYS3[d2.getDay()]+'</span>';
-    sr.appendChild(dv);
+  // ── Activity grid (redesigned) ──
+  var ag=document.getElementById('activity-grid');
+  if(ag){
+    ag.innerHTML='';
+    var sportCount14=0,writeCount14=0,bothCount14=0;
+    for(var i=13;i>=0;i--){
+      var d2=new Date(now.getTime()-i*864e5);
+      var k=dk(d2.getFullYear(),d2.getMonth(),d2.getDate());
+      var e=store[k]||{};
+      var hs=e.sport&&e.sport!=='repos',hw=e.write&&e.write!=='non';
+      if(hs&&hw)bothCount14++;else if(hs)sportCount14++;else if(hw)writeCount14++;
+      var isToday=i===0;
+      var bg=hs&&hw?'var(--blue)':hs?'var(--green)':hw?'var(--amber)':'var(--bg)';
+      var border=hs&&hw?'var(--blue-bd)':hs?'var(--green-bd)':hw?'var(--amber-bd)':'var(--line)';
+      var txtColor=hs||hw?'#fff':'var(--ink4)';
+      var cell=document.createElement('div');
+      cell.style.cssText='border-radius:6px;padding:5px 2px;text-align:center;background:'+bg+';border:1px solid '+border+';'+(isToday?'outline:2px solid var(--blue);outline-offset:1px;':'');
+      cell.innerHTML='<div style="font-size:11px;font-weight:700;color:'+txtColor+';">'+d2.getDate()+'</div>'
+        +'<div style="font-size:8px;font-weight:500;color:'+(hs||hw?'rgba(255,255,255,0.75)':'var(--ink4)')+';">'+DAYS3[d2.getDay()]+'</div>'
+        +(hs||hw?'<div style="display:flex;gap:2px;justify-content:center;margin-top:2px;">'
+          +(hs?'<div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.6);"></div>':'')
+          +(hw?'<div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.4);"></div>':'')
+        +'</div>':'');
+      ag.appendChild(cell);
+    }
+    // mini stats
+    var as=document.getElementById('activity-stats');
+    if(as){
+      as.innerHTML='';
+      [{v:sportCount14+bothCount14,l:'jours sport',c:'var(--green)'},{v:writeCount14+bothCount14,l:'jours écriture',c:'var(--amber)'},{v:14-(sportCount14+writeCount14+bothCount14),l:'jours repos',c:'var(--ink3)'}].forEach(function(it){
+        var d3=document.createElement('div');
+        d3.style.cssText='background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;text-align:center;';
+        d3.innerHTML='<div style="font-size:22px;font-weight:700;color:'+it.c+';">'+it.v+'</div>'
+          +'<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink3);margin-top:2px;">'+it.l+'</div>';
+        as.appendChild(d3);
+      });
+    }
   }
   setTimeout(function(){drawWeightIMC();drawWriteHome();},50);
   var ci=cycleInfo();var chw=document.getElementById('cyc-home-wrap');
@@ -1126,9 +1175,17 @@ function renderSport(){
   var types={run:0,pil:0,bad:0,march:0,swim:0,other:0};
   m12.forEach(function(m){types.run+=m.d.run;types.pil+=m.d.pilates;types.bad+=m.d.badminton;types.march+=m.d.marche;types.swim+=m.d.natation;types.other+=Math.max(0,m.d.sport-m.d.run-m.d.pilates-m.d.badminton-m.d.marche-m.d.natation);});
   var st=document.getElementById('sport-types');st.innerHTML='';
-  [{v:types.run,l:'Running',e:'🏃'},{v:types.pil,l:'Pilates',e:'🧘'},{v:types.bad,l:'Badminton',e:'🏸'},{v:types.march,l:'Marche',e:'🚶'},{v:types.swim,l:'Natation',e:'◎'},{v:types.other,l:'Autre',e:'◉'}].forEach(function(t){
+  [{v:types.run,l:'Running',e:'run'},{v:types.pil,l:'Pilates',e:'pil'},{v:types.bad,l:'Badminton',e:'bad'},{v:types.march,l:'Marche',e:'wlk'},{v:types.swim,l:'Natation',e:'swm'},{v:types.other,l:'Autre',e:'◉'}].forEach(function(t){
+    var sportIconSvg={
+      'run':'<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="3.5" r="1.5" fill="currentColor"/><path d="M11 6l-2.5 3L6 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M11 6l1.5 3-2 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M8.5 9l-2 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12.5 11.5l1 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+      'pil':'<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="3.5" r="1.5" fill="currentColor"/><path d="M10 5.5c0 2-2 3.5-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M10 5.5c0 2 2 3.5 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M10 9v4l-2 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M10 13l2 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+      'bad':'<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M7.5 3.5v8M3.5 7.5h8M5 5l5 5M10 5l-5 5" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.5"/><path d="M11 11l4.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+      'wlk':'<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="3" r="1.5" fill="currentColor"/><path d="M10 5.5v5l-2 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M10 10.5l2 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7.5 8l-1.5 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M10 8l2 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+      'swm':'<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="4" r="1.5" fill="currentColor"/><path d="M13 5.5l-2 3-4 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M13 5.5l1 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 13.5c1.5 0 2.5 1 4 1s2.5-1 4-1 2.5 1 4 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 16c1.5 0 2.5 1 4 1s2.5-1 4-1 2.5 1 4 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/></svg>',
+      '◉':'<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3" fill="currentColor" opacity="0.5"/></svg>'
+    };
     var d=document.createElement('div');d.className='kpi';d.style.textAlign='center';
-    d.innerHTML='<div style="font-size:22px;margin-bottom:2px;">'+t.e+'</div><div class="kpi-num" style="font-size:26px;">'+t.v+'</div><div class="kpi-label" style="margin-top:4px;">'+t.l+'</div>';
+    d.innerHTML='<div style="color:var(--green);margin-bottom:2px;display:flex;justify-content:center;">'+(sportIconSvg[t.e]||t.e)+'</div><div class="kpi-num" style="font-size:26px;">'+t.v+'</div><div class="kpi-label" style="margin-top:4px;">'+t.l+'</div>';
     st.appendChild(d);
   });
   var vals=m12.map(function(m){return m.d.sport;});
@@ -1154,6 +1211,106 @@ function alimNav(d){
   alimDate=new Date(alimDate.getTime()+d*864e5);
   alimDateK=dk(alimDate.getFullYear(),alimDate.getMonth(),alimDate.getDate());
   renderAlim();
+}
+
+
+// ═══════════════════════════════════════
+// BASE DE DONNÉES NUTRITIONNELLE (kcal/100g ou par portion standard)
+// Format: [nom, kcal_par_portion, desc_portion]
+// ═══════════════════════════════════════
+var FOOD_DB = [
+  // Boissons
+  ["Café noir",2,"1 tasse (200ml)"],["Café au lait (lait écrémé)",30,"1 tasse"],["Café au lait (lait entier)",60,"1 tasse"],
+  ["Thé nature",2,"1 tasse"],["Tisane",3,"1 tasse"],["Eau",0,"1 verre"],
+  ["Jus d'orange (pressé)",55,"1 verre (150ml)"],["Jus de pomme",70,"1 verre (150ml)"],
+  ["Lait entier",75,"1 verre (150ml)"],["Lait demi-écrémé",55,"1 verre (150ml)"],
+  ["Lait d'amande",20,"1 verre (150ml)"],["Lait de soja",50,"1 verre (150ml)"],
+  ["Lait d'avoine",60,"1 verre (150ml)"],["Smoothie fruits",120,"1 verre (200ml)"],
+  ["Soda (Coca-Cola)",90,"1 canette (250ml)"],["Eau gazeuse",0,"1 verre"],
+  // Petit-déjeuner
+  ["Yaourt nature (0%)",57,"1 pot (125g)"],["Yaourt grec nature",88,"1 pot (100g)"],
+  ["Yaourt aux fruits",105,"1 pot (125g)"],["Skyr nature",65,"1 pot (125g)"],
+  ["Fromage blanc 0%",48,"1 pot (100g)"],["Fromage blanc 20%",75,"1 pot (100g)"],
+  ["Pain complet (tranche)",70,"1 tranche (30g)"],["Pain de mie blanc (tranche)",65,"1 tranche (25g)"],
+  ["Baguette (portion)",130,"1/6 baguette (50g)"],["Pain au son",60,"1 tranche (25g)"],
+  ["Flocons d'avoine",150,"1 portion (40g)"],["Müesli",180,"1 portion (45g)"],
+  ["Granola",230,"1 portion (50g)"],["Corn flakes",140,"1 portion (35g)"],
+  ["Beurre",75,"1 noisette (10g)"],["Margarine",72,"1 noisette (10g)"],
+  ["Confiture",50,"1 c. à soupe (15g)"],["Miel",50,"1 c. à soupe (15g)"],
+  ["Nutella",100,"1 c. à soupe (15g)"],
+  ["Oeuf à la coque",75,"1 oeuf (55g)"],["Oeufs brouillés (2)",165,"2 oeufs avec beurre"],
+  ["Omelette nature (2 oeufs)",155,"2 oeufs"],
+  ["Banane",95,"1 banane moyenne (100g)"],["Pomme",55,"1 pomme (130g)"],
+  ["Poire",55,"1 poire (130g)"],["Orange",55,"1 orange (130g)"],
+  ["Kiwi",40,"1 kiwi (70g)"],["Fraises",30,"1 portion (100g)"],
+  ["Framboises",25,"1 portion (80g)"],["Myrtilles",45,"1 portion (100g)"],
+  ["Pastèque",30,"1 portion (150g)"],["Melon",40,"1 portion (150g)"],
+  ["Raisin",60,"1 grappe (80g)"],["Ananas",40,"1 portion (100g)"],
+  ["Mangue",60,"1 portion (100g)"],
+  // Déjeuner / dîner - protéines
+  ["Poulet rôti (blanc)",165,"1 portion (150g)"],["Poulet sauté (avec huile)",210,"1 portion (150g)"],
+  ["Filet de saumon grillé",260,"1 portion (150g)"],["Cabillaud vapeur",120,"1 portion (150g)"],
+  ["Thon (boîte au naturel)",150,"1 boîte (120g)"],["Sardines (huile égouttées)",175,"1 portion (100g)"],
+  ["Crevettes",80,"1 portion (100g)"],["Steak haché 5%",155,"1 steak (120g)"],
+  ["Steak haché 15%",195,"1 steak (120g)"],["Boeuf bourguignon",280,"1 portion (300g)"],
+  ["Escalope de dinde",130,"1 portion (120g)"],["Jambon blanc (tranche)",35,"1 tranche (40g)"],
+  ["Jambon de pays (tranche)",60,"1 tranche (30g)"],["Oeufs durs (2)",155,"2 oeufs"],
+  ["Tofu nature",80,"1 portion (100g)"],["Tofu sauté",120,"1 portion (100g)"],
+  ["Lentilles cuites",116,"1 portion (150g)"],["Pois chiches cuits",160,"1 portion (150g)"],
+  ["Haricots rouges cuits",130,"1 portion (150g)"],["Haricots blancs cuits",124,"1 portion (150g)"],
+  // Féculents
+  ["Riz blanc cuit",175,"1 portion (175g)"],["Riz complet cuit",145,"1 portion (175g)"],
+  ["Pâtes cuites",210,"1 portion (200g)"],["Pâtes complètes cuites",195,"1 portion (200g)"],
+  ["Pommes de terre vapeur",130,"2 pommes de terre (150g)"],["Pommes de terre sautées",200,"1 portion (150g)"],
+  ["Purée de pommes de terre",180,"1 portion (200g)"],["Frites",320,"1 portion (150g)"],
+  ["Quinoa cuit",185,"1 portion (180g)"],["Boulgour cuit",150,"1 portion (180g)"],
+  ["Semoule cuite",170,"1 portion (180g)"],["Pain (sandwich complet)",120,"1/2 baguette (80g)"],
+  // Légumes
+  ["Salade verte",15,"1 portion (80g)"],["Tomates",20,"1 tomate (120g)"],
+  ["Concombre",12,"1 portion (100g)"],["Carottes râpées",40,"1 portion (100g)"],
+  ["Brocolis vapeur",35,"1 portion (150g)"],["Courgettes poêlées",50,"1 portion (150g)"],
+  ["Épinards",35,"1 portion (150g)"],["Haricots verts",35,"1 portion (150g)"],
+  ["Champignons poêlés",40,"1 portion (100g)"],["Poivrons",35,"1 portion (120g)"],
+  ["Asperges",30,"1 portion (120g)"],["Aubergines",45,"1 portion (150g)"],
+  ["Avocat",160,"1/2 avocat (80g)"],["Maïs",80,"1 portion (80g)"],
+  ["Petits pois",80,"1 portion (100g)"],
+  // Fromages
+  ["Emmental (tranche)",95,"1 tranche (25g)"],["Comté (tranche)",100,"1 tranche (25g)"],
+  ["Camembert (portion)",85,"1 portion (30g)"],["Brie (portion)",100,"1 portion (30g)"],
+  ["Chèvre frais",50,"1 rondelle (20g)"],["Feta",50,"1 portion (30g)"],
+  ["Mozzarella",80,"1 portion (35g)"],["Parmesan râpé",25,"1 c. à soupe (8g)"],
+  ["Gruyère râpé",100,"1 portion (25g)"],
+  // Snacks / collations
+  ["Barre de chocolat noir (1 carré)",50,"1 carré (10g)"],["Chocolat noir (tablette)",175,"2 rangées (35g)"],
+  ["Amandes",170,"1 poignée (30g)"],["Noix",185,"1 poignée (30g)"],
+  ["Noix de cajou",165,"1 poignée (30g)"],["Noisettes",180,"1 poignée (30g)"],
+  ["Chips (sachet)",265,"1 sachet (50g)"],["Crackers (3)",100,"3 crackers (25g)"],
+  ["Galette de riz",40,"1 galette (10g)"],["Biscuit sec (petit beurre)",60,"2 biscuits (14g)"],
+  ["Compote sans sucre",55,"1 gourde (100g)"],
+  // Plats composés courants
+  ["Salade composée",200,"1 portion (300g)"],["Quiche lorraine (part)",400,"1 part (150g)"],
+  ["Pizza margherita (part)",250,"1 part (150g)"],["Sandwich jambon beurre",380,"1 sandwich (200g)"],
+  ["Wrap poulet crudités",350,"1 wrap (200g)"],["Soupe de légumes",80,"1 bol (250ml)"],
+  ["Soupe à l'oignon",120,"1 bol (250ml)"],["Velouté tomate",110,"1 bol (250ml)"],
+  ["Ratatouille",120,"1 portion (250g)"],["Gratin dauphinois",280,"1 portion (200g)"],
+  ["Tarte aux légumes",320,"1 part (150g)"],["Bolognaise (sauce)",180,"1 portion (150g)"],
+  // Desserts
+  ["Yaourt à la grecque sucré",120,"1 pot (100g)"],["Compote de pommes",70,"1 pot (100g)"],
+  ["Mousse au chocolat",180,"1 portion (90g)"],["Crème brûlée",250,"1 ramequin (120g)"],
+  ["Tarte aux pommes (part)",280,"1 part (120g)"],["Gâteau au chocolat (part)",350,"1 part (80g)"],
+  ["Sorbet citron",115,"1 boule (80g)"],["Glace vanille",170,"1 boule (80g)"],
+  // Huiles / matières grasses
+  ["Huile d'olive (c. à soupe)",90,"1 c. à soupe (10ml)"],["Huile (c. à café)",40,"1 c. à café (5ml)"],
+  ["Vinaigrette maison",80,"1 c. à soupe"],
+];
+
+function foodSearch(query){
+  if(!query||query.length<2)return[];
+  var q=query.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  return FOOD_DB.filter(function(f){
+    var name=f[0].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+    return name.includes(q);
+  }).slice(0,6);
 }
 
 function sportLevelFromStore(k){
@@ -1251,17 +1408,48 @@ function renderMealItems(meal,fd){
   var items=fd.items[meal]||[];
   items.forEach(function(item,idx){
     var row=document.createElement('div');row.className='alim-item-row';
+    // Autocomplete wrapper
+    var acWrap=document.createElement('div');acWrap.className='food-autocomplete-wrap';
     var descInp=document.createElement('input');
     descInp.type='text';descInp.className='alim-desc';descInp.value=item.desc||'';
-    descInp.placeholder=meal==='petitdej'?'Ex : café noir, yaourt grec, flocons avoine…':meal==='dejeuner'?'Ex : salade de lentilles, poulet grillé…':meal==='diner'?'Ex : soupe de légumes, tisane, pomme…':'Aliment / boisson';
-    descInp.oninput=function(){getFoodDay(alimDateK).items[meal][idx].desc=descInp.value;saveFood();};
+    descInp.placeholder=meal==='petitdej'?'Café, yaourt, flocons…':meal==='dejeuner'?'Poulet, riz, salade…':meal==='diner'?'Soupe, légumes, tisane…':'Aliment…';
+    descInp.autocomplete='off';
+    // Suggestions dropdown
+    var sugBox=document.createElement('div');sugBox.className='food-suggestions';sugBox.style.display='none';
+    function showSugs(query){
+      var results=foodSearch(query);
+      sugBox.innerHTML='';
+      if(!results.length){sugBox.style.display='none';return;}
+      results.forEach(function(f){
+        var item2=document.createElement('div');item2.className='food-sug-item';
+        item2.innerHTML='<span class="food-sug-name">'+f[0]+'</span><span class="food-sug-kcal">'+f[1]+' kcal <span style="font-weight:400;font-size:10px;">'+f[2]+'</span></span>';
+        item2.onmousedown=function(ev){ev.preventDefault();
+          descInp.value=f[0];
+          getFoodDay(alimDateK).items[meal][idx].desc=f[0];
+          getFoodDay(alimDateK).items[meal][idx].kcal=f[1];
+          kcalInp.value=f[1];
+          sugBox.style.display='none';
+          saveFoodAndRefresh();
+        };
+        sugBox.appendChild(item2);
+      });
+      sugBox.style.display='block';
+    }
+    descInp.oninput=function(){
+      getFoodDay(alimDateK).items[meal][idx].desc=descInp.value;
+      saveFood();
+      showSugs(descInp.value);
+    };
+    descInp.onfocus=function(){if(descInp.value.length>=2)showSugs(descInp.value);};
+    descInp.onblur=function(){setTimeout(function(){sugBox.style.display='none';},200);};
+    acWrap.appendChild(descInp);acWrap.appendChild(sugBox);
     var kcalInp=document.createElement('input');
     kcalInp.type='number';kcalInp.className='alim-kcal-inp';kcalInp.value=item.kcal||'';kcalInp.placeholder='kcal';kcalInp.min='0';
     kcalInp.oninput=function(){getFoodDay(alimDateK).items[meal][idx].kcal=parseInt(kcalInp.value)||0;saveFoodAndRefresh();};
     var unit=document.createElement('span');unit.className='alim-kcal-unit';unit.textContent='kcal';
     var del=document.createElement('button');del.className='alim-del';del.textContent='×';del.title='Supprimer';
     del.onclick=function(){getFoodDay(alimDateK).items[meal].splice(idx,1);renderMealItems(meal,fd);saveFoodAndRefresh();};
-    row.appendChild(descInp);row.appendChild(kcalInp);row.appendChild(unit);row.appendChild(del);
+    row.appendChild(acWrap);row.appendChild(kcalInp);row.appendChild(unit);row.appendChild(del);
     container.appendChild(row);
   });
 }
@@ -1387,7 +1575,7 @@ function renderWrite(){
   else if(pct<50)gabSub='Bon rythme — tu es à '+pct+'% de ton objectif.';
   else if(pct<75)gabSub='Plus de la moitié — la fin est en vue.';
   else if(pct<100)gabSub='Presque là — encore quelques milliers de mots !';
-  else gabSub='🎉 Objectif atteint ! Félicitations.';
+  else gabSub='Objectif atteint — félicitations !';
   document.getElementById('gab-sub').textContent=gabSub;
   var gabMonthVals=m12.map(function(m){return m.d.wg;});
   document.getElementById('gab-bar-total').textContent=fmt(gabT.total)+' mots au total';
