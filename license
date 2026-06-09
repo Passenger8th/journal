@@ -1,0 +1,187 @@
+# 📔 Journal Manon
+
+Tracker holistique pour **sport, écriture, alimentation et santé**. Minimaliste, fluide, offline-first.
+
+## 🚀 Démarrage rapide
+
+1. Clone le repo
+```bash
+git clone https://github.com/manon/journal-manon.git
+```
+
+2. Ouvre `index.html` dans le navigateur
+3. C'est tout ! Pas de build, pas de serveur, pas de dépendances.
+
+## ✨ Features
+
+- **Sport** : multi-activités (marche + yoga même jour), marche au pas, intensité
+- **Écriture** : sessions structurées (journal/fiction/roman Gabrielle) + mood + contexte
+- **Alimentation** : calories + macronutriments
+- **Santé** : poids, cycle, bien-être
+- **Design** : moderne, animations fluides, responsive mobile/desktop
+- **Offline** : localStorage, données privées, zéro cloud
+
+## 📊 Données
+
+```javascript
+// Format par jour
+{
+  activities: [
+    { type: 'run', duration: 45, km: 12, intensity: 'intense' },
+    { type: 'marche', duration: 30, steps: 8500 }
+  ],
+  writings: [
+    { type: 'gabrielle', words: 1200, duration: 90, mood: 'inspired', notes: '...' }
+  ],
+  meals: [
+    { type: 'breakfast', desc: 'Café au lait + yaourt', kcal: 280, macros: { protein: 12, carbs: 35, fat: 8 } }
+  ],
+  weight: 51.3,
+  mood: 'energized',
+  notes: ''
+}
+```
+
+## 🎨 Design
+
+- **Palette** : Violet-Rose (Gabrielle) + Ambre (écriture) + Vert-Cyan (sport/alim)
+- **Typographie** : Inter (moderne, lisible)
+- **Transitions** : 150-250ms (fluide, pas agressif)
+- **Responsive** : Desktop / Tablet / Mobile
+
+## 🗺️ Pages
+
+| Page | Contenu |
+|------|---------|
+| **Accueil** | KPIs du jour + timeline récente |
+| **Aujourd'hui** | Saisie rapide (sport/écriture/repas) |
+| **Sport** | Stats 12 mois + répartition types |
+| **Écriture** | Gabrielle progress hero + stats journal/fiction |
+| **Alimentation** | Macros + historique |
+| **Santé** | Poids, IMC, cycle |
+| **Insights** | Corrélations personnelles (Phase 2) |
+| **Semaine/Mois** | Vues agrégées (Phase 2) |
+
+## 🛠️ Technologie
+
+- **HTML5** : structure sémantique
+- **CSS3** : token system, variables, gradients, animations
+- **Vanilla JS** : zéro dépendances, ~500 lignes logique
+- **localStorage** : persistance locale
+
+## 📝 Usage
+
+### Ajouter une activité sport
+1. Clic "+ Ajouter une activité"
+2. Type (running, marche, yoga, etc.)
+3. Durée + champs dynamiques (km pour running, steps pour marche)
+4. Intensité
+5. ✅ Enregistré auto
+
+### Ajouter une session d'écriture
+1. "+ Ajouter une session"
+2. Type (journal/fiction/Gabrielle)
+3. Mots + durée (opt.)
+4. Mood (inspired/focused/struggling/tired)
+5. Notes
+6. ✅ Sauvegardé
+
+### Ajouter un repas
+1. "+ Saisir un repas"
+2. Repas (petit-dej/déjeuner/collation/dîner)
+3. Description
+4. Calories + macros (opt.)
+5. ✅ Done
+
+## 🗓️ Roadmap
+
+**Phase 1** ✅
+- [x] Multi-sport avec cumul
+- [x] Écriture structurée (journal/fiction/Gabrielle)
+- [x] Alimentation de base + macros
+- [x] Design fluide + responsive
+- [x] Dark mode
+
+**Phase 2** (Prochainement)
+- [ ] Autocomplete alimentation + favoris
+- [ ] Jeûne intermittent (16:8, etc.)
+- [ ] Analyses & corrélations
+- [ ] Graphes 12 mois
+- [ ] Heatmap semaine/mois
+- [ ] Export/import JSON+CSV
+
+**Phase 3** (Optionnel)
+- [ ] PWA (install mobile)
+- [ ] Sync cloud (iCloud/Google Drive)
+- [ ] Apple Health integration
+- [ ] Achievements & gamification
+
+## 💾 Installation locale
+
+### Sur Desktop
+```bash
+# Clone
+git clone https://github.com/manon/journal-manon.git
+cd journal-manon
+
+# Ouvre dans le navigateur (double-click index.html)
+# Ou via terminal :
+open index.html  # macOS
+start index.html # Windows
+xdg-open index.html # Linux
+```
+
+### Sur Mobile
+1. **iPhone** : Ouvre Safari → Favoris → Ajouter à l'écran d'accueil
+2. **Android** : Chrome → Menu → "Ajouter à l'écran d'accueil"
+
+## 🔧 Customisation
+
+### Changer couleur Gabrielle
+```css
+:root {
+  --rose-600: #EC4899;  /* Rose plus clair */
+}
+```
+
+### Ajouter un type de sport
+Dans le `<select>` du modal :
+```html
+<option value="slack-line">🪢 Slack-line</option>
+```
+
+### Modifier objectif Gabrielle
+```javascript
+const gabrielleGoal = 100000;  // Au lieu de 80k
+```
+
+## 📚 Documentation complète
+
+Voir le dossier `docs/` :
+- `GUIDE.md` : Guide complet d'utilisation + architecture
+- `PHASE2.md` : Snippets de code pour Phase 2
+
+## 💡 Tips
+
+- **Sport** : Rentre intensité + durée (patterns d'efficacité)
+- **Écriture** : Mood + notes = données pour analyser productivité
+- **Alimentation** : Macros optionnels mais recommandés (Phase 2)
+- **Hebdo** : Revise dimanche soir (5 min)
+- **Mensuel** : Regarde Gabrielle progress (30 min)
+
+## 🐛 Issues
+
+Données disparues?
+```javascript
+// Console du navigateur
+localStorage.removeItem('journal-manon');
+location.reload();
+```
+
+## 📄 License
+
+MIT — Libre d'utilisation, modification, distribution.
+
+## 👋 Crédit
+
+Conçu pour Manon par Claude (Anthropic).
