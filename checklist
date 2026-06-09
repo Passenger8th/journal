@@ -1,0 +1,48 @@
+# ✅ Checklist GitHub — 5 min
+
+## Fichiers à télécharger (outputs/)
+
+- [ ] `journal-manon-v2.html` → **rename `index.html`**
+- [ ] `README.md`
+- [ ] `LICENSE`
+- [ ] `.gitignore`
+- [ ] `GUIDE-JOURNAL-V2.md` → dossier `docs/`
+- [ ] `PHASE2-SNIPPETS.md` → dossier `docs/`
+
+## Dossier local
+
+```
+journal-manon/
+├── index.html
+├── README.md
+├── LICENSE
+├── .gitignore
+└── docs/
+    ├── GUIDE.md
+    └── PHASE2.md
+```
+
+## Commandes
+
+```bash
+cd journal-manon
+git init
+git add .
+git commit -m "Initial commit: Journal Manon v2"
+git branch -M main
+git remote add origin https://github.com/TON_USERNAME/journal-manon.git
+git push -u origin main
+```
+
+## Test avant
+
+```bash
+open index.html  # Fonctionne? Oui ✅
+# Ajoute sport/écriture/repas
+# Rafrâîchis → données là? Oui ✅
+# ALORS push
+```
+
+## C'est tout!
+
+Repo vivant à `https://github.com/TON_USERNAME/journal-manon` ✨
